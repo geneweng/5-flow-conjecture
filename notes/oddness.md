@@ -205,3 +205,15 @@ What this changes in the plan of §5: candidate lemma (L-A) in its strong form (
 - The rule "the path-complement of a killed colouring is killed by $V\setminus S$ iff no even circuit crosses $\partial S$" was verified on the six three-kill instances (`tools/check_complement.py`): no violation, and in the two 6-of-8 instances all witness cuts have $s=0$, so there the four-class picture is exact and three of the four complementary pairs are genuinely dead.
 - Per-colouring histogram at oddness 6 (`killsets.py`, cyclically 6-connected `six12`, `straddleA`, `straddleC`, 1,080 instances): killed colourings of 8: $\{0{:}692,\ 1{:}138,\ 2{:}211,\ 3{:}17,\ 4{:}18,\ 5{:}2,\ 6{:}2\}$. Single kills (an 11-cut crossed by an even circuit) are common, so the even-circuit colouring is not a side issue: it decides whether a tight cut kills one colouring or two.
 - **The missing pattern is realized with zero slack.** For a surviving colouring one can force a pattern (chosen path ends inside $S$, the others outside) and minimize $3d(S)-5(b_S-a_S)$ by one min cut (`tools/forced_cut.py`). In the 6-of-8 instance `threekill_straddleC_5_0_43` both survivors have forced cuts with **slack 0**: a 15-cut with $k=9$ and a 10-cut with $k=6$, i.e. $3m=5k$ exactly. Bad needs $5k>3m$, so these colourings survive by a single edge. The same happens for one survivor of `six12_5_3_204` (a 10-cut with $k=6$). The $m=5j$, $k=3j$ cuts are the boundary cases of the catalogue (the inequality $5k>3m$ excludes them, and nothing else does), and the data says the fourth pattern of situation 5 tends to be realized precisely by such a boundary cut. A proof that the fourth pattern cannot be *bad* therefore has no room: it must show that the best cut for that pattern has $3m\ge5k$, with equality attainable. `tools/slack_stats.py` measures how often survivors sit at slack 0 (running).
+
+**Slack statistics** (`slack_stats.py`, 720 instances of `straddleC`, `six12`, `straddleA`, 40 0-edge choices per graph): in about 93% of all instances, including those with nothing killed, some surviving colouring has a forced cut of slack exactly 0, realized by the boundary types $(10,6,4,q{=}2\text{ or }4)$, $(10,6,3,3)$ and $(15,9,6,3)$. So $3m=5k$ cuts are the generic situation, not a special feature of the near-failures: the catalogue's strict inequality $5k>3m$ is what separates "always some colouring survives" from failure, by one edge, essentially everywhere. Any proof will have to handle the equality cases as the typical ones rather than as a degenerate corner.
+
+**Per-colouring recount of the table above** (all $2^t$ path colourings, even circuits fixed; `kill_full_colourings.log`):
+
+| oddness $2t$ | colourings | family | instances | with 0 killed | worst kill |
+|---|---|---|---|---|---|
+| 8 | 16 | random $8C_7{+}C_8{+}C_6$ | 320 | 272 | 4 |
+| 8 | 16 | 5-block straddle rings | 320 | 84 | 10 |
+| 8 | 16 | 4-block rings $[7,7,6]$ (two seeds) | 640 | 107 | **14** |
+| 10 | 32 | 5-block rings $[7,7,6]$ | 160 | 7 | **29** |
+| 12 | 64 | 6-block rings $[7,7,6]$ | 160 | 1 | **56** |
