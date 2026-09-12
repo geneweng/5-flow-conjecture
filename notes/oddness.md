@@ -6,7 +6,7 @@
 
 > **(O6)** Every cyclically 6-edge-connected cubic graph with oddness at most 6 has a nowhere-zero 5-flow.
 
-Known: oddness $\le 2$ (Jaeger 1988), oddness $\le 4$ with cyclic 6-edge-connectivity (Mazzuoccolo–Steffen 2017, "MS"), and cyclic connectivity $\ge \tfrac52\omega-3$ (Steffen 2010). Since a smallest counterexample to the 5-flow conjecture is cyclically 6-edge-connected (Kochol), (O6) would push its oddness to $\ge 8$. It is a natural next step but not obviously within reach of the MS method, as explained in §2.
+Known: oddness $\le 2$ (Jaeger 1988), oddness $\le 4$ with cyclic 6-edge-connectivity (Mazzuoccolo–Steffen 2017, "MS"), and cyclic connectivity $\ge \tfrac52\omega-3$ (Steffen 2010). Since a smallest counterexample to the 5-flow conjecture is cyclically 6-edge-connected (Kochol), (O6) would push its oddness to $\ge 8$. It is a natural next step but not obviously within reach of the MS method, as explained in §2. **Status (end of 2026-09-12):** the method's obstructions are fully catalogued (§2, §6); the four-class cover problem is solved for covers by 6-cuts (Lemma 6.5, conditional on the MS uncrossing claims); the 7- and 11-cut cases are open; no counterexample to the fixed-2-factor template was found in about 60,000 instances (§4).
 
 ## 1. The method (Steffen 2010, MS 2017), restated
 

@@ -40,6 +40,11 @@ straddle_profiles = {   # MS crossing structure: 4 blocks, odd circuits straddli
     "straddle6A": ([[7, 6], [6], [7, 6], [6], [7, 6], [6]], [(7, 3), None, (7, 3), None, (7, 3), None]),
     "straddle6B": ([[7, 6], [8], [7, 6], [6], [7, 8], [6]], [(7, 3), None, (7, 3), None, (7, 3), None]),
     "straddle6C": ([[7], [6], [7], [8], [7], [6]], [(7, 3), None, (7, 3), None, (7, 3), None]),
+    "t4rand": [7] * 8 + [8, 6],
+    "t5rand": [7] * 10 + [8],
+    "t4ring": [[7, 7, 6]] * 4,
+    "t5ring": [[7, 7, 6]] * 5,
+    "t4str": ([[7, 6], [7], [7, 7], [6], [7, 7]], [(7, 3), (7, 3), None, None, None]),
     "six12": ([[7, 6], [12], [7, 6], [12], [7, 6], [12]], [(7, 3), None, (7, 3), None, (7, 3), None]),
     "six10": ([[7, 8], [10], [7, 8], [10], [7, 8], [10]], [(7, 3), None, (7, 3), None, (7, 3), None]),
     "straddle6D": ([[7, 6], [6], [7, 6], [6], [7, 6], [6]], [(7, 2), None, (7, 4), None, (7, 3), None]),
@@ -51,7 +56,7 @@ for name in which:
     lengths = profiles[name]
     if isinstance(lengths, tuple):
         graphs = generate_straddle(lengths[0], lengths[1], rng, int(__import__("os").environ.get("NGRAPHS", "8")))
-    elif name.startswith("ring"):
+    elif name.startswith("ring") or name.startswith("t4ring") or name.startswith("t5ring"):
         graphs = generate_rings(lengths, rng, 5)
     else:
         graphs = generate(lengths, rng, 6)
