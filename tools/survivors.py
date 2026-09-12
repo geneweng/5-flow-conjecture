@@ -23,7 +23,6 @@ def margin(black):
     cut, _ = nx.minimum_cut(D, 's', 't'); return cut - 5 * len(black)
 summary = "-s" in sys.argv; cuts = {}; nsurv = 0
 for bits in itertools.product((0, 1), repeat=t):
-    if bits[0] == 1: continue
     f = list(ref)
     for i, b in zip(path_idx, bits): f[i] = b
     black = partition(comps, f); S = violating_set(G, black)
@@ -38,6 +37,6 @@ for bits in itertools.product((0, 1), repeat=t):
     print(f"class {bits}: killed by {ty[:5]} sep={ty[5]}  |S|={len(S)}  z in S: {[(z, 'B' if z in black else 'w', block[z]) for z in zin]}  blocks of S: {dict(sorted(blocks_in.items()))}  path-end colours {zcol}")
 
 if summary:
-    print(f"{nsurv} survivors of {2**(t-1)}; {len(cuts)} distinct witness cuts:")
+    print(f"{nsurv} survivors of {2**t} path colourings; {len(cuts)} distinct witness cuts:")
     for key, (ty, sep, zs, cnt) in sorted(cuts.items(), key=lambda kv: -kv[1][3]):
         print(f"   {ty} sep={sep} kills {cnt:3d}  |S|={len(key):3d}  blocks={dict(sorted(collections.Counter(block[v] for v in key).items()))}  z in S: {zs}")

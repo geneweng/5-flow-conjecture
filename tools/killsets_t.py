@@ -47,7 +47,6 @@ for gi, (G, circuits) in enumerate(graphs):
         path_idx = [i for i, (_, ends) in enumerate(comps) if ends]; t = len(path_idx)
         ref = [rng.randint(0, 1) for _ in comps]; killed = set(); sig = {}
         for bits in itertools.product((0, 1), repeat=t):
-            if bits[0] == 1: continue                      # classes up to complement
             f = list(ref)
             for i, b in zip(path_idx, bits): f[i] = b
             black = partition(comps, f); S = violating_set(G, black)
@@ -59,15 +58,15 @@ for gi, (G, circuits) in enumerate(graphs):
             worst = len(killed); worst_sig = collections.Counter(sig[b] for b in killed)
             worst_inst = {"profile": name, "seed": seed, "graph": gi, "edges": [list(e) for e in G.edges()],
                           "circuits": circuits, "zero": list(zc), "ref": ref, "killed": sorted(killed), "sig": {str(b): sig[b] for b in killed}}
-        if len(killed) == 2 ** (t - 1):                    # every class killed: dump the instance
+        if len(killed) == 2 ** t:                          # every colouring killed: dump the instance
             import json
             fn = f"fullkill_{name}_{seed}_{gi}_{n_inst}.json"
             json.dump({"profile": name, "seed": seed, "graph": gi, "edges": [list(e) for e in G.edges()],
                        "circuits": circuits, "zero": list(zc), "ref": ref, "killed": sorted(killed)}, open(fn, "w"))
             print("FULL KILL ->", fn, flush=True)
 if n_inst == 0: print(f"{name}: generator produced no cyclically 6-connected graph"); sys.exit(0)
-print(f"{name} (t={t}, {2**(t-1)} classes): {n_inst} instances; killed classes histogram: {dict(sorted(hist.items()))}; worst {worst}")
+print(f"{name} (t={t}, {2**t} path colourings, even circuits fixed): {n_inst} instances; killed-colourings histogram: {dict(sorted(hist.items()))}; worst {worst}")
 print("bad cut types (|dS|, c1, c2, q, #separated paths):", dict(types.most_common(12)))
-print("worst instance: killing cut types per killed class:", dict(worst_sig) if worst_sig else None, flush=True)
+print("worst instance: killing cut types per killed colouring:", dict(worst_sig) if worst_sig else None, flush=True)
 if worst_sig:
     import json; json.dump(worst_inst, open(f"worst_{name}_{seed}.json", "w"))

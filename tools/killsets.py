@@ -9,7 +9,7 @@ from badcuts import violating_set, classify, profiles
 rng = random.Random(int(sys.argv[2]) if len(sys.argv) > 2 else 5)
 name = sys.argv[1]; pr = profiles[name]
 graphs = (generate_straddle(pr[0], pr[1], rng, int(sys.argv[3]) if len(sys.argv) > 3 else 6, min_dist=(4 if CYC5 else 5), check=(cyclically_5_connected if CYC5 else None)) if isinstance(pr, tuple) else generate(pr, rng, 6))
-killed_hist = collections.Counter(); combo = collections.Counter(); n_inst = 0
+killed_hist = collections.Counter(); combo = collections.Counter(); n_inst = 0; col_hist = collections.Counter()
 seed = int(sys.argv[2]) if len(sys.argv) > 2 else 5
 for gi, (G, circuits) in enumerate(graphs):
     M = {frozenset((u, v)) for u, v in G.edges()} - {frozenset((C[i], C[(i + 1) % len(C)])) for C in circuits for i in range(len(C))}
@@ -28,7 +28,7 @@ for gi, (G, circuits) in enumerate(graphs):
                 lab = (bits[0] ^ bits[1], bits[0] ^ bits[2])
                 t = classify(G, S, col, comps, black)
                 killed.setdefault(lab, set()).add((t[0], t[1], t[2], t[5])); sets[str(bits)] = sorted(S)
-        n_inst += 1; killed_hist[len(killed)] += 1
+        n_inst += 1; killed_hist[len(killed)] += 1; col_hist[len(sets)] += 1
         if len(killed) >= 3:                                   # dump for uncrossing analysis
             json.dump({"profile": name, "seed": seed, "graph": gi, "edges": [list(e) for e in G.edges()], "circuits": circuits,
                        "zero": list(zc), "ref": ref, "killed": {str(k): sorted(v) for k, v in killed.items()}, "S": sets},
@@ -36,6 +36,7 @@ for gi, (G, circuits) in enumerate(graphs):
         sig = tuple(sorted((lab, tuple(sorted(ts))) for lab, ts in killed.items()))
         combo[sig] += 1
 print(f"{name}: {n_inst} instances; number of killed classes (of 4):", dict(sorted(killed_hist.items())))
+print(f"{name}: number of killed path colourings (of 8, even circuits fixed):", dict(sorted(col_hist.items())))
 print("most common (killed class -> cut types) signatures:")
 for sig, cnt in combo.most_common(12):
     print(f"  {cnt:4d}  " + ("; ".join(f"class{lab}: {list(ts)}" for lab, ts in sig) if sig else "(nothing killed)"))
