@@ -53,7 +53,25 @@ Test graphs: generalized Petersen graphs $GP(n,3)$ and $GP(n,4)$ with $n$ odd (g
 | 20 rings of 3 blocks $[7,7,6]$, $[7,9,8]$, $[7,7,8]$, $[7,7,6,6]$ ($n=60$–$78$), all block boundaries = 3 matching edges | 120 0-edge choices each | path recolourings alone always balanced. Expected in hindsight: a cut made of matching edges has $c_2=0$, so it is never bad |
 | 8 four-block rings with a $C_7$ straddling two consecutive boundaries (profile A, $n=54$), which contain two *crossing bad-type* 6-cuts (4 matching + 2 circuit edges), exactly the $U_1..U_4$ configuration of MS | 120 0-edge choices each | path recolourings alone always balanced |
 
-So far the fixed-$F_2$, path-recolouring template has not failed on any cyclically 6-connected graph with a 6-odd 2-factor, including ones built to contain the MS crossing configuration. Profiles with three crossing bad-type cuts (6-block rings, obstruction 2 of §2) are appended below.
+| 14 more four-block straddle rings (profiles C, D: $n=56$–$60$) | 120 0-edge choices each | path recolourings alone always balanced |
+
+So far the fixed-$F_2$, path-recolouring template has not failed on any cyclically 6-connected graph with a 6-odd 2-factor, including ones built to contain the MS crossing configuration.
+
+**What the violating cuts look like** (`tools/badcuts.py`: for each of the 8 path colourings, extract the minimum-cut witness $S$ and classify it by $(|\partial S|, c_1, c_2, |S\cap Z|, q, \text{paths separated})$; 360 instances per profile, six graphs each):
+
+| type $(|\partial S|,c_1,c_2,|S\cap Z|,q,J)$ | straddle A | straddle C | straddle D | straddle F | random $6C_7{+}C_8$ |
+|---|---|---|---|---|---|
+| $(11,7,4,3,3,\{1,2,3\})$ | 161 | 191 | 173 | 153 | 67 |
+| $(7,5,2,3,3,\{1,2,3\})$ | 16 | 12 | 17 | 3 | 1 |
+| $(6,4,2,2,2,\{a,b\})$ | 26 | 22 | 23 | 3 | 0 |
+| $(6,4,1,3,3,\{1,2,3\})$ | 2 | 0 | 0 | 0 | 0 |
+| **min. number of balanced colourings among the 8** | 4 | 4 | 4 | 4 | 6 |
+
+Three things stand out.
+
+1. **The dominant obstruction at oddness 6 is new**: an 11-edge cut with 7 matching edges and 4 colour-2 edges whose side contains exactly one end of each of the three paths, all of the same colour ($k=7=c_1=c_2+q$, tight everywhere). It is impossible at oddness 4 ($q\le2$) and it appears even in random cyclically 6-connected graphs. It forbids exactly the two colourings in which the three ends in $S$ agree, i.e. one of the four classes up to complement.
+2. The MS-type bad 6-cuts $(6,4,2,2,2,\{a,b\})$ do occur, in the straddle rings, for each of the three pairs, and each forbids two of the four classes. The 7-cut and $(6,4,1)$ types are rarer.
+3. In every instance at least 2 of the 4 classes survive. Killing all four would need, e.g., a pair-type 6-cut plus two 11-cuts with different side patterns, or four 11-cuts with the four distinct patterns. Whether cyclic 6-edge-connectivity forbids such combinations is exactly what a proof of (O6) has to show; the 6-block rings (three crossing bad-type 6-cuts) are the test for it.
 
 
 ## 5. Plan

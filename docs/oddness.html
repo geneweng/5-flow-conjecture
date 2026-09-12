@@ -114,7 +114,77 @@
 <div class="line-block">29 random cyclically 6-connected graphs, planted profiles <span class="math inline">\(6\times C_7+2C_6\)</span>, <span class="math inline">\(4C_7+2C_9+C_6\)</span>, <span class="math inline">\(6\times C_9\)</span> (<span class="math inline">\(n=52\)</span>–<span class="math inline">\(54\)</span>) and <span class="math inline">\(4C_7+C_8+C_6\)</span>, <span class="math inline">\(4C_9+2C_6\)</span> (4 odd circuits, <span class="math inline">\(n=42\)</span>–<span class="math inline">\(48\)</span>) | 120 0-edge choices each | path recolourings alone always balanced |<br />
 20 rings of 3 blocks <span class="math inline">\([7,7,6]\)</span>, <span class="math inline">\([7,9,8]\)</span>, <span class="math inline">\([7,7,8]\)</span>, <span class="math inline">\([7,7,6,6]\)</span> (<span class="math inline">\(n=60\)</span>–<span class="math inline">\(78\)</span>), all block boundaries = 3 matching edges | 120 0-edge choices each | path recolourings alone always balanced. Expected in hindsight: a cut made of matching edges has <span class="math inline">\(c_2=0\)</span>, so it is never bad |<br />
 8 four-block rings with a <span class="math inline">\(C_7\)</span> straddling two consecutive boundaries (profile A, <span class="math inline">\(n=54\)</span>), which contain two <em>crossing bad-type</em> 6-cuts (4 matching + 2 circuit edges), exactly the <span class="math inline">\(U_1..U_4\)</span> configuration of MS | 120 0-edge choices each | path recolourings alone always balanced |</div>
-<p>So far the fixed-<span class="math inline">\(F_2\)</span>, path-recolouring template has not failed on any cyclically 6-connected graph with a 6-odd 2-factor, including ones built to contain the MS crossing configuration. Profiles with three crossing bad-type cuts (6-block rings, obstruction 2 of §2) are appended below.</p>
+<div class="line-block">14 more four-block straddle rings (profiles C, D: <span class="math inline">\(n=56\)</span>–<span class="math inline">\(60\)</span>) | 120 0-edge choices each | path recolourings alone always balanced |</div>
+<p>So far the fixed-<span class="math inline">\(F_2\)</span>, path-recolouring template has not failed on any cyclically 6-connected graph with a 6-odd 2-factor, including ones built to contain the MS crossing configuration.</p>
+<p><strong>What the violating cuts look like</strong> (<code>tools/badcuts.py</code>: for each of the 8 path colourings, extract the minimum-cut witness <span class="math inline">\(S\)</span> and classify it by <span class="math inline">\((|\partial S|, c_1, c_2, |S\cap Z|, q, \text{paths separated})\)</span>; 360 instances per profile, six graphs each):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>type <span class="math inline">\((|\partial S|,c_1,c_2,|S\cap Z|,q,J)\)</span></th>
+<th>straddle A</th>
+<th>straddle C</th>
+<th>straddle D</th>
+<th>straddle F</th>
+<th>random <span class="math inline">\(6C_7{+}C_8\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\((11,7,4,3,3,\{1,2,3\})\)</span></td>
+<td>161</td>
+<td>191</td>
+<td>173</td>
+<td>153</td>
+<td>67</td>
+</tr>
+<tr>
+<td><span class="math inline">\((7,5,2,3,3,\{1,2,3\})\)</span></td>
+<td>16</td>
+<td>12</td>
+<td>17</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td><span class="math inline">\((6,4,2,2,2,\{a,b\})\)</span></td>
+<td>26</td>
+<td>22</td>
+<td>23</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="math inline">\((6,4,1,3,3,\{1,2,3\})\)</span></td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>min. number of balanced colourings among the 8</strong></td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>6</td>
+</tr>
+</tbody>
+</table></div>
+<p>Three things stand out.</p>
+<ol type="1">
+<li><strong>The dominant obstruction at oddness 6 is new</strong>: an 11-edge cut with 7 matching edges and 4 colour-2 edges whose side contains exactly one end of each of the three paths, all of the same colour (<span class="math inline">\(k=7=c_1=c_2+q\)</span>, tight everywhere). It is impossible at oddness 4 (<span class="math inline">\(q\le2\)</span>) and it appears even in random cyclically 6-connected graphs. It forbids exactly the two colourings in which the three ends in <span class="math inline">\(S\)</span> agree, i.e. one of the four classes up to complement.</li>
+<li>The MS-type bad 6-cuts <span class="math inline">\((6,4,2,2,2,\{a,b\})\)</span> do occur, in the straddle rings, for each of the three pairs, and each forbids two of the four classes. The 7-cut and <span class="math inline">\((6,4,1)\)</span> types are rarer.</li>
+<li>In every instance at least 2 of the 4 classes survive. Killing all four would need, e.g., a pair-type 6-cut plus two 11-cuts with different side patterns, or four 11-cuts with the four distinct patterns. Whether cyclic 6-edge-connectivity forbids such combinations is exactly what a proof of (O6) has to show; the 6-block rings (three crossing bad-type 6-cuts) are the test for it.</li>
+</ol>
 <h2 id="plan">5. Plan</h2>
 <ol type="1">
 <li>Run the experiment of §3. Three possible outcomes: (a) path recolourings always suffice at <span class="math inline">\(t=3\)</span> on cyclically 6-connected graphs: then (O6) is a case analysis of obstructions 1–3 above, and the job is to find the replacement for the parity argument; (b) they do not suffice but 0-edge/even-circuit freedom does: then the proof must first choose <span class="math inline">\(c\)</span> well, and the experiment tells which choices work; (c) some cyclically 6-connected graph with a 6-odd 2-factor has no balanced flow partition at all: then (O6), if true, needs a different valuation family, and the template is dead at oddness 6.</li>
