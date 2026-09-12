@@ -31,7 +31,7 @@ for gi, (G, circuits) in enumerate(graphs):
         n_inst += 1; killed_hist[len(killed)] += 1; col_hist[len(sets)] += 1
         if len(killed) >= 3:                                   # dump for uncrossing analysis
             json.dump({"profile": name, "seed": seed, "graph": gi, "edges": [list(e) for e in G.edges()], "circuits": circuits,
-                       "zero": list(zc), "ref": ref, "killed": {str(k): sorted(v) for k, v in killed.items()}, "S": sets},
+                       "zero": list(zc), "ref": {str(min(c)): b for (c, _), b in zip(comps, ref)}, "killed": {str(k): sorted(v) for k, v in killed.items()}, "S": sets},
                       open(f"threekill_{name}_{seed}_{gi}_{n_inst}.json", "w"))
         sig = tuple(sorted((lab, tuple(sorted(ts))) for lab, ts in killed.items()))
         combo[sig] += 1
