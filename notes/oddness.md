@@ -24,7 +24,17 @@ MS use only the $2^t$ path recolourings for a fixed $F_2$ and $c$ (and only $t=2
 
 ## 2. What changes at oddness 6 ($t=3$)
 
-- **Bad cut sizes.** $m<15$; Steffen's Proposition 1 with $\omega=6$ gives $m\le11$ if $m\equiv1$, $m\le7$ if $m\equiv2$, $m\le8$ if $m\equiv3$ (mod 5) and nothing for $m\equiv0,4$ beyond $m\le4$. Hence, after excluding the non-cyclic cuts of size $\le5$ by cyclic 6-edge-connectivity: **$m\in\{6,7,8,11\}$** and $q\in\{2,3\}$.
+- **Bad cut sizes.** $m<15$; Steffen's Proposition 1 with $\omega=6$ gives $m\le11$ if $m\equiv1$, $m\le7$ if $m\equiv2$, $m\le8$ if $m\equiv3$ (mod 5). One can do better by direct case analysis. Use: $k>\tfrac35m$, $k\le c_1$, $k\le c_2+q$, $c_1+c_2\le m$, $q\le3$, and the two parity facts $k\equiv m\equiv c_1\pmod 2$ (colour 1 is a perfect matching, so $c_1\equiv|S|\equiv m$). Running through $m=6,\dots,14$ leaves exactly five possibilities:
+
+  | $m$ | $k$ | $c_1$ | $c_2$ | $q$ | $c_0+c_3$ | tight? |
+  |---|---|---|---|---|---|---|
+  | 6 | 4 | 4 | 2 | 2 | 0 | $k=c_1=c_2+q$ |
+  | 6 | 4 | 4 | 2 | 3 | 0 | $k=c_1$ |
+  | 6 | 4 | 4 | 1 | 3 | 1 | $k=c_1=c_2+q$ |
+  | 7 | 5 | 5 | 2 | 3 | 0 | $k=c_1=c_2+q$ |
+  | 11 | 7 | 7 | 4 | 3 | 0 | $k=c_1=c_2+q$ |
+
+  **Catalogue (t = 3, cyclically 6-edge-connected):** a bad cut has $(m,c_1,c_2,q)\in\{(6,4,2,2),(6,4,2,3),(6,4,1,3),(7,5,2,3),(11,7,4,3)\}$; in particular *there is no bad 8-cut*, and $k=c_1$ always, which means every colour-1 edge of the cut has its $S$-end black; where $k=c_2+q$ is tight, also every colour-2 cut edge has its $S$-end black and every $z$ in $S$ is black. The experiments of §4 found every one of these five types and nothing else.
 - **The colour imbalance $q$** of $S\cap Z$: paths of $H$ with both ends in $S$ contribute 0; a path $P_i$ with exactly one end in $S$ contributes $\varepsilon_i\sigma_i=\pm1$ where $\varepsilon_i$ is the chosen colouring of $P_i$ and $\sigma_i$ records which end is in $S$. So $q\ge2$ needs at least two paths separated by $\partial S$ with equal signs; $q=3$ needs all three separated with equal signs.
 - **Constraint system.** Write $J(S)\subseteq\{1,2,3\}$ for the paths separated by $\partial S$. A cut with $J=\{a,b\}$ is bad for the colourings with $\varepsilon_a\varepsilon_b=\sigma_a\sigma_b=:s(S)$; a cut with $J=\{1,2,3\}$ is bad for the colourings with $\varepsilon_1\sigma_1=\varepsilon_2\sigma_2=\varepsilon_3\sigma_3$. Up to global complement there are 4 colourings $\varepsilon$ of the three paths. The method (with $F_2,c$ fixed and only path recolourings) succeeds iff the system of "forbidden" relations has a solution. It has **no** solution in exactly these situations:
   1. two bad cuts with the same pair $J=\{a,b\}$ and opposite signs $s$ (this is the only obstruction at $t=2$, and MS's whole proof is that it cannot happen);

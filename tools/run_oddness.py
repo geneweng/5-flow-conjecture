@@ -49,7 +49,7 @@ which = sys.argv[1:] or list(profiles)
 rng = random.Random(11)
 for name in which:
     lengths = profiles[name]
-    if name.startswith("straddle"):
+    if isinstance(lengths, tuple):
         graphs = generate_straddle(lengths[0], lengths[1], rng, int(__import__("os").environ.get("NGRAPHS", "8")))
     elif name.startswith("ring"):
         graphs = generate_rings(lengths, rng, 5)

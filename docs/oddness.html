@@ -64,16 +64,77 @@
 <p><strong>What can go wrong.</strong> Suppose <span class="math inline">\(w\)</span> is not balanced, witnessed by <span class="math inline">\(S\)</span> with <span class="math inline">\(5k&gt;3m\)</span>, <span class="math inline">\(k=|b_S-a_S|\)</span>, <span class="math inline">\(m=|\partial S|\)</span>. Let <span class="math inline">\(c_i=|\partial S\cap c^{-1}(i)|\)</span>. Since colour-1 and colour-2 edges are bichromatic, <span class="math inline">\(k\le c_1\)</span> and <span class="math inline">\(k\le c_2+q\)</span>, where <span class="math inline">\(q\)</span> is the colour imbalance among the <span class="math inline">\(z\)</span>’s inside <span class="math inline">\(S\)</span>; also <span class="math inline">\(k\equiv m\pmod 2\)</span>. Adding, <span class="math inline">\(2k\le m+q\)</span>, hence <span class="math inline">\(q&gt;m/5\)</span>, and since <span class="math inline">\(q\le t\)</span> we get <strong><span class="math inline">\(m&lt;5t\)</span></strong>: bad cuts have fewer than <span class="math inline">\(5t\)</span> edges. Steffen’s Proposition 1 refines this by residues mod 5, and with cyclic 6-edge-connectivity MS show for <span class="math inline">\(t=2\)</span> that a bad cut has exactly 6 edges, 4 of colour 1 and 2 of colour 2, and separates the <span class="math inline">\(z\)</span>’s into two same-coloured pairs.</p>
 <h2 id="what-changes-at-oddness-6-t3">2. What changes at oddness 6 (<span class="math inline">\(t=3\)</span>)</h2>
 <ul>
-<li><strong>Bad cut sizes.</strong> <span class="math inline">\(m&lt;15\)</span>; Steffen’s Proposition 1 with <span class="math inline">\(\omega=6\)</span> gives <span class="math inline">\(m\le11\)</span> if <span class="math inline">\(m\equiv1\)</span>, <span class="math inline">\(m\le7\)</span> if <span class="math inline">\(m\equiv2\)</span>, <span class="math inline">\(m\le8\)</span> if <span class="math inline">\(m\equiv3\)</span> (mod 5) and nothing for <span class="math inline">\(m\equiv0,4\)</span> beyond <span class="math inline">\(m\le4\)</span>. Hence, after excluding the non-cyclic cuts of size <span class="math inline">\(\le5\)</span> by cyclic 6-edge-connectivity: <strong><span class="math inline">\(m\in\{6,7,8,11\}\)</span></strong> and <span class="math inline">\(q\in\{2,3\}\)</span>.</li>
-<li><strong>The colour imbalance <span class="math inline">\(q\)</span></strong> of <span class="math inline">\(S\cap Z\)</span>: paths of <span class="math inline">\(H\)</span> with both ends in <span class="math inline">\(S\)</span> contribute 0; a path <span class="math inline">\(P_i\)</span> with exactly one end in <span class="math inline">\(S\)</span> contributes <span class="math inline">\(\varepsilon_i\sigma_i=\pm1\)</span> where <span class="math inline">\(\varepsilon_i\)</span> is the chosen colouring of <span class="math inline">\(P_i\)</span> and <span class="math inline">\(\sigma_i\)</span> records which end is in <span class="math inline">\(S\)</span>. So <span class="math inline">\(q\ge2\)</span> needs at least two paths separated by <span class="math inline">\(\partial S\)</span> with equal signs; <span class="math inline">\(q=3\)</span> needs all three separated with equal signs.</li>
-<li><strong>Constraint system.</strong> Write <span class="math inline">\(J(S)\subseteq\{1,2,3\}\)</span> for the paths separated by <span class="math inline">\(\partial S\)</span>. A cut with <span class="math inline">\(J=\{a,b\}\)</span> is bad for the colourings with <span class="math inline">\(\varepsilon_a\varepsilon_b=\sigma_a\sigma_b=:s(S)\)</span>; a cut with <span class="math inline">\(J=\{1,2,3\}\)</span> is bad for the colourings with <span class="math inline">\(\varepsilon_1\sigma_1=\varepsilon_2\sigma_2=\varepsilon_3\sigma_3\)</span>. Up to global complement there are 4 colourings <span class="math inline">\(\varepsilon\)</span> of the three paths. The method (with <span class="math inline">\(F_2,c\)</span> fixed and only path recolourings) succeeds iff the system of “forbidden” relations has a solution. It has <strong>no</strong> solution in exactly these situations:
+<li><p><strong>Bad cut sizes.</strong> <span class="math inline">\(m&lt;15\)</span>; Steffen’s Proposition 1 with <span class="math inline">\(\omega=6\)</span> gives <span class="math inline">\(m\le11\)</span> if <span class="math inline">\(m\equiv1\)</span>, <span class="math inline">\(m\le7\)</span> if <span class="math inline">\(m\equiv2\)</span>, <span class="math inline">\(m\le8\)</span> if <span class="math inline">\(m\equiv3\)</span> (mod 5). One can do better by direct case analysis. Use: <span class="math inline">\(k&gt;\tfrac35m\)</span>, <span class="math inline">\(k\le c_1\)</span>, <span class="math inline">\(k\le c_2+q\)</span>, <span class="math inline">\(c_1+c_2\le m\)</span>, <span class="math inline">\(q\le3\)</span>, and the two parity facts <span class="math inline">\(k\equiv m\equiv c_1\pmod 2\)</span> (colour 1 is a perfect matching, so <span class="math inline">\(c_1\equiv|S|\equiv m\)</span>). Running through <span class="math inline">\(m=6,\dots,14\)</span> leaves exactly five possibilities:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><span class="math inline">\(m\)</span></th>
+<th><span class="math inline">\(k\)</span></th>
+<th><span class="math inline">\(c_1\)</span></th>
+<th><span class="math inline">\(c_2\)</span></th>
+<th><span class="math inline">\(q\)</span></th>
+<th><span class="math inline">\(c_0+c_3\)</span></th>
+<th>tight?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td><span class="math inline">\(k=c_1=c_2+q\)</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td><span class="math inline">\(k=c_1\)</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td>4</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td><span class="math inline">\(k=c_1=c_2+q\)</span></td>
+</tr>
+<tr>
+<td>7</td>
+<td>5</td>
+<td>5</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td><span class="math inline">\(k=c_1=c_2+q\)</span></td>
+</tr>
+<tr>
+<td>11</td>
+<td>7</td>
+<td>7</td>
+<td>4</td>
+<td>3</td>
+<td>0</td>
+<td><span class="math inline">\(k=c_1=c_2+q\)</span></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Catalogue (t = 3, cyclically 6-edge-connected):</strong> a bad cut has <span class="math inline">\((m,c_1,c_2,q)\in\{(6,4,2,2),(6,4,2,3),(6,4,1,3),(7,5,2,3),(11,7,4,3)\}\)</span>; in particular <em>there is no bad 8-cut</em>, and <span class="math inline">\(k=c_1\)</span> always, which means every colour-1 edge of the cut has its <span class="math inline">\(S\)</span>-end black; where <span class="math inline">\(k=c_2+q\)</span> is tight, also every colour-2 cut edge has its <span class="math inline">\(S\)</span>-end black and every <span class="math inline">\(z\)</span> in <span class="math inline">\(S\)</span> is black. The experiments of §4 found every one of these five types and nothing else.</p></li>
+<li><p><strong>The colour imbalance <span class="math inline">\(q\)</span></strong> of <span class="math inline">\(S\cap Z\)</span>: paths of <span class="math inline">\(H\)</span> with both ends in <span class="math inline">\(S\)</span> contribute 0; a path <span class="math inline">\(P_i\)</span> with exactly one end in <span class="math inline">\(S\)</span> contributes <span class="math inline">\(\varepsilon_i\sigma_i=\pm1\)</span> where <span class="math inline">\(\varepsilon_i\)</span> is the chosen colouring of <span class="math inline">\(P_i\)</span> and <span class="math inline">\(\sigma_i\)</span> records which end is in <span class="math inline">\(S\)</span>. So <span class="math inline">\(q\ge2\)</span> needs at least two paths separated by <span class="math inline">\(\partial S\)</span> with equal signs; <span class="math inline">\(q=3\)</span> needs all three separated with equal signs.</p></li>
+<li><p><strong>Constraint system.</strong> Write <span class="math inline">\(J(S)\subseteq\{1,2,3\}\)</span> for the paths separated by <span class="math inline">\(\partial S\)</span>. A cut with <span class="math inline">\(J=\{a,b\}\)</span> is bad for the colourings with <span class="math inline">\(\varepsilon_a\varepsilon_b=\sigma_a\sigma_b=:s(S)\)</span>; a cut with <span class="math inline">\(J=\{1,2,3\}\)</span> is bad for the colourings with <span class="math inline">\(\varepsilon_1\sigma_1=\varepsilon_2\sigma_2=\varepsilon_3\sigma_3\)</span>. Up to global complement there are 4 colourings <span class="math inline">\(\varepsilon\)</span> of the three paths. The method (with <span class="math inline">\(F_2,c\)</span> fixed and only path recolourings) succeeds iff the system of “forbidden” relations has a solution. It has <strong>no</strong> solution in exactly these situations:</p>
 <ol type="1">
 <li>two bad cuts with the same pair <span class="math inline">\(J=\{a,b\}\)</span> and opposite signs <span class="math inline">\(s\)</span> (this is the only obstruction at <span class="math inline">\(t=2\)</span>, and MS’s whole proof is that it cannot happen);</li>
 <li>three bad cuts with <span class="math inline">\(J=\{1,2\},\{1,3\},\{2,3\}\)</span> and <span class="math inline">\(s_{12}s_{13}s_{23}=+1\)</span> (each forbids one parity; the three forced parities are inconsistent);</li>
 <li>combinations with <span class="math inline">\(J=\{1,2,3\}\)</span> cuts (each forbids two of the eight <span class="math inline">\(\varepsilon\)</span>, i.e. one class up to complement) together with pair cuts.</li>
 </ol></li>
-<li><strong>Why the MS argument does not transfer.</strong> Their final contradiction takes two bad cuts <span class="math inline">\(E_3,E_4\)</span> for <span class="math inline">\(J=\{1,2\}\)</span> with opposite signs, uncrosses them into <span class="math inline">\(U_1,\dots,U_4\)</span> using cyclic 6-edge-connectivity to force <span class="math inline">\(|\partial(U_i,U_j)|\in\{0,3\}\)</span>, and then observes that <span class="math inline">\(E_3&#39;\cup E_4&#39;\)</span> is a 6-cut inside <span class="math inline">\(H\)</span> crossed an odd number of times by <span class="math inline">\(P_1\cup P_2\)</span> while every circuit of <span class="math inline">\(H\)</span> crosses it evenly. With a third path <span class="math inline">\(P_3\)</span> in <span class="math inline">\(H\)</span>, <span class="math inline">\(P_3\)</span> may cross <span class="math inline">\(E_3&#39;\cup E_4&#39;\)</span> an odd number of times, and the parity contradiction disappears. So even obstruction 1 needs a new argument at <span class="math inline">\(t=3\)</span>, and obstructions 2 and 3 are new.</li>
-<li><strong>Extra freedom not used by MS.</strong> The 0-edge on each odd circuit (which moves the <span class="math inline">\(z_i\)</span> around the circuit and changes the paths), the colourings of the even circuits of <span class="math inline">\(H\)</span>, and the choice of <span class="math inline">\(F_2\)</span> itself. Any of these may be needed.</li>
+<li><p><strong>Why the MS argument does not transfer.</strong> Their final contradiction takes two bad cuts <span class="math inline">\(E_3,E_4\)</span> for <span class="math inline">\(J=\{1,2\}\)</span> with opposite signs, uncrosses them into <span class="math inline">\(U_1,\dots,U_4\)</span> using cyclic 6-edge-connectivity to force <span class="math inline">\(|\partial(U_i,U_j)|\in\{0,3\}\)</span>, and then observes that <span class="math inline">\(E_3&#39;\cup E_4&#39;\)</span> is a 6-cut inside <span class="math inline">\(H\)</span> crossed an odd number of times by <span class="math inline">\(P_1\cup P_2\)</span> while every circuit of <span class="math inline">\(H\)</span> crosses it evenly. With a third path <span class="math inline">\(P_3\)</span> in <span class="math inline">\(H\)</span>, <span class="math inline">\(P_3\)</span> may cross <span class="math inline">\(E_3&#39;\cup E_4&#39;\)</span> an odd number of times, and the parity contradiction disappears. So even obstruction 1 needs a new argument at <span class="math inline">\(t=3\)</span>, and obstructions 2 and 3 are new.</p></li>
+<li><p><strong>Extra freedom not used by MS.</strong> The 0-edge on each odd circuit (which moves the <span class="math inline">\(z_i\)</span> around the circuit and changes the paths), the colourings of the even circuits of <span class="math inline">\(H\)</span>, and the choice of <span class="math inline">\(F_2\)</span> itself. Any of these may be needed.</p></li>
 </ul>
 <h2 id="decisive-experiment-before-theory">3. Decisive experiment before theory</h2>
 <p>Before trying to prove (O6) with the flow-partition method it should be checked that the method is <em>capable</em> of it: for cyclically 6-edge-connected cubic graphs with a 2-factor of exactly 6 odd circuits, is there always a balanced flow partition, and if so, is it always reachable by path recolourings alone (as in MS), or does one need the 0-edge/even-circuit/2-factor freedom? <code>tools/oddness.py</code> implements the method exactly (canonical colouring, <span class="math inline">\(H\)</span>, 2-colourings, the balance test as one min-cut) and, as a check, reproduces Jaeger’s oddness-2 theorem: on Petersen, <span class="math inline">\(J_7\)</span> and <span class="math inline">\(J_9\)</span> every sampled 2-factor with 2 odd circuits and every 0-edge choice gives a balanced partition (150 + 22,354 + 71,657 cases).</p>
