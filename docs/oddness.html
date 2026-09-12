@@ -79,7 +79,42 @@
 <p>Before trying to prove (O6) with the flow-partition method it should be checked that the method is <em>capable</em> of it: for cyclically 6-edge-connected cubic graphs with a 2-factor of exactly 6 odd circuits, is there always a balanced flow partition, and if so, is it always reachable by path recolourings alone (as in MS), or does one need the 0-edge/even-circuit/2-factor freedom? <code>tools/oddness.py</code> implements the method exactly (canonical colouring, <span class="math inline">\(H\)</span>, 2-colourings, the balance test as one min-cut) and, as a check, reproduces Jaeger’s oddness-2 theorem: on Petersen, <span class="math inline">\(J_7\)</span> and <span class="math inline">\(J_9\)</span> every sampled 2-factor with 2 odd circuits and every 0-edge choice gives a balanced partition (150 + 22,354 + 71,657 cases).</p>
 <p>Test graphs: generalized Petersen graphs <span class="math inline">\(GP(n,3)\)</span> and <span class="math inline">\(GP(n,4)\)</span> with <span class="math inline">\(n\)</span> odd (girth 6 or 7, so cyclic connectivity is plausibly 6 or more; they are 3-edge-colourable but have 2-factors with 4 or 6 odd circuits, which is all the fixed-<span class="math inline">\(F_2\)</span> template sees), the flower snarks <span class="math inline">\(J_7,J_9\)</span> (cyclically 6-edge-connected, oddness 2), and the oddness-6 snark <span class="math inline">\(R_2\)</span> on 40 vertices of Lukoťka–Máčajová–Mazák–Škoviera (cyclic connectivity only 2, so a failure there would not contradict (O6), but a success is informative). Results are recorded in §4 as they come in.</p>
 <h2 id="experiment-log">4. Experiment log</h2>
-<p>(pending)</p>
+<p><strong>Test-bed problem.</strong> Vertex-transitive families are useless here: with girth 6 every odd circuit has <span class="math inline">\(\ge7\)</span> vertices, and <span class="math inline">\(J_{11}\)</span> has a single odd circuit of length <span class="math inline">\(\le11\)</span>, <span class="math inline">\(GP(29,3)\)</span> none. So I generate graphs with a <em>planted</em> 2-factor: prescribed circuit lengths plus a random perfect matching chosen edge by edge among vertices at distance <span class="math inline">\(\ge5\)</span> (girth <span class="math inline">\(\ge6\)</span>), then certify cyclic 6-edge-connectivity exactly by SAT (no vertex set <span class="math inline">\(X\)</span> with <span class="math inline">\(6\le|X|\le n-6\)</span> and <span class="math inline">\(d(X)\le5\)</span>; with girth <span class="math inline">\(\ge6\)</span> this is equivalent). Two flavours (<code>tools/gen_cyc6.py</code>): fully random matchings, and <strong>rings of blocks</strong> joined by exactly 3 matching edges between consecutive blocks, which have the crossing 6-cut structure (<span class="math inline">\(U_1,\dots,U_4\)</span> with <span class="math inline">\(|\partial(U_i,U_{i+1})|=3\)</span>) that drives the MS obstruction. Blocks must contain an even number of odd circuits, so rings of 3 blocks with 2 odd circuits each give the oddness-6 test cases.</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Graphs</th>
+<th>2-factor</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen, <span class="math inline">\(J_7\)</span>, <span class="math inline">\(J_9\)</span></td>
+<td>all sampled 2-factors with 2 odd circuits, all 0-edges (150 + 22,354 + 71,657 cases)</td>
+<td>balanced flow partition always exists (Jaeger’s theorem reproduced)</td>
+</tr>
+<tr>
+<td><span class="math inline">\(R_2\)</span> (40 vertices, oddness 6, cyclic connectivity 2)</td>
+<td>165 planted 2-factors with 6 odd circuits, 400 0-edge choices each</td>
+<td>every 2-factor has some balanced flow partition; <strong>61,999 of 66,000 (2-factor, 0-edge) pairs</strong> have one (the rest are failures or misses of the 64-colouring sample), so the 0-edge choice matters on graphs with small cuts</td>
+</tr>
+<tr>
+<td>6 random cyclically 6-connected graphs, planted <span class="math inline">\(6\times C_7+C_8\)</span>, <span class="math inline">\(n=50\)</span></td>
+<td>120 0-edge choices each</td>
+<td>path recolourings alone always balanced (120/120 on every graph)</td>
+</tr>
+</tbody>
+</table></div>
+<div class="line-block">29 random cyclically 6-connected graphs, planted profiles <span class="math inline">\(6\times C_7+2C_6\)</span>, <span class="math inline">\(4C_7+2C_9+C_6\)</span>, <span class="math inline">\(6\times C_9\)</span> (<span class="math inline">\(n=52\)</span>–<span class="math inline">\(54\)</span>) and <span class="math inline">\(4C_7+C_8+C_6\)</span>, <span class="math inline">\(4C_9+2C_6\)</span> (4 odd circuits, <span class="math inline">\(n=42\)</span>–<span class="math inline">\(48\)</span>) | 120 0-edge choices each | path recolourings alone always balanced |<br />
+20 rings of 3 blocks <span class="math inline">\([7,7,6]\)</span>, <span class="math inline">\([7,9,8]\)</span>, <span class="math inline">\([7,7,8]\)</span>, <span class="math inline">\([7,7,6,6]\)</span> (<span class="math inline">\(n=60\)</span>–<span class="math inline">\(78\)</span>), all block boundaries = 3 matching edges | 120 0-edge choices each | path recolourings alone always balanced. Expected in hindsight: a cut made of matching edges has <span class="math inline">\(c_2=0\)</span>, so it is never bad |<br />
+8 four-block rings with a <span class="math inline">\(C_7\)</span> straddling two consecutive boundaries (profile A, <span class="math inline">\(n=54\)</span>), which contain two <em>crossing bad-type</em> 6-cuts (4 matching + 2 circuit edges), exactly the <span class="math inline">\(U_1..U_4\)</span> configuration of MS | 120 0-edge choices each | path recolourings alone always balanced |</div>
+<p>So far the fixed-<span class="math inline">\(F_2\)</span>, path-recolouring template has not failed on any cyclically 6-connected graph with a 6-odd 2-factor, including ones built to contain the MS crossing configuration. Profiles with three crossing bad-type cuts (6-block rings, obstruction 2 of §2) are appended below.</p>
 <h2 id="plan">5. Plan</h2>
 <ol type="1">
 <li>Run the experiment of §3. Three possible outcomes: (a) path recolourings always suffice at <span class="math inline">\(t=3\)</span> on cyclically 6-connected graphs: then (O6) is a case analysis of obstructions 1–3 above, and the job is to find the replacement for the parity argument; (b) they do not suffice but 0-edge/even-circuit freedom does: then the proof must first choose <span class="math inline">\(c\)</span> well, and the experiment tells which choices work; (c) some cyclically 6-connected graph with a 6-odd 2-factor has no balanced flow partition at all: then (O6), if true, needs a different valuation family, and the template is dead at oddness 6.</li>

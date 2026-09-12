@@ -78,6 +78,50 @@ def random_2factor(G, rng):
             unseen -= set(C); circuits.append(C)
         return M, circuits
 
+def planted_2factor(G, k, rng, odd_cycles):
+    """Try to build a 2-factor containing k given disjoint odd circuits as components.
+    Returns (M, circuits) or None."""
+    chosen = []; used = set()
+    order = list(odd_cycles); rng.shuffle(order)
+    for C in order:
+        if used.isdisjoint(C):
+            chosen.append(C); used |= set(C)
+            if len(chosen) == k: break
+    if len(chosen) < k: return None
+    forced = set()
+    for C in chosen:
+        Cs = set(C)
+        for v in C:
+            for u in G[v]:
+                if u not in Cs: forced.add(frozenset((u, v)))
+    inner = {frozenset(e) for C in chosen for e in circuit_edges(C)}
+    H = nx.Graph()
+    for u, v in G.edges():
+        e = frozenset((u, v))
+        if e in inner: continue
+        H.add_edge(u, v, w=(100.0 if e in forced else rng.random()))
+    H.add_nodes_from(G.nodes())
+    M = nx.max_weight_matching(H, maxcardinality=True, weight='w'); M = {frozenset(e) for e in M}
+    if len(M) * 2 != G.number_of_nodes() or not forced <= M: return None
+    nbr = {v: [] for v in G.nodes()}
+    for u, v in G.edges():
+        if frozenset((u, v)) not in M: nbr[u].append(v); nbr[v].append(u)
+    if any(len(l) != 2 for l in nbr.values()): return None
+    unseen = set(G.nodes()); circuits = []
+    while unseen:
+        start = next(iter(unseen)); C = [start]; prev, cur = None, start
+        while True:
+            nxt = nbr[cur][0] if nbr[cur][0] != prev else nbr[cur][1]
+            if nxt == start: break
+            C.append(nxt); prev, cur = cur, nxt
+        unseen -= set(C); circuits.append(C)
+    return M, circuits
+
+
+def odd_cycles_upto(G, L):
+    return [c for c in nx.simple_cycles(G, length_bound=L) if len(c) % 2 == 1]
+
+
 def circuit_edges(C):
     return [(C[i], C[(i + 1) % len(C)]) for i in range(len(C))]
 
@@ -138,8 +182,13 @@ def test_graph(G, rng, want_odd=(4, 6), samples=200, max_zero=400, max_flips=64,
     2-colourings of H; report whether some flow partition is balanced."""
     stats = {}
     seen = set()
-    for _ in range(samples):
-        M, circuits = random_2factor(G, rng)
+    cyc = odd_cycles_upto(G, max(want_odd and [11]) )
+    for it in range(samples):
+        k = rng.choice([k for k in want_odd if k > 0]) if cyc else 0
+        r = planted_2factor(G, k, rng, cyc) if k else None
+        if r is None:
+            continue
+        M, circuits = r
         key = frozenset(M)
         if key in seen: continue
         seen.add(key)

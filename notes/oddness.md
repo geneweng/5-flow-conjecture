@@ -41,7 +41,20 @@ Test graphs: generalized Petersen graphs $GP(n,3)$ and $GP(n,4)$ with $n$ odd (g
 
 ## 4. Experiment log
 
-(pending)
+**Test-bed problem.** Vertex-transitive families are useless here: with girth 6 every odd circuit has $\ge7$ vertices, and $J_{11}$ has a single odd circuit of length $\le11$, $GP(29,3)$ none. So I generate graphs with a *planted* 2-factor: prescribed circuit lengths plus a random perfect matching chosen edge by edge among vertices at distance $\ge5$ (girth $\ge6$), then certify cyclic 6-edge-connectivity exactly by SAT (no vertex set $X$ with $6\le|X|\le n-6$ and $d(X)\le5$; with girth $\ge6$ this is equivalent). Two flavours (`tools/gen_cyc6.py`): fully random matchings, and **rings of blocks** joined by exactly 3 matching edges between consecutive blocks, which have the crossing 6-cut structure ($U_1,\dots,U_4$ with $|\partial(U_i,U_{i+1})|=3$) that drives the MS obstruction. Blocks must contain an even number of odd circuits, so rings of 3 blocks with 2 odd circuits each give the oddness-6 test cases.
+
+| Graphs | 2-factor | Result |
+|---|---|---|
+| Petersen, $J_7$, $J_9$ | all sampled 2-factors with 2 odd circuits, all 0-edges (150 + 22,354 + 71,657 cases) | balanced flow partition always exists (Jaeger's theorem reproduced) |
+| $R_2$ (40 vertices, oddness 6, cyclic connectivity 2) | 165 planted 2-factors with 6 odd circuits, 400 0-edge choices each | every 2-factor has some balanced flow partition; **61,999 of 66,000 (2-factor, 0-edge) pairs** have one (the rest are failures or misses of the 64-colouring sample), so the 0-edge choice matters on graphs with small cuts |
+| 6 random cyclically 6-connected graphs, planted $6\times C_7+C_8$, $n=50$ | 120 0-edge choices each | path recolourings alone always balanced (120/120 on every graph) |
+
+| 29 random cyclically 6-connected graphs, planted profiles $6\times C_7+2C_6$, $4C_7+2C_9+C_6$, $6\times C_9$ ($n=52$–$54$) and $4C_7+C_8+C_6$, $4C_9+2C_6$ (4 odd circuits, $n=42$–$48$) | 120 0-edge choices each | path recolourings alone always balanced |
+| 20 rings of 3 blocks $[7,7,6]$, $[7,9,8]$, $[7,7,8]$, $[7,7,6,6]$ ($n=60$–$78$), all block boundaries = 3 matching edges | 120 0-edge choices each | path recolourings alone always balanced. Expected in hindsight: a cut made of matching edges has $c_2=0$, so it is never bad |
+| 8 four-block rings with a $C_7$ straddling two consecutive boundaries (profile A, $n=54$), which contain two *crossing bad-type* 6-cuts (4 matching + 2 circuit edges), exactly the $U_1..U_4$ configuration of MS | 120 0-edge choices each | path recolourings alone always balanced |
+
+So far the fixed-$F_2$, path-recolouring template has not failed on any cyclically 6-connected graph with a 6-odd 2-factor, including ones built to contain the MS crossing configuration. Profiles with three crossing bad-type cuts (6-block rings, obstruction 2 of §2) are appended below.
+
 
 ## 5. Plan
 
