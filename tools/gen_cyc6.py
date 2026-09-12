@@ -50,6 +50,10 @@ def cyclically_6_connected(G):
     return nx.girth(G) >= 6 and nx.edge_connectivity(G) >= 3 and has_small_cyclic_cut(G) is None
 
 
+def cyclically_5_connected(G):
+    return nx.girth(G) >= 5 and nx.edge_connectivity(G) >= 3 and has_small_cyclic_cut(G, kmax=4, side_min=5) is None
+
+
 def generate(lengths, rng, count, verbose=False):
     out = []; attempts = 0
     while len(out) < count and attempts < 100 * count:
@@ -166,11 +170,12 @@ def ring_graph_straddle(blocks, straddles, rng, min_dist=5, tries=60):
     return None
 
 
-def generate_straddle(blocks, straddles, rng, count):
+def generate_straddle(blocks, straddles, rng, count, min_dist=5, check=None):
+    check = check or cyclically_6_connected
     out = []; attempts = 0
     while len(out) < count and attempts < 100 * count:
         attempts += 1
-        r = ring_graph_straddle(blocks, straddles, rng)
+        r = ring_graph_straddle(blocks, straddles, rng, min_dist=min_dist)
         if r is None: continue
-        if cyclically_6_connected(r[0]): out.append(r)
+        if check(r[0]): out.append(r)
     return out

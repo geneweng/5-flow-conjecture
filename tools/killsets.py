@@ -1,12 +1,14 @@
 """Per (2-factor, 0-edge) instance: which of the 4 colouring classes (up to complement) are killed,
 and by which cut types.  Class label of a path colouring (b1,b2,b3) is (b1^b2, b1^b3)."""
 import sys, random, itertools, collections
-from gen_cyc6 import generate_straddle, generate
+from gen_cyc6 import generate_straddle, generate, cyclically_5_connected
+import os
+CYC5 = os.environ.get('CYC5') == '1'
 from oddness import canonical_colouring, H_components, partition
 from badcuts import violating_set, classify, profiles
 rng = random.Random(int(sys.argv[2]) if len(sys.argv) > 2 else 5)
 name = sys.argv[1]; pr = profiles[name]
-graphs = generate_straddle(pr[0], pr[1], rng, int(sys.argv[3]) if len(sys.argv) > 3 else 6) if isinstance(pr, tuple) else generate(pr, rng, 6)
+graphs = (generate_straddle(pr[0], pr[1], rng, int(sys.argv[3]) if len(sys.argv) > 3 else 6, min_dist=(4 if CYC5 else 5), check=(cyclically_5_connected if CYC5 else None)) if isinstance(pr, tuple) else generate(pr, rng, 6))
 killed_hist = collections.Counter(); combo = collections.Counter(); n_inst = 0
 for G, circuits in graphs:
     M = {frozenset((u, v)) for u, v in G.edges()} - {frozenset((C[i], C[(i + 1) % len(C)])) for C in circuits for i in range(len(C))}
