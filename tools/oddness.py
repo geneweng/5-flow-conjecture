@@ -40,8 +40,8 @@ def insert_P2(G, e, tag):
     for u, v in P.edges():
         G.add_edge(m[u], m[v])
     # subdivide edge (0,1) of the Petersen copy by two terminals s (joined to x) and t (joined to y)
-    G.remove_edge(m[0], m[1]); s, t = (tag, 's'), (tag, 't')
-    G.add_edge(m[0], s); G.add_edge(s, x); G.add_edge(m[1], t); G.add_edge(t, y)
+    G.remove_edge(m[0], m[1])
+    G.add_edge(m[0], x); G.add_edge(m[1], y)
     return G
 
 def R2():
@@ -54,14 +54,29 @@ def R2():
 
 # ---------- 2-factors and colourings ----------
 def random_2factor(G, rng):
-    for u, v in G.edges():
-        G[u][v]['w'] = rng.random()
-    M = nx.max_weight_matching(G, maxcardinality=True, weight='w')
-    M = {frozenset(e) for e in M}
-    assert len(M) * 2 == G.number_of_nodes(), "no perfect matching"
-    F2 = nx.Graph([(u, v) for u, v in G.edges() if frozenset((u, v)) not in M])
-    circuits = [list(nx.cycle_basis(F2.subgraph(cc))[0]) for cc in nx.connected_components(F2)]
-    return M, circuits
+    """Random perfect matching (max-weight matching with random weights); returns (M, circuits of G - M)."""
+    while True:
+        for u, v in G.edges():
+            G[u][v]['w'] = rng.random()
+        M = nx.max_weight_matching(G, maxcardinality=True, weight='w')
+        M = {frozenset(e) for e in M}
+        if len(M) * 2 != G.number_of_nodes():
+            continue
+        nbr = {v: [] for v in G.nodes()}
+        for u, v in G.edges():
+            if frozenset((u, v)) not in M:
+                nbr[u].append(v); nbr[v].append(u)
+        if any(len(l) != 2 for l in nbr.values()):
+            continue
+        unseen = set(G.nodes()); circuits = []
+        while unseen:
+            start = next(iter(unseen)); C = [start]; prev, cur = None, start
+            while True:
+                nxt = nbr[cur][0] if nbr[cur][0] != prev else nbr[cur][1]
+                if nxt == start: break
+                C.append(nxt); prev, cur = cur, nxt
+            unseen -= set(C); circuits.append(C)
+        return M, circuits
 
 def circuit_edges(C):
     return [(C[i], C[(i + 1) % len(C)]) for i in range(len(C))]
@@ -149,7 +164,12 @@ def test_graph(G, rng, want_odd=(4, 6), samples=200, max_zero=400, max_flips=64,
 
 if __name__ == "__main__":
     rng = random.Random(1)
-    for name, G in [("Petersen", petersen()), ("J7", flower(7)), ("J9", flower(9)), ("GP(12,3)", gp(12, 3)), ("GP(14,3)", gp(14,3)), ("R2", R2())]:
-        t = time.time()
-        st = test_graph(G, rng, want_odd=(2, 4, 6), samples=300)
+    which = sys.argv[1:] or ["Petersen", "GP(12,3)", "GP(14,3)", "GP(16,3)", "R2", "J7", "J9"]
+    builders = {"Petersen": petersen, "J7": lambda: flower(7), "J9": lambda: flower(9), "J11": lambda: flower(11),
+                "GP(12,3)": lambda: gp(12, 3), "GP(14,3)": lambda: gp(14, 3), "GP(16,3)": lambda: gp(16, 3), "GP(18,3)": lambda: gp(18, 3), "GP(13,3)": lambda: gp(13, 3), "GP(17,3)": lambda: gp(17, 3), "GP(15,4)": lambda: gp(15, 4), "R2": R2}
+    for name in which:
+        G = builders[name](); t = time.time()
+        import os
+        want = tuple(int(x) for x in os.environ.get('ODD', '2,4,6').split(','))
+        st = test_graph(G, rng, want_odd=want, samples=int(os.environ.get('SAMPLES', '300')))
         print(f"{name} (n={G.number_of_nodes()}): " + "; ".join(f"{k} odd: {v[1]}/{v[0]} 2-factors OK, {v[2]}/{v[3]} (2-factor,0-edge) choices OK" for k, v in sorted(st.items())) + f"  [{time.time()-t:.0f}s]", flush=True)
