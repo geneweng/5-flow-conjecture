@@ -89,8 +89,19 @@ for step in range(1, steps + 1):
                 print("FULL KILL FOUND ->", fn, flush=True); break
         else: stale += 1
     else: stale += 1
+    if score >= best and best_state is None or (best_state is not None and score > best_state[3]):
+        best_state = (G, list(zc), dict(ref), score)
     if stale >= RESTART:
-        G, circuits, odd, zc, ref = fresh(); circuit_edges = {frozenset((C[i], C[(i + 1) % len(C)])) for C in circuits for i in range(len(C))}
-        score, det, t, keys = evaluate(G, circuits, zc, ref); stale = 0
-        print(f"  step {step}: restart, score {score}", flush=True)
+        # kick: return to the best state and apply a few random matching swaps (keeps the 2-factor; cyc-6 rechecked)
+        if best_state is not None and rng.random() < 0.7:
+            G, zc, ref, _ = best_state; zc = list(zc); ref = dict(ref)
+            for _ in range(rng.randint(2, 6)):
+                G2 = swap_move(G, circuits, rng, circuit_edges)
+                if G2 is not None and cyclically_6_connected(G2): G = G2
+            score, det, t, keys = evaluate(G, circuits, zc, ref); stale = 0
+            print(f"  step {step}: kick from best, score {score}", flush=True)
+        else:
+            G, circuits, odd, zc, ref = fresh(); circuit_edges = {frozenset((C[i], C[(i + 1) % len(C)])) for C in circuits for i in range(len(C))}
+            score, det, t, keys = evaluate(G, circuits, zc, ref); stale = 0; best_state = None
+            print(f"  step {step}: restart, score {score}", flush=True)
 print(f"done: best {best} in {time.time()-t0:.0f}s", flush=True)
