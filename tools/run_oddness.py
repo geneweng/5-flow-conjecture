@@ -40,6 +40,8 @@ straddle_profiles = {   # MS crossing structure: 4 blocks, odd circuits straddli
     "straddle6A": ([[7, 6], [6], [7, 6], [6], [7, 6], [6]], [(7, 3), None, (7, 3), None, (7, 3), None]),
     "straddle6B": ([[7, 6], [8], [7, 6], [6], [7, 8], [6]], [(7, 3), None, (7, 3), None, (7, 3), None]),
     "straddle6C": ([[7], [6], [7], [8], [7], [6]], [(7, 3), None, (7, 3), None, (7, 3), None]),
+    "six12": ([[7, 6], [12], [7, 6], [12], [7, 6], [12]], [(7, 3), None, (7, 3), None, (7, 3), None]),
+    "six10": ([[7, 8], [10], [7, 8], [10], [7, 8], [10]], [(7, 3), None, (7, 3), None, (7, 3), None]),
     "straddle6D": ([[7, 6], [6], [7, 6], [6], [7, 6], [6]], [(7, 2), None, (7, 4), None, (7, 3), None]),
 }
 profiles.update(straddle_profiles)
@@ -48,7 +50,7 @@ rng = random.Random(11)
 for name in which:
     lengths = profiles[name]
     if name.startswith("straddle"):
-        graphs = generate_straddle(lengths[0], lengths[1], rng, 8)
+        graphs = generate_straddle(lengths[0], lengths[1], rng, int(__import__("os").environ.get("NGRAPHS", "8")))
     elif name.startswith("ring"):
         graphs = generate_rings(lengths, rng, 5)
     else:
@@ -60,7 +62,7 @@ for name in which:
         E = list(G.edges())
         has5 = nz_flow_Z5(n, E)
         zero_space = list(itertools.product(*[range(len(C)) for C in odd]))
-        zero_space = rng.sample(zero_space, min(120, len(zero_space)))
+        zero_space = rng.sample(zero_space, min(int(__import__("os").environ.get("NZERO", "120")), len(zero_space)))
         paths_ok = all_ok = 0
         for zc in zero_space:
             col = canonical_colouring(G, M, circuits, zc)

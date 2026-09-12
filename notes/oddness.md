@@ -67,11 +67,15 @@ So far the fixed-$F_2$, path-recolouring template has not failed on any cyclical
 | $(6,4,1,3,3,\{1,2,3\})$ | 2 | 0 | 0 | 0 | 0 |
 | **min. number of balanced colourings among the 8** | 4 | 4 | 4 | 4 | 6 |
 
+Looking at the 11-cut witnesses concretely (straddle A): $S$ consists of one whole odd circuit together with an arc of each of two other odd circuits, each arc containing that circuit's $z$, and *all seven* matching edges at these 15 vertices leave $S$; the four circuit edges of the cut are the ends of the two arcs, coloured 2 on both sides by the 0-edge placement. So the obstruction is local: three "$z$-neighbourhoods" of the same colour glued by the matching. Moving a 0-edge along one of the two partial circuits changes both which vertex is $z$ and the colour parity of the arc ends, so the 0-edge freedom acts directly on this cut type.
+
 Three things stand out.
 
 1. **The dominant obstruction at oddness 6 is new**: an 11-edge cut with 7 matching edges and 4 colour-2 edges whose side contains exactly one end of each of the three paths, all of the same colour ($k=7=c_1=c_2+q$, tight everywhere). It is impossible at oddness 4 ($q\le2$) and it appears even in random cyclically 6-connected graphs. It forbids exactly the two colourings in which the three ends in $S$ agree, i.e. one of the four classes up to complement.
 2. The MS-type bad 6-cuts $(6,4,2,2,2,\{a,b\})$ do occur, in the straddle rings, for each of the three pairs, and each forbids two of the four classes. The 7-cut and $(6,4,1)$ types are rarer.
-3. In every instance at least 2 of the 4 classes survive. Killing all four would need, e.g., a pair-type 6-cut plus two 11-cuts with different side patterns, or four 11-cuts with the four distinct patterns. Whether cyclic 6-edge-connectivity forbids such combinations is exactly what a proof of (O6) has to show; the 6-block rings (three crossing bad-type 6-cuts) are the test for it.
+3. **Co-occurrence** (`tools/killsets.py`, which records for each instance the set of killed classes and the cut types responsible): in the four-block straddle rings, 1 class is killed in ~30% of instances, 2 classes in ~5%, and in one instance out of 1,080 **3 classes** were killed (only 2 of the 8 colourings balanced). Two 11-cuts with *different* side patterns do coexist in one instance, so there is no "all 11-cuts have the same pattern" lemma to hope for; the combinations seen are 11+11, 11+7, 11+6(pair), 6(pair)+6(pair) and 6+7. On the 6-block rings (`six12`, `six10`, $n=96$–$102$), which contain three crossing bad-type 6-cuts, instances with only 2 balanced colourings appear at a rate of about 1 in 250, and a new type $(6,4,2,4,2,\{a,b\})$ (a 6-cut with four $z$'s inside) shows up.
+
+   In every instance so far at least 1 of the 4 classes survives. Killing all four would need, e.g., a pair-type 6-cut plus two 11-cuts with different side patterns, or four 11-cuts with the four distinct patterns. Whether cyclic 6-edge-connectivity forbids such combinations is exactly what a proof of (O6) has to show; the 6-block rings (three crossing bad-type 6-cuts) are the test for it.
 
 
 ## 5. Plan
