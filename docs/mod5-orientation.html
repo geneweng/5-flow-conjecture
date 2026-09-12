@@ -169,7 +169,35 @@
 </table></div>
 <p>Here <strong>(S1)</strong> is the statement: <em>a multigraph with minimum degree <span class="math inline">\(\ge9\)</span> in which every vertex set <span class="math inline">\(A\)</span> with <span class="math inline">\(|A|,|A^c|\ge 2\)</span> has <span class="math inline">\(d(A)\ge12\)</span> is strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected.</em> It is LTWZ’s hypothesis (ii) with singletons exempted. (S1) would imply that <span class="math inline">\(3G\)</span> is strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected for every cyclically 4-edge-connected cubic <span class="math inline">\(G\)</span>, hence the JLPT conjecture for those graphs and the 5-flow conjecture; so it is not going to be easy, but so far no small counterexample exists, and small counterexamples are exactly what a Cranston–Li style proof would need to list.</p>
 <p>For the record, one modulo 5-orientation of <span class="math inline">\(3P_{10}\)</span> has in-degree-2 set <span class="math inline">\(S=\{0,2,3,8,9\}\)</span> (outer cycle <span class="math inline">\(0..4\)</span>, spokes <span class="math inline">\(i\to i+5\)</span>): <span class="math inline">\(S\)</span> and its complement each induce 2 edges, the cut has 11 edges, and Lemma C’s constraint <span class="math inline">\(5\le 2.5+0.3\cdot 11\)</span> is met with slack <span class="math inline">\(0.8\)</span>.</p>
-<p>Running: random 9-regular multigraphs (<span class="math inline">\(n\le 24\)</span>, pairing model, 8-edge-connected), Markov-chain samples of 9-regular multigraphs with heavy multiplicities (<span class="math inline">\(n=8,10\)</span>), the (S1) test for <span class="math inline">\(n=6\)</span> with degrees in <span class="math inline">\([9,10]\)</span> and sampled <span class="math inline">\(n=7,8\)</span>. Results will be appended below.</p>
+<p>Further results (appended 2026-09-12, later the same day):</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Experiment</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>random 9-regular multigraphs, pairing model, <span class="math inline">\(n\in\{10,\dots,24\}\)</span>, kept if 8-edge-connected: 82,010 graphs (524 with <span class="math inline">\(\lambda=8\)</span>, the rest <span class="math inline">\(\lambda=9\)</span>)</td>
+<td>all have modulo 5-orientations</td>
+</tr>
+<tr>
+<td>Markov-chain samples of 9-regular multigraphs on 8 vertices with heavy multiplicities (up to 5), 8-edge-connected: 142,398 graphs</td>
+<td>all have modulo 5-orientations</td>
+</tr>
+<tr>
+<td><strong>(S1) test</strong>, sampled: 24,792 distinct multigraphs on 7 vertices with degrees in <span class="math inline">\([9,10]\)</span> meeting the cut condition</td>
+<td>all strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected</td>
+</tr>
+</tbody>
+</table></div>
+<p>Still running when this was written: the 10-vertex heavy-multiplicity sampler, the exhaustive (S1) test on 6 vertices with degrees in <span class="math inline">\([9,10]\)</span>, and the sampled (S1) test on 8 vertices; their summaries are appended below when they finish.</p>
+<p><strong>Reading of the evidence.</strong> Nothing so far distinguishes Jaeger’s <span class="math inline">\(p=2\)</span> conjecture from a theorem: no 8-edge-connected 9-regular multigraph without a modulo 5-orientation has turned up among <span class="math inline">\(\sim 2.2\times10^5\)</span> samples including dense, small, high-multiplicity ones, which are the natural place for a counterexample. Likewise (S1), the singletons-exempt version of the LTWZ hypothesis, has no counterexample on up to 7 vertices. Both statements would imply the 5-flow conjecture, so this is evidence, not a route to a proof; but it does say the “troublesome partition” list that a Cranston–Li style argument for general graphs would need is empty at small orders, which is unlike the planar odd-11 case where four exceptional configurations already appear on 2 and 3 vertices.</p>
 <h2 id="next-steps-on-this-route">5. Next steps on this route</h2>
 <ol type="1">
 <li>Finish and record the experiments above; add tripled snarks (all snarks to 36 vertices are known to have 5-flows, so this is only a consistency check of the pipeline).</li>
