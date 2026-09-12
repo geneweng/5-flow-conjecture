@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Route: modulo 5-orientations</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+  <style>
+  :root{--paper:#f6f6f3;--paper2:#ecede8;--ink:#1c1f23;--ink2:#4f5760;--rule:#cfd3cc;--accent:#2b5c85;--accent2:#9a4b2f;--code:#e9ebe6;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}}
+  :root[data-theme="dark"]{--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}
+  html{color-scheme:light dark}
+  body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;padding-block:0 4rem;padding-inline:clamp(16px,4vw,40px);margin:0}
+  .wrap{max-width:46rem;margin:0 auto}
+  header.masthead{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;padding-block:3rem 1.5rem;border-bottom:2px solid var(--ink)}
+  header.masthead h1{font-family:"Source Sans 3","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 .6rem;text-wrap:balance}
+  header.masthead .byline{color:var(--ink2);font-size:.95rem;margin:0;max-width:34rem}
+  .eyebrow{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 .4rem}
+  .petersen{flex:none}
+  .sitenav{font-family:"Source Sans 3",Arial,sans-serif;font-size:.9rem;color:var(--ink2);margin:1rem 0 0}
+.conj{font-size:1.2rem;line-height:1.4;margin:2rem 0;padding:1rem 1.2rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  .conj .lbl{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.3rem}
+  nav.toc{margin:2rem 0 2.5rem;padding:1rem 1.2rem;border:1px solid var(--rule)}
+  nav.toc ol{margin:0;padding-left:1.4rem;columns:2;column-gap:2rem;font-family:"Source Sans 3",Arial,sans-serif;font-size:.95rem;line-height:1.5}
+  nav.toc li{break-inside:avoid;padding:.1rem 0}
+  @media (max-width:520px){nav.toc ol{columns:1}header.masthead{grid-template-columns:1fr}.petersen{width:84px;height:84px}}
+  h2{font-family:"Source Sans 3",Arial,sans-serif;font-weight:700;font-size:1.45rem;line-height:1.2;margin:3rem 0 1rem;padding-top:1rem;border-top:1px solid var(--rule);text-wrap:balance}
+  h3{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:1.08rem;margin:2rem 0 .6rem;text-wrap:balance}
+  p{margin:0 0 1rem}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  blockquote{margin:1.2rem 0;padding:.7rem 1.1rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  blockquote p:last-child{margin-bottom:0}
+  ul,ol{padding-left:1.4rem}li{margin-bottom:.35rem}
+  hr{border:0;height:0;margin:0}
+  .tbl{overflow-x:auto;margin:1.2rem 0}
+  table{border-collapse:collapse;width:100%;font-family:"Source Sans 3",Arial,sans-serif;font-size:.92rem;line-height:1.4;font-variant-numeric:tabular-nums}
+  th{text-align:left;font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--ink);padding:.45rem .6rem .35rem}
+  td{border-bottom:1px solid var(--rule);padding:.45rem .6rem;vertical-align:top}
+  td:first-child{font-weight:600}
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code);padding:.05em .3em;border-radius:2px}
+  strong{font-weight:600}
+  mjx-container[display="true"]{margin:.6rem 0;overflow-x:auto;overflow-y:hidden}
+  section.refs ul{padding-left:1.2rem;font-size:.93rem}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+  </style>
+  </head>
+<body>
+<div class="wrap">
+  <header class="masthead"><div><p class="eyebrow">Working notes · September 2026</p><h1>Route: modulo 5-orientations</h1><p class="byline">Working notes, started 2026-09-12. Companion to `survey/5-flow-survey.md` §6.6 and §9 (route 3). Code in `tools/`.</p></div><svg class="petersen" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Petersen graph"><g stroke="var(--accent)" stroke-width="1.6" fill="none"><line x1="60.0" y1="22.0" x2="98.0" y2="49.6"/><line x1="98.0" y1="49.6" x2="83.5" y2="94.4"/><line x1="83.5" y1="94.4" x2="36.5" y2="94.4"/><line x1="36.5" y1="94.4" x2="22.0" y2="49.6"/><line x1="22.0" y1="49.6" x2="60.0" y2="22.0"/><line x1="60.0" y1="22.0" x2="60.0" y2="44.0"/><line x1="98.0" y1="49.6" x2="77.1" y2="56.4"/><line x1="83.5" y1="94.4" x2="70.6" y2="76.6"/><line x1="36.5" y1="94.4" x2="49.4" y2="76.6"/><line x1="22.0" y1="49.6" x2="42.9" y2="56.4"/><line x1="60.0" y1="44.0" x2="70.6" y2="76.6"/><line x1="77.1" y1="56.4" x2="49.4" y2="76.6"/><line x1="70.6" y1="76.6" x2="42.9" y2="56.4"/><line x1="49.4" y1="76.6" x2="60.0" y2="44.0"/><line x1="42.9" y1="56.4" x2="77.1" y2="56.4"/></g><g fill="var(--ink)"><circle cx="60.0" cy="22.0" r="3"/><circle cx="98.0" cy="49.6" r="3"/><circle cx="83.5" cy="94.4" r="3"/><circle cx="36.5" cy="94.4" r="3"/><circle cx="22.0" cy="49.6" r="3"/><circle cx="60.0" cy="44.0" r="3"/><circle cx="77.1" cy="56.4" r="3"/><circle cx="70.6" cy="76.6" r="3"/><circle cx="49.4" cy="76.6" r="3"/><circle cx="42.9" cy="56.4" r="3"/></g></svg></header>
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#why-this-route">Why this route</a></li><li><a href="#the-ltwz-machinery-in-alpha-form">The LTWZ machinery in <span class="math inline">\(\alpha\)</span>-form</a></li><li><a href="#where-9-regular-graphs-break-it-exactly">Where 9-regular graphs break it, exactly</a></li><li><a href="#a-discrepancy-reformulation-of-9-regular-modulo-5-orientations">A discrepancy reformulation of 9-regular modulo 5-orientations</a></li><li><a href="#experiments-tools">Experiments (tools/)</a></li><li><a href="#next-steps-on-this-route">Next steps on this route</a></li><li><a href="#references">References</a></li></ol></nav>
+  <h2 id="why-this-route">0. Why this route</h2>
+<p>A <strong>modulo <span class="math inline">\(k\)</span>-orientation</strong> of a graph is an orientation with <span class="math inline">\(d^+(v)\equiv d^-(v) \pmod k\)</span> at every vertex. For odd <span class="math inline">\(k=2p+1\)</span> this is the same as a circular <span class="math inline">\((2+\tfrac1p)\)</span>-flow, and as a nowhere-zero <span class="math inline">\(\mathbb Z_k\)</span>-flow using only the values <span class="math inline">\(\pm1\)</span> (Zhang, Thm 9.2.3). Jaeger’s circular flow conjecture (1984) asserted that <span class="math inline">\(4p\)</span>-edge-connected graphs have modulo <span class="math inline">\((2p+1)\)</span>-orientations; Han, Li, Wu and Zhang (2018) refuted it for <span class="math inline">\(p\ge 3\)</span>, and the cases <span class="math inline">\(p=1\)</span> (the 3-flow conjecture) and <span class="math inline">\(p=2\)</span> are open. The best general theorem is Lovász–Thomassen–Wu–Zhang (2013): <span class="math inline">\((3k-3)\)</span>-edge-connected graphs have modulo <span class="math inline">\(k\)</span>-orientations, so <strong>12-edge-connected graphs have modulo 5-orientations.</strong></p>
+<p>The connection to the 5-flow conjecture is tighter than “implies”:</p>
+<blockquote>
+<p><strong>Lemma A (tripling).</strong> For any graph <span class="math inline">\(G\)</span> let <span class="math inline">\(3G\)</span> be <span class="math inline">\(G\)</span> with every edge replaced by three parallel edges. Then <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-flow <strong>if and only if</strong> <span class="math inline">\(3G\)</span> has a modulo 5-orientation.</p>
+<p><em>Proof.</em> Orient the three copies of <span class="math inline">\(e=uv\)</span>; the net contribution at <span class="math inline">\(u\)</span> is <span class="math inline">\((\#\text{out}-\#\text{in})\in\{3,1,-1,-3\}\)</span>, which mod 5 runs over <span class="math inline">\(\{3,1,4,2\}=\mathbb Z_5\setminus\{0\}\)</span> exactly once each. So modulo 5-orientations of <span class="math inline">\(3G\)</span> correspond bijectively (per edge) to nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-valued functions on <span class="math inline">\(E(G)\)</span> with the same balance condition, i.e. to nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-flows of <span class="math inline">\(G\)</span>. <span class="math inline">\(\square\)</span></p>
+</blockquote>
+<p>Consequences.</p>
+<ul>
+<li><strong>5FC <span class="math inline">\(\Leftrightarrow\)</span> every <span class="math inline">\(3G\)</span> with <span class="math inline">\(G\)</span> bridgeless has a modulo 5-orientation.</strong> By the survey’s ledger it suffices to take <span class="math inline">\(G\)</span> a cyclically 6-edge-connected cubic graph of girth <span class="math inline">\(\ge 11\)</span> and oddness <span class="math inline">\(\ge 6\)</span>; then <span class="math inline">\(3G\)</span> is 9-regular and 9-edge-connected.</li>
+<li>Hence (Jaeger) <em>every 9-edge-connected graph has a modulo 5-orientation</em> <span class="math inline">\(\Rightarrow\)</span> 5FC, and a fortiori the open <span class="math inline">\(p=2\)</span> case (8-edge-connected) <span class="math inline">\(\Rightarrow\)</span> 5FC.</li>
+<li>The same argument with boundaries: <span class="math inline">\(G\)</span> is <span class="math inline">\(\mathbb Z_5\)</span>-connected (JLPT) iff <span class="math inline">\(3G\)</span> is <em>strongly</em> <span class="math inline">\(\mathbb Z_5\)</span>-connected (every zero-sum <span class="math inline">\(\beta\colon V\to\mathbb Z_5\)</span> is realised as <span class="math inline">\(d^+-d^-\)</span> by some orientation). So the JLPT conjecture “3-edge-connected <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(\mathbb Z_5\)</span>-connected” is the statement that every <span class="math inline">\(3G\)</span>, <span class="math inline">\(G\)</span> 3-edge-connected, is strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected.</li>
+<li>A nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-flow of a cubic graph is the same as an assignment of integer weights <span class="math inline">\(\pm1,\pm3\)</span> to oriented edges such that every vertex has signed sum exactly <span class="math inline">\(\pm5\)</span> (the three weights at a vertex are <span class="math inline">\(\{3,1,1\}\)</span> or <span class="math inline">\(\{3,3,-1\}\)</span> up to a global sign).</li>
+</ul>
+<p>So the route is: understand exactly why the LTWZ induction needs 12, and whether the special structure of <span class="math inline">\(3G\)</span> (or of 9-regular graphs whose only small odd cuts are trivial) lets one push through at 9.</p>
+<h2 id="the-ltwz-machinery-in-alpha-form">1. The LTWZ machinery in <span class="math inline">\(\alpha\)</span>-form</h2>
+<p>I could not download the LTWZ paper (the WVU server refuses connections); the following is the refined presentation in Hasanvand, <em>Modulo orientations with bounded out-degrees</em> (arXiv:1702.07039, Thm 3.3), which reproduces the LTWZ argument with a set function <span class="math inline">\(\alpha\)</span> (<span class="math inline">\(2\alpha=\tau_{\text{LTWZ}}\)</span> for odd <span class="math inline">\(k\)</span>).</p>
+<p><strong>Setup.</strong> <span class="math inline">\(k\ge3\)</span>, <span class="math inline">\(p\colon V(G)\to\mathbb Z_k\)</span> a prescription of out-degrees with <span class="math inline">\(\sum_v p(v)\equiv|E|\)</span>. For a vertex set <span class="math inline">\(A\)</span> put <span class="math inline">\(p(A)=\sum_{v\in A}p(v)-e(A)\)</span> and let <span class="math inline">\(\alpha(A)\in\{0,\pm\tfrac12,\dots,\pm\tfrac k2\}\)</span> be the rational with <span class="math inline">\(\alpha(A)\equiv p(A)-d(A)/2\pmod k\)</span>. So <span class="math inline">\(|\alpha(A)|\)</span> measures how far the prescribed net out-flow of <span class="math inline">\(A\)</span> is from the balanced value <span class="math inline">\(d(A)/2\)</span>, on a circle of circumference <span class="math inline">\(k\)</span>. Properties: <span class="math inline">\(\alpha(A\cup B)\equiv\alpha(A)+\alpha(B)\)</span> for disjoint <span class="math inline">\(A,B\)</span>; <span class="math inline">\(|\alpha(A)|=|\alpha(A^c)|\)</span>; <span class="math inline">\(d(A)-2|\alpha(A)|\)</span> is an even integer; lifting two edges at a vertex does not change <span class="math inline">\(|\alpha|\)</span> of any set.</p>
+<blockquote>
+<p><strong>Theorem (LTWZ; Hasanvand Thm 3.3).</strong> Let <span class="math inline">\(z_0\in V(G)\)</span> carry a pre-orientation of its incident edges with <span class="math inline">\(d^+(z_0)\equiv p(z_0)\)</span>, and let <span class="math inline">\(v_0\)</span> be a minimum-degree vertex with <span class="math inline">\(\alpha(v_0)=0\)</span> if one exists. Suppose (i) <span class="math inline">\(d(z_0)\le 2k-2+2|\alpha(z_0)|\)</span>, and (ii) <span class="math inline">\(d(A)\ge 2k-2+2|\alpha(A)|\)</span> for every <span class="math inline">\(\emptyset\ne A\subsetneq V\setminus z_0\)</span>, <span class="math inline">\(A\ne\{v_0\}\)</span>. Then the pre-orientation extends to a <span class="math inline">\(p\)</span>-orientation of <span class="math inline">\(G\)</span> with <span class="math inline">\(|d^+(v)-d(v)/2|\le k-1+|\alpha(v)|\)</span> for all <span class="math inline">\(v\)</span>.</p>
+</blockquote>
+<p>Since <span class="math inline">\(|\alpha|\le k/2\)</span> and <span class="math inline">\(|\alpha(A)|=k/2\)</span> forces <span class="math inline">\(d(A)\equiv k\pmod 2\)</span>, hypothesis (ii) holds whenever <span class="math inline">\(G\)</span> is <span class="math inline">\((3k-3)\)</span>-edge-connected; that is the source of 12 for <span class="math inline">\(k=5\)</span>.</p>
+<p><strong>Skeleton of the proof</strong> (all of it is needed to see where 9-regular graphs break it). Take a counterexample <span class="math inline">\((G,p,z_0)\)</span> minimising <span class="math inline">\(|V|+|E(G-z_0)|\)</span>.</p>
+<ol type="1">
+<li><em>Claim 1.</em> Every <span class="math inline">\(A\subsetneq V\setminus z_0\)</span> with <span class="math inline">\(|A|\ge2\)</span> has <span class="math inline">\(d(A)\ge 2k+2|\alpha(A)|\)</span> (otherwise contract <span class="math inline">\(A\)</span>, extend, then contract <span class="math inline">\(A^c\)</span> into a new <span class="math inline">\(z_0\)</span> and extend inside <span class="math inline">\(A\)</span>).</li>
+<li><em>Claim 2.</em> No vertex other than <span class="math inline">\(z_0\)</span> has <span class="math inline">\(\alpha=0\)</span> (lift a pair of edges at it).</li>
+<li><em>Claim 3.</em> <span class="math inline">\(G-z_0\)</span> connected, <span class="math inline">\(d(z_0)\ge k\)</span>.</li>
+<li><em>Claim 3.A.</em> <strong>Every vertex <span class="math inline">\(v\ne z_0\)</span> has <span class="math inline">\(d(v)=2k-2+2|\alpha(v)|\)</span> exactly</strong> (otherwise lift a pair of edges at <span class="math inline">\(v\)</span>; Claim 1 keeps (ii) true).</li>
+<li><em>Claim 4/5.</em> All <span class="math inline">\(\alpha(v)\)</span>, <span class="math inline">\(v\ne z_0\)</span>, have the same sign and <span class="math inline">\(0&lt;|\alpha(v)|&lt;k/2\)</span> (delete an edge <span class="math inline">\(xy\)</span> with <span class="math inline">\(\alpha(x)&gt;0&gt;\alpha(y)\)</span>; the deletion lowers <span class="math inline">\(|\alpha|\)</span> at both ends by <span class="math inline">\(\tfrac12\)</span> and Claim 1 absorbs the loss on larger sets).</li>
+<li><em>Claim 6 and the final step.</em> All edges at <span class="math inline">\(z_0\)</span> point away, <span class="math inline">\(d(z_0)=k+p(z_0)\)</span>; replace one arc <span class="math inline">\(z_0x\)</span> by <span class="math inline">\(k-1\)</span> parallel arcs <span class="math inline">\(xz_0\)</span>, which flips the sign of <span class="math inline">\(\alpha(x)\)</span> and contradicts Claim 5.</li>
+</ol>
+<h2 id="where-9-regular-graphs-break-it-exactly">2. Where 9-regular graphs break it, exactly</h2>
+<p>For a <strong>modulo orientation</strong> (<span class="math inline">\(\beta\equiv0\)</span>) the prescription is <span class="math inline">\(p(v)\equiv d(v)\cdot\tfrac{k+1}2\)</span>, so <span class="math display">\[\alpha(v)\equiv d(v)\cdot\tfrac k2\pmod k=\begin{cases}0,&amp; d(v)\text{ even},\\ \pm k/2,&amp; d(v)\text{ odd},\end{cases}\qquad \alpha(A)=\begin{cases}0,&amp; d(A)\text{ even},\\ \pm k/2,&amp; d(A)\text{ odd}.\end{cases}\]</span></p>
+<p>So for <span class="math inline">\(k=5\)</span> hypothesis (ii) reads: <strong>even cuts need <span class="math inline">\(d(A)\ge 8\)</span>, odd cuts need <span class="math inline">\(d(A)\ge 13\)</span></strong>, and (Hasanvand §3.3, generalising LTWZ Thm 4.12) sets with <span class="math inline">\(\alpha(A)=0\)</span> can be dropped entirely: <em>odd-edge-connectivity <span class="math inline">\(\ge13\)</span> alone gives a modulo 5-orientation.</em> (Cranston–Li 2018: odd-11 suffices for planar graphs; Cranston–Li–Su–Wang–Wei 2026: 10-edge-connected planar graphs are even strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected.)</p>
+<p>Now take <span class="math inline">\(G\)</span> a cyclically 6-edge-connected, 3-connected cubic graph and <span class="math inline">\(H=3G\)</span>. Cuts of <span class="math inline">\(H\)</span> are triples of cuts of <span class="math inline">\(G\)</span>; <span class="math inline">\(d_G(A)\equiv|A|\pmod 2\)</span>; and in <span class="math inline">\(G\)</span> the non-cyclic cuts are those with a tree side, of size <span class="math inline">\(|T|+2\)</span>. Hence the odd cuts of <span class="math inline">\(H\)</span> have sizes</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><span class="math inline">\(d_H(A)\)</span></th>
+<th>what <span class="math inline">\(A\)</span> is in <span class="math inline">\(G\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>a single vertex</td>
+</tr>
+<tr>
+<td>15</td>
+<td>a 3-vertex path (tree side of a 5-cut)</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\ge 21\)</span></td>
+<td>cyclic odd cuts (size <span class="math inline">\(\ge7\)</span> by cyclic 6-connectivity)</td>
+</tr>
+</tbody>
+</table></div>
+<p>and the even cuts have size <span class="math inline">\(\ge 12\)</span> (an edge, <span class="math inline">\(d_G=4\)</span>) or <span class="math inline">\(\ge18\)</span> (cyclic). Therefore</p>
+<blockquote>
+<p><strong>Observation B.</strong> For <span class="math inline">\(H=3G\)</span> with <span class="math inline">\(G\)</span> a cyclically 6-edge-connected cubic graph, <em>every</em> non-singleton vertex set satisfies the LTWZ hypothesis (ii), and even the strengthened Claim-1 level (<span class="math inline">\(d(A)\ge 2k+2|\alpha(A)|\)</span>, i.e. <span class="math inline">\(\ge10\)</span> even, <span class="math inline">\(\ge15\)</span> odd). <strong>The only violations are the singletons</strong>: <span class="math inline">\(d(v)=9\)</span> where the induction wants <span class="math inline">\(2k-2+2|\alpha(v)|=13\)</span>.</p>
+</blockquote>
+<p>So on the graphs that matter the LTWZ method is short by exactly 4 at every vertex and by nothing anywhere else. Claim 3.A shows this is intrinsic to the induction: minimal counterexamples are driven to have every vertex at degree exactly <span class="math inline">\(13\)</span> (for <span class="math inline">\(|\alpha|=5/2\)</span>), and the lifting/deletion steps (Claims 2, 3.A, 4) all consume degree at a vertex. The same phenomenon at <span class="math inline">\(k=3\)</span>: 5-regular graphs have <span class="math inline">\(|\alpha(v)|=3/2\)</span> and LTWZ wants <span class="math inline">\(d(v)\ge7\)</span>; the 3-flow conjecture lives exactly in that gap of 2. For <span class="math inline">\(k=5\)</span> the gap is 4, but the graphs <span class="math inline">\(3G\)</span> have far more slack on non-trivial cuts than the 5-regular graphs of the 3-flow problem.</p>
+<p><strong>A sharper sub-target.</strong></p>
+<blockquote>
+<p><strong>(T1)</strong> Every 9-regular graph in which every odd cut other than a singleton has <span class="math inline">\(\ge15\)</span> edges and every even cut has <span class="math inline">\(\ge 10\)</span> (or 12) edges admits a modulo 5-orientation.</p>
+</blockquote>
+<p>(T1) implies the 5-flow conjecture (apply it to <span class="math inline">\(3G\)</span>). It is strictly stronger, since it also covers non-tripled 9-regular graphs; random 9-regular graphs satisfy its hypothesis a.a.s. and do have modulo 5-orientations a.a.s. (Delcourt–Huq–Prałat 2025), so there is no cheap random counterexample. A counterexample to (T1) that is not of the form <span class="math inline">\(3G\)</span> would be a counterexample to Jaeger’s conjecture for <span class="math inline">\(p=2\)</span>, which would itself be new.</p>
+<h2 id="a-discrepancy-reformulation-of-9-regular-modulo-5-orientations">3. A discrepancy reformulation of 9-regular modulo 5-orientations</h2>
+<p>A 9-regular graph has a modulo 5-orientation iff it has an orientation with every in-degree in <span class="math inline">\(\{2,7\}\)</span>. Let <span class="math inline">\(S\)</span> be the set of in-degree-2 vertices; counting edges gives <span class="math inline">\(|S|=n/2\)</span>. By Hakimi’s orientation theorem such an orientation exists iff <span class="math inline">\(e(X)\le 2|X\cap S|+7|X\setminus S|\)</span> for every <span class="math inline">\(X\subseteq V\)</span>. Writing <span class="math inline">\(e(X)=(9|X|-d(X))/2\)</span> this becomes:</p>
+<blockquote>
+<p><strong>Lemma C.</strong> A 9-regular graph <span class="math inline">\(H\)</span> has a modulo 5-orientation iff there is <span class="math inline">\(S\subseteq V\)</span> with <span class="math inline">\(|S|=n/2\)</span> such that <span class="math display">\[\Bigl|\,|X\cap S|-\tfrac{|X|}{2}\,\Bigr|\le \frac{d(X)}{10}\qquad\text{for every } X\subseteq V.\]</span> (The lower bound follows from the upper bound applied to <span class="math inline">\(V\setminus X\)</span>.) The constraint is vacuous unless <span class="math inline">\(d(X)&lt;5|X|\)</span>, i.e. unless <span class="math inline">\(X\)</span> induces average degree <span class="math inline">\(&gt;4\)</span>.</p>
+</blockquote>
+<p>For <span class="math inline">\((4p+1)\)</span>-regular graphs and modulo <span class="math inline">\((2p+1)\)</span> the same computation gives tolerance <span class="math inline">\(d(X)/(2(2p+1))\)</span>; for <span class="math inline">\(k=3\)</span> it is <span class="math inline">\(d(X)/6\)</span>.</p>
+<p>Two readings:</p>
+<ul>
+<li><strong>Jaeger <span class="math inline">\(p=2\)</span> is tight in an explicit way.</strong> In an 8-edge-connected 9-regular graph, an 8-cut <span class="math inline">\(X\)</span> (necessarily <span class="math inline">\(|X|\)</span> even) must be split <em>exactly</em> evenly by <span class="math inline">\(S\)</span>; a 9-cut (odd <span class="math inline">\(|X|\)</span>) must be split as evenly as an odd set can be. A counterexample to Jaeger <span class="math inline">\(p=2\)</span> is a 9-regular 8-edge-connected multigraph whose family of 8- and 9-cuts admits no simultaneous exact balancing by a half-set. This is a concrete finite search problem (see §5).</li>
+<li><strong>For <span class="math inline">\(3G\)</span></strong>, <span class="math inline">\(d_H(X)=3d_G(X)\)</span>, so the condition is <span class="math inline">\(\bigl||X\cap S|-|X|/2\bigr|\le 0.3\,d_G(X)\)</span>: a cyclic 6-cut of <span class="math inline">\(G\)</span> may be unbalanced by at most 1, a 7-, 8- or 9-cut by at most 2, and so on. <strong>The 5-flow conjecture says: every cyclically 6-edge-connected cubic graph has a half-set <span class="math inline">\(S\)</span> that is within <span class="math inline">\(0.3\,d_G(X)\)</span> of balanced on every vertex set <span class="math inline">\(X\)</span>.</strong> Sparse-cut large sets are the danger (a random half-set deviates by <span class="math inline">\(\sim\sqrt{|X|}/2\)</span>); expanders are easy.</li>
+</ul>
+<h2 id="experiments-tools">4. Experiments (tools/)</h2>
+<p><code>mod5.py</code> encodes “<span class="math inline">\((\mathbb Z_k,\beta)\)</span>-orientation exists” as CNF (a mod-<span class="math inline">\(k\)</span> counter per vertex) and solves it with CaDiCaL via python-sat. <code>z5conn.py</code> decides <span class="math inline">\(\mathbb Z_k\)</span>-connectivity of small graphs exactly, as a Minkowski sum over <span class="math inline">\(\mathbb Z_k^V\)</span> (feasible for <span class="math inline">\(k=5\)</span>, <span class="math inline">\(|V|\le12\)</span>).</p>
+<p>Sanity checks (all as expected): Petersen has a nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-flow via Lemma A and no nowhere-zero <span class="math inline">\(\mathbb Z_3\)</span>-flow; <span class="math inline">\(K_{3,3}\)</span> has one; <span class="math inline">\(aK_2\)</span> is strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected iff <span class="math inline">\(a\ge4\)</span>; <span class="math inline">\(T_{2,2,3}\)</span> and <span class="math inline">\(T_{1,3,3}\)</span> fail with the same bad boundaries as in Cranston–Li; <span class="math inline">\(K_2\)</span> and <span class="math inline">\(C_5\)</span> are not <span class="math inline">\(\mathbb Z_5\)</span>-connected.</p>
+<p>Results so far (2026-09-12):</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Experiment</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\mathbb Z_5\)</span>-connectivity of <span class="math inline">\(K_4\)</span>, <span class="math inline">\(K_{3,3}\)</span>, prism, cube, <strong>Petersen</strong> (exact)</td>
+<td>all <span class="math inline">\(\mathbb Z_5\)</span>-connected (and <span class="math inline">\(\mathbb Z_6\)</span>-connected); <span class="math inline">\(K_2\)</span>, <span class="math inline">\(C_5\)</span> correctly rejected</td>
+</tr>
+<tr>
+<td>all simple 9-regular graphs on 10, 12, 14 vertices (1, 9, 88,193 graphs)</td>
+<td>all have modulo 5-orientations</td>
+</tr>
+<tr>
+<td>all loopless 9-regular multigraphs on 4 and 6 vertices with <span class="math inline">\(\lambda\ge8\)</span> (6 and 453 graphs up to a degree-sequence invariant)</td>
+<td>all have modulo 5-orientations</td>
+</tr>
+<tr>
+<td>tripled flower snarks <span class="math inline">\(3J_k\)</span>, <span class="math inline">\(k=5,\dots,21\)</span> (up to 84 vertices)</td>
+<td>modulo 5-orientations found in <span class="math inline">\(&lt;0.05\)</span> s each; no <span class="math inline">\(\mathbb Z_3\)</span>-flow, as expected</td>
+</tr>
+<tr>
+<td><strong>(S1) test</strong>, exhaustive: multigraphs with degrees in <span class="math inline">\([9,9]\)</span> (<span class="math inline">\(n=4,6\)</span>), <span class="math inline">\([9,11]\)</span> (<span class="math inline">\(n=4\)</span>), <span class="math inline">\([9,10]\)</span> (<span class="math inline">\(n=5\)</span>), every set <span class="math inline">\(A\)</span> with <span class="math inline">\(|A|,|A^c|\ge2\)</span> having <span class="math inline">\(d(A)\ge12\)</span></td>
+<td>all strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected (1, 22, 31, 31 graphs)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Here <strong>(S1)</strong> is the statement: <em>a multigraph with minimum degree <span class="math inline">\(\ge9\)</span> in which every vertex set <span class="math inline">\(A\)</span> with <span class="math inline">\(|A|,|A^c|\ge 2\)</span> has <span class="math inline">\(d(A)\ge12\)</span> is strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected.</em> It is LTWZ’s hypothesis (ii) with singletons exempted. (S1) would imply that <span class="math inline">\(3G\)</span> is strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected for every cyclically 4-edge-connected cubic <span class="math inline">\(G\)</span>, hence the JLPT conjecture for those graphs and the 5-flow conjecture; so it is not going to be easy, but so far no small counterexample exists, and small counterexamples are exactly what a Cranston–Li style proof would need to list.</p>
+<p>For the record, one modulo 5-orientation of <span class="math inline">\(3P_{10}\)</span> has in-degree-2 set <span class="math inline">\(S=\{0,2,3,8,9\}\)</span> (outer cycle <span class="math inline">\(0..4\)</span>, spokes <span class="math inline">\(i\to i+5\)</span>): <span class="math inline">\(S\)</span> and its complement each induce 2 edges, the cut has 11 edges, and Lemma C’s constraint <span class="math inline">\(5\le 2.5+0.3\cdot 11\)</span> is met with slack <span class="math inline">\(0.8\)</span>.</p>
+<p>Running: random 9-regular multigraphs (<span class="math inline">\(n\le 24\)</span>, pairing model, 8-edge-connected), Markov-chain samples of 9-regular multigraphs with heavy multiplicities (<span class="math inline">\(n=8,10\)</span>), the (S1) test for <span class="math inline">\(n=6\)</span> with degrees in <span class="math inline">\([9,10]\)</span> and sampled <span class="math inline">\(n=7,8\)</span>. Results will be appended below.</p>
+<h2 id="next-steps-on-this-route">5. Next steps on this route</h2>
+<ol type="1">
+<li>Finish and record the experiments above; add tripled snarks (all snarks to 36 vertices are known to have 5-flows, so this is only a consistency check of the pipeline).</li>
+<li><strong>Targeted search for a <span class="math inline">\(p=2\)</span> counterexample</strong> using Lemma C: build 9-regular 8-edge-connected multigraphs with many crossing 8-cuts (e.g. blow-ups of small base graphs with parallel classes of size 4 and 8-edge “necks”) and test with the SAT encoding. Either a counterexample (new: Jaeger <span class="math inline">\(p=2\)</span> false) or a family of hard positive instances that show what a proof must handle.</li>
+<li><strong>Attack (T1) theoretically.</strong> The induction has to survive vertices of degree <span class="math inline">\(2k-1\)</span> with <span class="math inline">\(|\alpha|=k/2\)</span>. Ideas to try, in order:
+<ul>
+<li>Find a pre-orientation/lifting step that trades the surplus on non-trivial odd cuts (<span class="math inline">\(\ge15\)</span> vs <span class="math inline">\(13\)</span>) for the deficit at singletons; Claim 1 shows contraction of any <span class="math inline">\(A\)</span> with <span class="math inline">\(|A|\ge2\)</span> is “free” on <span class="math inline">\(3G\)</span>, so a counterexample to (T1) restricted to <span class="math inline">\(3G\)</span> would have to be minimal in a very strong sense.</li>
+<li>Work on the Hakimi form of Lemma C directly: choose <span class="math inline">\(S\)</span> greedily/probabilistically on <span class="math inline">\(G\)</span> (cubic), and analyse violated sets <span class="math inline">\(X\)</span> as an uncrossing family; the constraint is only active on sets with <span class="math inline">\(d_G(X) &lt; \tfrac{10}{3}\cdot\)</span> deviation, i.e. sparse cuts, which in a cyclically 6-edge-connected graph are few.</li>
+<li>Compare with what Cranston–Li do for planar graphs at odd-11: their proof gets from 13 down to 11 by an explicit list of “troublesome partitions” plus discharging; the analogous non-planar list would be the first thing to compute (small 9-regular multigraphs that are not strongly <span class="math inline">\(\mathbb Z_5\)</span>-connected, <code>mod5.strongly_connected</code>).</li>
+</ul></li>
+<li>Obtain the LTWZ and Han–Li–Wu–Zhang papers (WVU server was down); check how the <span class="math inline">\(p\ge3\)</span> counterexamples interact with Lemma C’s tolerance <span class="math inline">\(d(X)/(2(2p+1))\)</span> and why the construction does not descend to <span class="math inline">\(p=2\)</span>.</li>
+</ol>
+<h2 id="references">References</h2>
+<p>See the survey bibliography; additionally: M. Hasanvand, Modulo orientations with bounded out-degrees, arXiv:1702.07039; D. W. Cranston, J. Li, Circular flows in planar graphs, arXiv:1812.09833; D. W. Cranston, J. Li, B. Su, Z. Wang, C. Wei, Orientations of 10-edge-connected planar multigraphs and applications, arXiv:2603.24292; J. Li, B. Su, Z. Wang, C. Wei, Characterization of strongly <span class="math inline">\(\mathbb Z_\ell\)</span>-connected graphs of small order, arXiv:2603.21591; M. Delcourt, R. Huq, P. Prałat, Almost all 9-regular graphs have a modulo-5 orientation, arXiv:2210.12103.</p>
+
+  </div>
+</body>
+</html>
