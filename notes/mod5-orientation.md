@@ -113,7 +113,10 @@ Further results (appended 2026-09-12, later the same day):
 | Markov-chain samples of 9-regular multigraphs on 8 vertices with heavy multiplicities (up to 5), 8-edge-connected: 142,398 graphs | all have modulo 5-orientations |
 | **(S1) test**, sampled: 24,792 distinct multigraphs on 7 vertices with degrees in $[9,10]$ meeting the cut condition | all strongly $\mathbb Z_5$-connected |
 
-Still running when this was written: the 10-vertex heavy-multiplicity sampler, the exhaustive (S1) test on 6 vertices with degrees in $[9,10]$, and the sampled (S1) test on 8 vertices; their summaries are appended below when they finish.
+| **(S1) test**, exhaustive: 900 multigraphs on 6 vertices with degrees in $[9,10]$ meeting the cut condition | all strongly $\mathbb Z_5$-connected |
+| **(S1) test**, sampled: 8,417 distinct 9-regular multigraphs on 8 vertices meeting the cut condition | all strongly $\mathbb Z_5$-connected |
+
+(The 10-vertex heavy-multiplicity sampler is appended below when it finishes.)
 
 **Reading of the evidence.** Nothing so far distinguishes Jaeger's $p=2$ conjecture from a theorem: no 8-edge-connected 9-regular multigraph without a modulo 5-orientation has turned up among $\sim 2.2\times10^5$ samples including dense, small, high-multiplicity ones, which are the natural place for a counterexample. Likewise (S1), the singletons-exempt version of the LTWZ hypothesis, has no counterexample on up to 7 vertices. Both statements would imply the 5-flow conjecture, so this is evidence, not a route to a proof; but it does say the "troublesome partition" list that a Cranston–Li style argument for general graphs would need is empty at small orders, which is unlike the planar odd-11 case where four exceptional configurations already appear on 2 and 3 vertices.
 
