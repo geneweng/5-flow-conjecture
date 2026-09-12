@@ -1,2 +1,5 @@
 .DS_Store
 book/*.pdf
+tools/*.log
+tools/__pycache__/
+tools/nohup.out
