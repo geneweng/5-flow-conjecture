@@ -85,7 +85,9 @@ Three things stand out.
 2. The MS-type bad 6-cuts $(6,4,2,2,2,\{a,b\})$ do occur, in the straddle rings, for each of the three pairs, and each forbids two of the four classes. The 7-cut and $(6,4,1)$ types are rarer.
 3. **Co-occurrence** (`tools/killsets.py`, which records for each instance the set of killed classes and the cut types responsible): in the four-block straddle rings, 1 class is killed in ~30% of instances, 2 classes in ~5%, and in one instance out of 1,080 **3 classes** were killed (only 2 of the 8 colourings balanced). Two 11-cuts with *different* side patterns do coexist in one instance, so there is no "all 11-cuts have the same pattern" lemma to hope for; the combinations seen are 11+11, 11+7, 11+6(pair), 6(pair)+6(pair) and 6+7. On the 6-block rings (`six12`, `six10`, $n=96$–$102$), which contain three crossing bad-type 6-cuts, instances with only 2 balanced colourings appear at a rate of about 1 in 250, and a new type $(6,4,2,4,2,\{a,b\})$ (a 6-cut with four $z$'s inside) shows up.
 
-   In every instance so far at least 1 of the 4 classes survives. Killing all four would need, e.g., a pair-type 6-cut plus two 11-cuts with different side patterns, or four 11-cuts with the four distinct patterns. Whether cyclic 6-edge-connectivity forbids such combinations is exactly what a proof of (O6) has to show; the 6-block rings (three crossing bad-type 6-cuts) are the test for it.
+   In every instance so far at least 1 of the 4 classes survives.
+
+4. **Full-method run on the 6-block rings** (`six12`, `six10`; 32 graphs, 250 0-edge choices each = 8,000 instances): path recolourings alone always produced a balanced partition. A second seed with the same profiles plus the four-block rings is appended below. Killing all four would need, e.g., a pair-type 6-cut plus two 11-cuts with different side patterns, or four 11-cuts with the four distinct patterns. Whether cyclic 6-edge-connectivity forbids such combinations is exactly what a proof of (O6) has to show; the 6-block rings (three crossing bad-type 6-cuts) are the test for it.
 
 
 ## 5. Plan

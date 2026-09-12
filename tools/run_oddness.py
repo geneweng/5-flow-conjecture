@@ -46,7 +46,7 @@ straddle_profiles = {   # MS crossing structure: 4 blocks, odd circuits straddli
 }
 profiles.update(straddle_profiles)
 which = sys.argv[1:] or list(profiles)
-rng = random.Random(11)
+rng = random.Random(int(__import__('os').environ.get('SEED', '11')))
 for name in which:
     lengths = profiles[name]
     if isinstance(lengths, tuple):
