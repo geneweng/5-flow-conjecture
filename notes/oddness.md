@@ -87,7 +87,9 @@ Three things stand out.
 
    In every instance so far at least 1 of the 4 classes survives.
 
-4. **Full-method run on the 6-block rings** (`six12`, `six10`; 32 graphs, 250 0-edge choices each = 8,000 instances): path recolourings alone always produced a balanced partition. A second seed with the same profiles plus the four-block rings is appended below. Killing all four would need, e.g., a pair-type 6-cut plus two 11-cuts with different side patterns, or four 11-cuts with the four distinct patterns. Whether cyclic 6-edge-connectivity forbids such combinations is exactly what a proof of (O6) has to show; the 6-block rings (three crossing bad-type 6-cuts) are the test for it.
+4. **Full-method run on the 6-block rings** (`six12`, `six10`; 32 graphs, 250 0-edge choices each = 8,000 instances): path recolourings alone always produced a balanced partition. A second seed (`SEED=23`) over `six12`, `six10`, `straddleA`, `straddleC` (64 graphs, 16,000 instances) gave the same: no instance in which all 8 path colourings fail.
+
+**Summary of the evidence for the plan in §5:** outcome (a) is what the data supports so far: on every cyclically 6-connected test graph, for every planted 6-odd 2-factor and 0-edge choice tried (about 35,000 instances), some recolouring of the three paths gives a balanced valuation, even though up to three of the four colouring classes can be killed. So the fixed-$F_2$ template is not refuted at oddness 6, and the theoretical task is to prove that the five bad-cut types cannot jointly kill all four classes. Killing all four would need, e.g., a pair-type 6-cut plus two 11-cuts with different side patterns, or four 11-cuts with the four distinct patterns. Whether cyclic 6-edge-connectivity forbids such combinations is exactly what a proof of (O6) has to show; the 6-block rings (three crossing bad-type 6-cuts) are the test for it.
 
 
 ## 5. Plan
