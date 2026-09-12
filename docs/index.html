@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutte's 5-Flow Conjecture</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<style>
+:root{--paper:#f6f6f3;--paper2:#ecede8;--ink:#1c1f23;--ink2:#4f5760;--rule:#cfd3cc;--accent:#2b5c85;--accent2:#9a4b2f;--code:#e9ebe6;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}}
+:root[data-theme="dark"]{--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}
+html{color-scheme:light dark}
+body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;padding-block:0 4rem;padding-inline:clamp(16px,4vw,40px);margin:0}
+.wrap{max-width:46rem;margin:0 auto}
+header.masthead{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;padding-block:3rem 1.5rem;border-bottom:2px solid var(--ink)}
+header.masthead h1{font-family:"Source Sans 3","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 .6rem;text-wrap:balance}
+header.masthead .byline{color:var(--ink2);font-size:.95rem;margin:0;max-width:34rem}
+.eyebrow{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 .4rem}
+.petersen{flex:none}
+.conj{font-size:1.2rem;line-height:1.4;margin:2rem 0;padding:1rem 1.2rem;border-left:3px solid var(--accent);background:var(--paper2)}
+.conj .lbl{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.3rem}
+nav.toc{margin:2rem 0 2.5rem;padding:1rem 1.2rem;border:1px solid var(--rule)}
+nav.toc ol{margin:0;padding-left:1.4rem;columns:2;column-gap:2rem;font-family:"Source Sans 3",Arial,sans-serif;font-size:.95rem;line-height:1.5}
+nav.toc li{break-inside:avoid;padding:.1rem 0}
+@media (max-width:520px){nav.toc ol{columns:1}header.masthead{grid-template-columns:1fr}.petersen{width:84px;height:84px}}
+h2{font-family:"Source Sans 3",Arial,sans-serif;font-weight:700;font-size:1.45rem;line-height:1.2;margin:3rem 0 1rem;padding-top:1rem;border-top:1px solid var(--rule);text-wrap:balance}
+h3{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:1.08rem;margin:2rem 0 .6rem;text-wrap:balance}
+p{margin:0 0 1rem}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+blockquote{margin:1.2rem 0;padding:.7rem 1.1rem;border-left:3px solid var(--accent);background:var(--paper2)}
+blockquote p:last-child{margin-bottom:0}
+ul,ol{padding-left:1.4rem}li{margin-bottom:.35rem}
+hr{border:0;height:0;margin:0}
+.tbl{overflow-x:auto;margin:1.2rem 0}
+table{border-collapse:collapse;width:100%;font-family:"Source Sans 3",Arial,sans-serif;font-size:.92rem;line-height:1.4;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--ink);padding:.45rem .6rem .35rem}
+td{border-bottom:1px solid var(--rule);padding:.45rem .6rem;vertical-align:top}
+td:first-child{font-weight:600}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code);padding:.05em .3em;border-radius:2px}
+strong{font-weight:600}
+mjx-container[display="true"]{margin:.6rem 0;overflow-x:auto;overflow-y:hidden}
+section.refs ul{padding-left:1.2rem;font-size:.93rem}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="masthead"><div><p class="eyebrow">Survey · September 2026</p><h1>Tutte's 5-Flow Conjecture</h1><p class="byline">Prepared for the 5-flow-conjecture project, September 2026. Primary sources: C.-Q. Zhang, &quot;Integer Flows and Cycle Covers of Graphs&quot; (1997), the Open Problem Garden entry, and the post-1997 literature cited in Section 10.</p></div><svg class="petersen" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Petersen graph"><g stroke="var(--accent)" stroke-width="1.6" fill="none"><line x1="60.0" y1="22.0" x2="98.0" y2="49.6"/><line x1="98.0" y1="49.6" x2="83.5" y2="94.4"/><line x1="83.5" y1="94.4" x2="36.5" y2="94.4"/><line x1="36.5" y1="94.4" x2="22.0" y2="49.6"/><line x1="22.0" y1="49.6" x2="60.0" y2="22.0"/><line x1="60.0" y1="22.0" x2="60.0" y2="44.0"/><line x1="98.0" y1="49.6" x2="77.1" y2="56.4"/><line x1="83.5" y1="94.4" x2="70.6" y2="76.6"/><line x1="36.5" y1="94.4" x2="49.4" y2="76.6"/><line x1="22.0" y1="49.6" x2="42.9" y2="56.4"/><line x1="60.0" y1="44.0" x2="70.6" y2="76.6"/><line x1="77.1" y1="56.4" x2="49.4" y2="76.6"/><line x1="70.6" y1="76.6" x2="42.9" y2="56.4"/><line x1="49.4" y1="76.6" x2="60.0" y2="44.0"/><line x1="42.9" y1="56.4" x2="77.1" y2="56.4"/></g><g fill="var(--ink)"><circle cx="60.0" cy="22.0" r="3"/><circle cx="98.0" cy="49.6" r="3"/><circle cx="83.5" cy="94.4" r="3"/><circle cx="36.5" cy="94.4" r="3"/><circle cx="22.0" cy="49.6" r="3"/><circle cx="60.0" cy="44.0" r="3"/><circle cx="77.1" cy="56.4" r="3"/><circle cx="70.6" cy="76.6" r="3"/><circle cx="49.4" cy="76.6" r="3"/><circle cx="42.9" cy="56.4" r="3"/></g></svg></header>
+<nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#the-conjecture-and-where-it-comes-from">The conjecture and where it comes from</a></li><li><a href="#foundations">Foundations</a></li><li><a href="#what-a-minimal-counterexample-must-look-like">What a minimal counterexample must look like</a></li><li><a href="#what-has-been-proved-upper-bounds">What has been proved: upper bounds</a></li><li><a href="#what-has-been-proved-graph-classes">What has been proved: graph classes</a></li><li><a href="#stronger-weaker-and-equivalent-statements">Stronger, weaker and equivalent statements</a></li><li><a href="#the-toolbox-and-why-every-tool-stops-at-6">The toolbox, and why every tool stops at 6</a></li><li><a href="#the-flow-polynomial-and-computation">The flow polynomial and computation</a></li><li><a href="#attack-routes-for-this-project">Attack routes for this project</a></li><li><a href="#bibliography">Bibliography</a></li></ol></nav>
+<p class="conj"><span class="lbl">Conjecture (Tutte, 1954)</span> Every bridgeless graph admits a nowhere-zero 5-flow.</p>
+<p>The conjecture is 72 years old. It is true for planar graphs (where it is the Five Colour Theorem in disguise), it is tight (the Petersen graph has no nowhere-zero 4-flow), and the best general result is Seymour’s 6-flow theorem from 1981. Nobody has moved the general bound since. What has moved is the description of what a counterexample would have to look like, the list of graph classes where the conjecture is verified, and the web of stronger and equivalent statements around it. This survey collects all of that, explains the techniques behind each result, identifies why the techniques stop at 6, and ends with a candid list of attack routes.</p>
+<hr />
+<hr />
+<h2 id="the-conjecture-and-where-it-comes-from">1. The conjecture and where it comes from</h2>
+<h3 id="flows-as-the-dual-of-face-colourings">1.1 Flows as the dual of face colourings</h3>
+<p>Tutte introduced integer flows in 1949-1954 as the dual of map colouring. Take a bridgeless plane graph <span class="math inline">\(G\)</span>, colour its faces properly with colours <span class="math inline">\(\{1,\dots,k\}\)</span>, orient every edge so the smaller colour is on its right, and weight each edge by the difference of the two face colours. Around every vertex the signed weights sum to zero, and every weight lies in <span class="math inline">\(\{1,\dots,k-1\}\)</span>. That is a nowhere-zero <span class="math inline">\(k\)</span>-flow. The construction reverses for plane graphs, so:</p>
+<blockquote>
+<p><strong>Theorem (Tutte 1954; Zhang Thm 1.4.5).</strong> A bridgeless plane graph is face-<span class="math inline">\(k\)</span>-colourable if and only if it admits a nowhere-zero <span class="math inline">\(k\)</span>-flow.</p>
+</blockquote>
+<p>Two consequences frame everything that follows.</p>
+<ul>
+<li>The Four Colour Theorem is exactly the statement “every bridgeless planar graph has a nowhere-zero 4-flow”.</li>
+<li>The Five Colour Theorem (Heawood 1890) is “every bridgeless planar graph has a nowhere-zero 5-flow”.</li>
+</ul>
+<p>The flow statement, unlike the colouring statement, makes sense for non-planar graphs. Tutte asked which colouring theorems survive that generalisation, and proposed three conjectures in the 1950s-60s that are still the spine of the subject (Zhang §1.1):</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Conjecture</th>
+<th>Statement</th>
+<th>Status (Sept 2026)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5-flow (1954)</td>
+<td>Every bridgeless graph has a nowhere-zero 5-flow</td>
+<td><strong>Open</strong></td>
+</tr>
+<tr>
+<td>4-flow (1966)</td>
+<td>Every bridgeless graph with no Petersen minor has a nowhere-zero 4-flow</td>
+<td>Open in general; <strong>cubic case (the edge-3-colouring conjecture) announced proved in 2026</strong></td>
+</tr>
+<tr>
+<td>3-flow (1972)</td>
+<td>Every 4-edge-connected graph has a nowhere-zero 3-flow</td>
+<td>Open; true for 6-edge-connected graphs (Lovász-Thomassen-Wu-Zhang 2013)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="why-5">1.2 Why 5</h3>
+<p>The Petersen graph <span class="math inline">\(P_{10}\)</span> is bridgeless and has no nowhere-zero 4-flow (a cubic graph has a 4-flow iff it is 3-edge-colourable, and <span class="math inline">\(P_{10}\)</span> is not). So 5 is the smallest constant that could possibly work for all bridgeless graphs. Tutte’s first conjecture was only that <em>some</em> finite <span class="math inline">\(k\)</span> works; Jaeger and Kilpatrick proved <span class="math inline">\(k=8\)</span> (1975-76) and Seymour proved <span class="math inline">\(k=6\)</span> (1981). The gap between 5 and 6 is the whole problem.</p>
+<h3 id="why-it-matters">1.3 Why it matters</h3>
+<p>The 5-flow conjecture sits at the centre of a cluster of famous problems: the cycle double cover conjecture, the 5-cycle-double-cover and orientable 5-CDC conjectures, the Berge-Fulkerson conjecture, shortest cycle cover bounds, group connectivity, circular flows, and the theory of snarks. Several of these would imply it (Section 6). Its restriction to cubic graphs is a statement about snarks, the same objects that obstruct the Four Colour Theorem’s generalisations. A proof would be the first non-trivial <em>general</em> upper bound on flow numbers since 1981; a counterexample would have to be a snark of a kind that has never been constructed (Section 3).</p>
+<hr />
+<h2 id="foundations">2. Foundations</h2>
+<p>Throughout, graphs may have loops and parallel edges. A <em>circuit</em> is a connected 2-regular graph; a <em>cycle</em> is a subgraph in which every vertex has even degree (an even subgraph); a <em>bridge</em> is an edge in no circuit.</p>
+<h3 id="definitions">2.1 Definitions</h3>
+<p>Let <span class="math inline">\(D\)</span> be an orientation of <span class="math inline">\(E(G)\)</span> and <span class="math inline">\(f\colon E(G)\to\Gamma\)</span> a weight into an abelian group. <span class="math inline">\((D,f)\)</span> is a <strong>flow</strong> if at every vertex <span class="math inline">\(v\)</span> the sum over out-arcs equals the sum over in-arcs. It is an <strong>integer <span class="math inline">\(k\)</span>-flow</strong> if <span class="math inline">\(\Gamma=\mathbb Z\)</span> and <span class="math inline">\(|f(e)|&lt;k\)</span> for all <span class="math inline">\(e\)</span>, and <strong>nowhere-zero</strong> if <span class="math inline">\(f(e)\ne 0\)</span> for all <span class="math inline">\(e\)</span>. A <strong>modular <span class="math inline">\(k\)</span>-flow</strong> (or <span class="math inline">\(\mathbb Z_k\)</span>-flow) only requires the balance condition modulo <span class="math inline">\(k\)</span>.</p>
+<p>Elementary facts (Zhang §1.2):</p>
+<ul>
+<li>A bridge always carries weight 0, so bridgelessness is necessary.</li>
+<li>Reversing an arc and negating its weight preserves flows, so orientation is irrelevant: “<span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(k\)</span>-flow” is a property of the undirected graph, and one may always take the flow positive.</li>
+<li>A nowhere-zero <span class="math inline">\(k\)</span>-flow is a nowhere-zero <span class="math inline">\(h\)</span>-flow for all <span class="math inline">\(h\ge k\)</span> (this monotonicity fails for group connectivity, see §6.5).</li>
+<li><span class="math inline">\(G\)</span> has a nowhere-zero 2-flow iff <span class="math inline">\(G\)</span> is a cycle (every degree even). The edges of odd weight in any integer flow form a cycle.</li>
+</ul>
+<h3 id="modular-flows-and-group-flows-the-value-set-does-not-matter">2.2 Modular flows and group flows: the value set does not matter</h3>
+<blockquote>
+<p><strong>Theorem (Tutte 1949; Zhang Thm 1.3.3-1.3.4).</strong> <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(k\)</span>-flow iff <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(\mathbb Z_k\)</span>-flow. In fact any modular <span class="math inline">\(k\)</span>-flow <span class="math inline">\((D,f)\)</span> lifts to an integer <span class="math inline">\(k\)</span>-flow <span class="math inline">\((D,f&#39;)\)</span> with <span class="math inline">\(f&#39;\equiv f \pmod k\)</span> under the same orientation.</p>
+</blockquote>
+<p>The lift is a potential argument: choose representatives in <span class="math inline">\(\{0,\dots,k-1\}\)</span>, then repeatedly push <span class="math inline">\(k\)</span> units along a directed path from a source to a sink; the total imbalance strictly decreases (Younger’s proof, Zhang Lemma 1.3.5).</p>
+<blockquote>
+<p><strong>Theorem (Tutte 1954; Zhang Thm 2.2.3).</strong> For any abelian group <span class="math inline">\(\Gamma\)</span> of order <span class="math inline">\(k\)</span>: <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(\Gamma\)</span>-flow iff <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(k\)</span>-flow. Moreover the <em>number</em> of nowhere-zero <span class="math inline">\(\Gamma\)</span>-flows depends only on <span class="math inline">\(|\Gamma|\)</span>.</p>
+</blockquote>
+<p>So the 5-flow conjecture is exactly: <strong>every bridgeless graph has a nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-flow.</strong> This is the form in which almost all modern work is done. Because <span class="math inline">\(\mathbb Z_5\)</span> is the only group of order 5, there is no product decomposition available for 5, unlike <span class="math inline">\(6=2\cdot 3\)</span> and <span class="math inline">\(8=2\cdot2\cdot2\)</span>. Section 7 explains why this single fact is the central obstruction.</p>
+<h3 id="products-and-sums-of-flows">2.3 Products and sums of flows</h3>
+<blockquote>
+<p><strong>Theorem (Zhang Thm 2.1.2).</strong> <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(k_1k_2\)</span>-flow iff <span class="math inline">\(G\)</span> has a <span class="math inline">\(k_1\)</span>-flow <span class="math inline">\(f_1\)</span> and a <span class="math inline">\(k_2\)</span>-flow <span class="math inline">\(f_2\)</span> (same orientation) with <span class="math inline">\(\operatorname{supp}(f_1)\cup\operatorname{supp}(f_2)=E(G)\)</span>. Then <span class="math inline">\(k_2f_1+f_2\)</span> is nowhere-zero.</p>
+</blockquote>
+<blockquote>
+<p><strong>Theorem (Matthews 1978; Zhang Thm 2.4.2).</strong> <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(2^r\)</span>-flow iff <span class="math inline">\(E(G)\)</span> is covered by <span class="math inline">\(r\)</span> cycles.</p>
+</blockquote>
+<blockquote>
+<p><strong>Theorem (Little-Tutte-Younger 1988; Zhang Thm 2.6.2).</strong> <span class="math inline">\(G\)</span> has a positive <span class="math inline">\(k\)</span>-flow <span class="math inline">\((D,f)\)</span> iff <span class="math inline">\(D(G)\)</span> has <span class="math inline">\(k-1\)</span> directed cycles covering every arc <span class="math inline">\(e\)</span> exactly <span class="math inline">\(f(e)\)</span> times. Equivalently every nonnegative <span class="math inline">\(k\)</span>-flow is a sum of <span class="math inline">\(k-1\)</span> nonnegative 2-flows.</p>
+</blockquote>
+<p>The first two are the engines of the 8-flow and 6-flow theorems. The third says the conjecture is equivalent to: <em>every bridgeless graph has an orientation whose arcs are covered by four directed cycles.</em></p>
+<h3 id="orientations-with-bounded-cut-ratios">2.4 Orientations with bounded cut ratios</h3>
+<blockquote>
+<p><strong>Theorem (Hoffman’s circulation theorem; Zhang Cor 2.3.2).</strong> <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(k\)</span>-flow iff <span class="math inline">\(G\)</span> has an orientation <span class="math inline">\(D\)</span> such that for every edge cut <span class="math inline">\((A,B)\)</span>, <span class="math display">\[\frac{1}{k-1}\le\frac{|[A,B]_D|}{|[B,A]_D|}\le k-1.\]</span></p>
+</blockquote>
+<p>So the 5-flow conjecture says: <strong>every bridgeless graph can be oriented so that no cut is more than 4:1 unbalanced.</strong> This is also the definition that generalises to real <span class="math inline">\(r\)</span> (circular flows, §6.3).</p>
+<h3 id="face-colourings-and-orientable-cycle-double-covers">2.5 Face colourings and orientable cycle double covers</h3>
+<p>For a bridgeless graph <span class="math inline">\(G\)</span> and integer <span class="math inline">\(k\)</span> consider (Zhang Thm 2.5.3):</p>
+<ul>
+<li>(P1) <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(k\)</span>-flow;</li>
+<li>(P2) <span class="math inline">\(G\)</span> has an orientable <span class="math inline">\(k\)</span>-cycle double cover (a CDC by at most <span class="math inline">\(k\)</span> cycles, each orientable as a directed cycle, so that the two cycles through each edge traverse it oppositely);</li>
+<li>(P3) <span class="math inline">\(G\)</span> is face-<span class="math inline">\(k\)</span>-colourable on some orientable surface.</li>
+</ul>
+<p>In general (P3) <span class="math inline">\(\Rightarrow\)</span> (P2) <span class="math inline">\(\Rightarrow\)</span> (P1); for <span class="math inline">\(k\in\{2,3,4\}\)</span> (P1) <span class="math inline">\(\Leftrightarrow\)</span> (P2); for planar graphs all three coincide. Whether (P1) <span class="math inline">\(\Rightarrow\)</span> (P2) for <span class="math inline">\(k=5\)</span> is precisely the orientable 5-CDC conjecture (§6.4), which together with the 5-flow conjecture would make (P1) <span class="math inline">\(\Leftrightarrow\)</span> (P2) universally.</p>
+<h3 id="the-flow-polynomial">2.6 The flow polynomial</h3>
+<p><span class="math inline">\(F(G;k)\)</span>, the number of nowhere-zero <span class="math inline">\(\Gamma\)</span>-flows for <span class="math inline">\(|\Gamma|=k\)</span>, is a polynomial in <span class="math inline">\(k\)</span> satisfying <span class="math inline">\(F(G;k)=F(G/e;k)-F(G\setminus e;k)\)</span> for non-loop <span class="math inline">\(e\)</span>, <span class="math inline">\(F(G;k)=(k-1)F(G\setminus e;k)\)</span> for a loop, and <span class="math inline">\(F=0\)</span> if <span class="math inline">\(G\)</span> has a bridge (Zhang §2.7). It is an evaluation of the Tutte polynomial: <span class="math inline">\(F(G;k)=(-1)^{|E|-|V|+c}\,T_G(0,1-k)\)</span>. The 5-flow conjecture is: <strong><span class="math inline">\(F(G;5)&gt;0\)</span> for every bridgeless <span class="math inline">\(G\)</span>.</strong> For the Petersen graph, <span class="math inline">\(F(P_{10};q)=(q-1)(q-2)(q-3)(q-4)(q^2-5q+10)\)</span>, so <span class="math inline">\(F(P_{10};4)=0\)</span> and <span class="math inline">\(F(P_{10};5)=240\)</span>.</p>
+<hr />
+<h2 id="what-a-minimal-counterexample-must-look-like">3. What a minimal counterexample must look like</h2>
+<p>The standard strategy is to assume a counterexample minimal with respect to <span class="math inline">\(|V|+|E|\)</span> and derive structure. The classical reductions are in Zhang §2.8; the modern ones are due mainly to Kochol, Steffen and Mazzuoccolo. Together they give the following ledger.</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Property of a smallest counterexample <span class="math inline">\(G\)</span></th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>simple, 3-edge-connected, hence 3-connected</td>
+<td>Tutte/Jaeger/Seymour (Zhang Lemma 2.8.4)</td>
+</tr>
+<tr>
+<td>cubic (so: a 3-connected cubic graph)</td>
+<td>Jaeger 1979 (Zhang Lemma 2.8.6), via vertex splitting</td>
+</tr>
+<tr>
+<td>not 3-edge-colourable, i.e. a snark</td>
+<td>cubic + 3-edge-colourable <span class="math inline">\(\Rightarrow\)</span> 4-flow</td>
+</tr>
+<tr>
+<td>no non-trivial edge cut of size <span class="math inline">\(\le 3\)</span></td>
+<td>Sekine-Zhang 1997 (Zhang Lemma 2.8.8)</td>
+</tr>
+<tr>
+<td>girth <span class="math inline">\(\ge 7\)</span></td>
+<td>Möller-Carstens-Brinkmann 1988, Celmins 1984, Jensen (Zhang Lemma 2.8.11 gives girth <span class="math inline">\(\ge 2k-3\)</span>)</td>
+</tr>
+<tr>
+<td>cyclically 5-edge-connected</td>
+<td>Celmins 1984</td>
+</tr>
+<tr>
+<td>cyclically 6-edge-connected</td>
+<td>Kochol 2004</td>
+</tr>
+<tr>
+<td>girth <span class="math inline">\(\ge 9\)</span></td>
+<td>Kochol 2006</td>
+</tr>
+<tr>
+<td>girth <span class="math inline">\(\ge 11\)</span></td>
+<td>Kochol 2010</td>
+</tr>
+<tr>
+<td>oddness <span class="math inline">\(\ge 6\)</span></td>
+<td>Mazzuoccolo-Steffen 2017 (cyclically 6-edge-connected + oddness <span class="math inline">\(\le 4\)</span> <span class="math inline">\(\Rightarrow\)</span> 5-flow)</td>
+</tr>
+<tr>
+<td>cyclic connectivity <span class="math inline">\(\le \tfrac52\,\omega(G)-4\)</span></td>
+<td>Steffen 2010</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\mu_2(G)\ge 3\)</span> (any two perfect matchings share <span class="math inline">\(\ge 3\)</span> edges)</td>
+<td>Steffen 2015</td>
+</tr>
+<tr>
+<td>order <span class="math inline">\(\ge 38\)</span></td>
+<td>all snarks up to 36 vertices have circular flow number <span class="math inline">\(\le 5\)</span> (Brinkmann-Goedgebeur-Hägglund-Markström 2013; Goedgebeur-Mattiolo-Mazzuoccolo 2021)</td>
+</tr>
+<tr>
+<td>not planar, not projective-planar, orientable genus <span class="math inline">\(\ge 3\)</span>, non-orientable genus <span class="math inline">\(\ge 5\)</span></td>
+<td>Heawood; Steinberg 1984; Möller-Carstens-Brinkmann 1988</td>
+</tr>
+<tr>
+<td>no Hamilton path, indeed no 2-factor with <span class="math inline">\(\le 2\)</span> odd circuits</td>
+<td>Jaeger 1979/1988</td>
+</tr>
+<tr>
+<td>contains a Petersen minor</td>
+<td>RST: cubic graphs of girth <span class="math inline">\(\ge 6\)</span> have Petersen minors; also Kochol 1999</td>
+</tr>
+</tbody>
+</table></div>
+<p>Here the <strong>oddness</strong> <span class="math inline">\(\omega(G)\)</span> of a cubic graph is the minimum number of odd circuits in a 2-factor (even, and <span class="math inline">\(\ge 2\)</span> for snarks), and <span class="math inline">\(\mu_2(G)\)</span> is the minimum size of the intersection of two perfect matchings.</p>
+<p><strong>How the classical reductions work (Zhang §2.8).</strong></p>
+<ul>
+<li><em>Parallel edges, degree-2 vertices, loops, 2-edge-cuts</em> are removed by deletion/suppression/contraction; the 2-flow on a digon lets one adjust a flow on the smaller graph.</li>
+<li><em>Cubic</em>: a vertex of degree <span class="math inline">\(\ge 4\)</span> can be split into two vertices without creating a bridge (Fleischner’s splitting lemma, Zhang Thm A.5.2); a flow on the split graph collapses back. Note this step does not preserve minor-closed classes, which is why the 4-flow conjecture is <em>not</em> known to reduce to the cubic case, while the 5-flow conjecture is.</li>
+<li><em>Small cuts</em>: for a cut <span class="math inline">\(T\)</span> with <span class="math inline">\(|T|\le 3\)</span> separating <span class="math inline">\(M_1,M_2\)</span>, the flow polynomial factorises, <span class="math inline">\(F(G;k)=F(G/M_1;k)F(G/M_2;k)/F(K_2^{|T|};k)\)</span>, so one of the two contractions is a smaller counterexample. The factorisation fails for cuts of size <span class="math inline">\(\ge 4\)</span>, which is why cyclic connectivity beyond 4 needed new ideas.</li>
+<li><em>Girth <span class="math inline">\(\ge 2k-3\)</span></em>: contract alternate edges of a short circuit <span class="math inline">\(C\)</span>, split the resulting degree-4 vertices, take a <span class="math inline">\(k\)</span>-flow on the smaller graph, lift it to <span class="math inline">\(G\)</span> (zero possibly only on <span class="math inline">\(C\)</span>), and add a suitable multiple of the 2-flow on <span class="math inline">\(C\)</span>; a counting argument shows some multiple avoids all zeros when <span class="math inline">\(|C|\le 2k-4\)</span>.</li>
+</ul>
+<p><strong>How Kochol’s reductions work.</strong> Kochol’s “Polynomials associated with nowhere-zero flows” (2002) treats a graph with a <span class="math inline">\(k\)</span>-edge-cut as two <span class="math inline">\(k\)</span>-poles glued together, and studies, for each <span class="math inline">\(k\)</span>-pole, the set of boundary value vectors in <span class="math inline">\(\mathbb Z_5^k\)</span> (summing to zero) that extend to a nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-flow. The 5-flow question for the whole graph becomes whether the two sets intersect. For cyclic <span class="math inline">\(k\)</span>-cuts with <span class="math inline">\(k\le 5\)</span> he shows the answer is forced by the smaller sides, giving the cyclically-6-edge-connected reduction (2004). The girth bounds (9 in 2006 by counting, 11 in 2010) compare the rank of a matrix indexed by boundary vectors with the rank of a submatrix; the 2011 papers with Krivoňáková, Smejová and Šranková reduce the size of the matrices so the computation is feasible. The method is in principle iterable to larger girth at increasing computational cost, but it cannot finish the job on its own: Kochol (1996) constructed cyclically 5-edge-connected snarks of arbitrarily large girth, so no finite girth bound excludes all snarks.</p>
+<p><strong>How the oddness results work.</strong> A 2-factor with only two odd circuits <span class="math inline">\(C_1,C_2\)</span> gives a 5-flow directly: add an edge <span class="math inline">\(e\)</span> joining them, contract the 2-factor, the result is Eulerian, so <span class="math inline">\(G+e\)</span> has a nowhere-zero <span class="math inline">\(\mathbb Z_2\times\mathbb Z_2\)</span>-flow, i.e. a 4-flow; then Jaeger’s lemma (Zhang Ex. 5.2: if <span class="math inline">\(G+e\)</span> has a nowhere-zero 4-flow and <span class="math inline">\(G\)</span> is bridgeless, then <span class="math inline">\(G\)</span> has a nowhere-zero 5-flow) finishes. Steffen (2010) and Mazzuoccolo-Steffen (2017) push this to oddness 4 by pairing odd circuits along paths and exploiting the freedom given by cyclic 6-edge-connectivity to repair the zeros; the extension to oddness 6 is open and is a natural target (Section 9).</p>
+<p><strong>What is not known to exist.</strong> No snark is currently known that is simultaneously cyclically 6-edge-connected, of girth <span class="math inline">\(\ge 11\)</span>, and of oddness <span class="math inline">\(\ge 6\)</span>. Cyclically 6-edge-connected snarks exist (Kochol 1996, order 118; smaller ones since), snarks of large girth exist (Kochol 1996, cyclic connectivity 5), and snarks of large oddness exist, but the combination has not been built. Jaeger and Swart conjectured in 1980 that no snark has cyclic connectivity <span class="math inline">\(&gt;6\)</span> (open) and that no snark has girth <span class="math inline">\(&gt;6\)</span> (refuted by Kochol). If the first Jaeger-Swart conjecture is true, a minimal counterexample has cyclic connectivity exactly 6.</p>
+<hr />
+<h2 id="what-has-been-proved-upper-bounds">4. What has been proved: upper bounds</h2>
+<h3 id="the-8-flow-theorem-jaeger-1975-79-kilpatrick-1975">4.1 The 8-flow theorem (Jaeger 1975-79, Kilpatrick 1975)</h3>
+<blockquote>
+<p>Every bridgeless graph has a nowhere-zero 8-flow.</p>
+</blockquote>
+<p><em>Proof sketch (Zhang §5.2).</em> Reduce to 3-edge-connected <span class="math inline">\(G\)</span>. Doubling every edge gives a 6-edge-connected graph, which by Nash-Williams-Tutte contains three edge-disjoint spanning trees <span class="math inline">\(T_1,T_2,T_3\)</span>. Each spanning tree contains a parity subgraph <span class="math inline">\(P_i\)</span> (a spanning subgraph with <span class="math inline">\(d_{P_i}(v)\equiv d_G(v)\)</span> mod 2 for all <span class="math inline">\(v\)</span>), and the complements <span class="math inline">\(G\setminus P_i\)</span> are cycles. The three parity subgraphs have empty common intersection in <span class="math inline">\(G\)</span> (each original edge lies in at most two of the trees), so the three cycles cover <span class="math inline">\(E(G)\)</span>, and Matthews’ theorem gives a <span class="math inline">\(2^3\)</span>-flow. A second proof uses a perfect matching meeting every 3-cut exactly once (Edmonds’ matching polytope) plus Jaeger’s 4-flow theorem for 4-edge-connected graphs.</p>
+<h3 id="the-6-flow-theorem-seymour-1981">4.2 The 6-flow theorem (Seymour 1981)</h3>
+<blockquote>
+<p>Every bridgeless graph has a nowhere-zero 6-flow. Equivalently, a nowhere-zero <span class="math inline">\(\mathbb Z_2\times\mathbb Z_3\)</span>-flow.</p>
+</blockquote>
+<p><em>Proof sketch (Zhang §5.3).</em> Let <span class="math inline">\(\mathcal C_k\)</span> be the graphs buildable from a single vertex by repeatedly adding a circuit that uses at most <span class="math inline">\(k\)</span> new edges. The key lemma:</p>
+<blockquote>
+<p><strong>Lemma (Seymour; Jaeger’s form, Zhang Lemma 5.3.3).</strong> If <span class="math inline">\(G\in\mathcal C_{k-1}\)</span> then for <em>every</em> prescription <span class="math inline">\(c\colon E(G)\to\mathbb Z_k\)</span> there is a <span class="math inline">\(\mathbb Z_k\)</span>-flow <span class="math inline">\(f\)</span> with <span class="math inline">\(f(e)\ne c(e)\)</span> on every edge. In particular <span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(\mathbb Z_k\)</span>-flow.</p>
+</blockquote>
+<p>The proof is induction on the circuits: a new circuit with at most <span class="math inline">\(k-1\)</span> new edges has <span class="math inline">\(k-1\)</span> “forbidden” values on its new edges, so some multiple of its 2-flow avoids all of them. Then:</p>
+<blockquote>
+<p><strong>Lemma (Seymour; Zhang Lemma 5.3.5).</strong> Every 3-edge-connected graph <span class="math inline">\(G\)</span> has a cycle <span class="math inline">\(S\)</span> with <span class="math inline">\(G/S\in\mathcal C_2\)</span>. (Younger: <span class="math inline">\(S\)</span> may be taken to be a <em>necklace</em>; Fan 1992: a union of vertex-disjoint circuits, for all bridgeless <span class="math inline">\(G\)</span>.)</p>
+</blockquote>
+<p>Take <span class="math inline">\(S\)</span> maximal so that <span class="math inline">\(G/S \in \mathcal C_2\)</span>; if some component <span class="math inline">\(H\)</span> of <span class="math inline">\(G-V(S)\)</span> remains, 3-edge-connectivity gives two edges from a bridgeless piece <span class="math inline">\(H&#39;\)</span> of <span class="math inline">\(H\)</span> to <span class="math inline">\(S\)</span>, and two edge-disjoint paths in <span class="math inline">\(H&#39;\)</span> between their ends; adding this “handle” enlarges <span class="math inline">\(S\)</span>. Now <span class="math inline">\(G/S\in\mathcal C_2\)</span> has a nowhere-zero <span class="math inline">\(\mathbb Z_3\)</span>-flow, which lifts to a 3-flow <span class="math inline">\(f_2\)</span> on <span class="math inline">\(G\)</span> that is nonzero off <span class="math inline">\(S\)</span>; a 2-flow <span class="math inline">\(f_1\)</span> supported on <span class="math inline">\(S\)</span> completes a product <span class="math inline">\(3f_1+f_2\)</span>, a nowhere-zero 6-flow.</p>
+<p>Three recent re-proofs (DeVos-Rollová-Šámal 2017; DeVos 2024; DeVos-Nurse 2025) shorten this but keep its shape: find a <span class="math inline">\(\mathbb Z_3\)</span>-flow whose zero set is an even subgraph.</p>
+<h3 id="why-neither-proof-yields-5">4.3 Why neither proof yields 5</h3>
+<p>Both proofs are <em>products</em>: <span class="math inline">\(8=2\cdot2\cdot2\)</span> and <span class="math inline">\(6=2\cdot3\)</span> come from covering <span class="math inline">\(E(G)\)</span> by supports of small flows and combining them via Theorem 2.1.2. Since 5 is prime, <span class="math inline">\(\mathbb Z_5\)</span> has no non-trivial direct-product decomposition, and no covering argument of this type can give 5. The only route to 5 through Seymour’s lemma is to show <span class="math inline">\(G\in\mathcal C_4\)</span> directly, but a graph of girth <span class="math inline">\(\ge 5\)</span> is never in <span class="math inline">\(\mathcal C_4\)</span> (its first circuit already needs <span class="math inline">\(\ge 5\)</span> new edges), so this fails for exactly the graphs that matter. Section 7 returns to this.</p>
+<hr />
+<h2 id="what-has-been-proved-graph-classes">5. What has been proved: graph classes</h2>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Class</th>
+<th>Result</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Planar graphs</td>
+<td>Five Colour Theorem; also a two-line proof from girth <span class="math inline">\(\ge 7\)</span> vs Euler’s formula</td>
+<td>Heawood 1890; Zhang Thm 5.1.2</td>
+</tr>
+<tr>
+<td>Projective-planar graphs</td>
+<td>5-flow</td>
+<td>Steinberg 1984</td>
+</tr>
+<tr>
+<td>Orientable genus <span class="math inline">\(\le 2\)</span>, non-orientable genus <span class="math inline">\(\le 4\)</span></td>
+<td>5-flow, computer-assisted; a minimal counterexample on a fixed surface has all faces of length <span class="math inline">\(\ge 7\)</span></td>
+<td>Möller-Carstens-Brinkmann 1988</td>
+</tr>
+<tr>
+<td>Graphs with a Hamilton path</td>
+<td>5-flow</td>
+<td>Jaeger 1979</td>
+</tr>
+<tr>
+<td><span class="math inline">\(G+e\)</span> has a 4-flow, <span class="math inline">\(G\)</span> bridgeless; or <span class="math inline">\(G-e\)</span> has a 4-flow</td>
+<td><span class="math inline">\(G\)</span> has a 5-flow</td>
+<td>Jaeger; Celmins (Zhang Ex. 5.2, 5.3)</td>
+</tr>
+<tr>
+<td>Cubic graphs of oddness <span class="math inline">\(\le 2\)</span></td>
+<td>5-flow</td>
+<td>Jaeger 1988</td>
+</tr>
+<tr>
+<td>Apex graphs (one vertex whose removal leaves a planar graph)</td>
+<td>5-flow</td>
+<td>Gerards-Seymour, unpublished (Zhang Ex. 5.4)</td>
+</tr>
+<tr>
+<td>4-edge-connected graphs</td>
+<td>4-flow (two edge-disjoint spanning trees)</td>
+<td>Jaeger 1979</td>
+</tr>
+<tr>
+<td>Bridgeless graphs with no Petersen minor, cubic</td>
+<td>4-flow (edge-3-colourable)</td>
+<td>Robertson-Seymour-Thomas 1997 + Sanders-Seymour + Edwards-Sanders-Seymour-Thomas 2016 + Inoue-Kawarabayashi-Matsuo-Miyashita-Mohar-Sonobe 2026 (preprint); 5-flow earlier by Kochol 1999</td>
+</tr>
+<tr>
+<td>Cyclically 6-edge-connected cubic, oddness <span class="math inline">\(\le 4\)</span></td>
+<td>5-flow</td>
+<td>Mazzuoccolo-Steffen 2017</td>
+</tr>
+<tr>
+<td>Cyclically <span class="math inline">\(k\)</span>-edge-connected cubic with <span class="math inline">\(k\ge\tfrac52\omega-3\)</span></td>
+<td>5-flow</td>
+<td>Steffen 2010</td>
+</tr>
+<tr>
+<td>Cyclically 6-edge-connected cubic with <span class="math inline">\(\mu_2\le 2\)</span>; or cyclically <span class="math inline">\((5\mu_2-3)\)</span>-edge-connected cubic</td>
+<td>5-flow</td>
+<td>Steffen 2015</td>
+</tr>
+<tr>
+<td>All snarks on <span class="math inline">\(\le 36\)</span> vertices</td>
+<td>circular flow number <span class="math inline">\(\le 5\)</span>, hence 5-flow</td>
+<td>Brinkmann-Goedgebeur-Hägglund-Markström 2013; Goedgebeur-Mattiolo-Mazzuoccolo 2021</td>
+</tr>
+<tr>
+<td>3-edge-connected graphs</td>
+<td><span class="math inline">\(\mathbb Z_6\)</span>-connected (stronger than 6-flow)</td>
+<td>Jaeger-Linial-Payan-Tarsi 1992</td>
+</tr>
+<tr>
+<td>12-edge-connected graphs</td>
+<td>modulo 5-orientation, hence circular flow number <span class="math inline">\(\le 5/2\)</span></td>
+<td>Lovász-Thomassen-Wu-Zhang 2013</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Remark on the 2026 edge-colouring announcement.</strong> Robertson, Seymour and Thomas (1997) reduced Tutte’s edge-3-colouring conjecture (every bridgeless cubic graph with no Petersen minor is 3-edge-colourable) to apex and doublecross graphs. The doublecross case was published in 2016. The apex case was long announced by Sanders and Seymour but unpublished; a preprint of August 2026 by Inoue, Kawarabayashi, Matsuo, Miyashita, Mohar and Sonobe gives a constructive, partly computer-checked proof and describes itself as the final piece. If it holds up, cubic Petersen-minor-free graphs have nowhere-zero 4-flows, and a minimal counterexample to the 5-flow conjecture must contain a Petersen minor for a second, independent reason.</p>
+<hr />
+<h2 id="stronger-weaker-and-equivalent-statements">6. Stronger, weaker and equivalent statements</h2>
+<h3 id="equivalent-forms">6.1 Equivalent forms</h3>
+<p>For a bridgeless graph <span class="math inline">\(G\)</span>, the following are all equivalent to “<span class="math inline">\(G\)</span> has a nowhere-zero 5-flow”:</p>
+<ol type="1">
+<li><span class="math inline">\(G\)</span> has a nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-flow (Tutte).</li>
+<li><span class="math inline">\(G\)</span> has an orientation in which every edge cut has out/in ratio in <span class="math inline">\([\tfrac14, 4]\)</span> (Hoffman).</li>
+<li><span class="math inline">\(G\)</span> has an orientation whose arcs are covered by four directed cycles (Little-Tutte-Younger).</li>
+<li><span class="math inline">\(F(G;5)&gt;0\)</span>.</li>
+<li><span class="math inline">\(G\)</span> has a real-valued flow with all <span class="math inline">\(|f(e)|\in[1,4]\)</span> (circular flow number <span class="math inline">\(\le 5\)</span>; Goddyn-Tarsi-Zhang 1998, and Steffen 2001 for integrality when the circular flow number is exactly 5).</li>
+<li>(cubic <span class="math inline">\(G\)</span>) <span class="math inline">\(G\)</span> has an <em>even <span class="math inline">\((1,2)\)</span>-factor</em>: a spanning subgraph <span class="math inline">\(F\)</span> with all degrees 1 or 2 such that every circuit of <span class="math inline">\(G\)</span> has an even number of <span class="math inline">\(F\)</span>-balanced edges, where an edge is <span class="math inline">\(F\)</span>-balanced if it lies in <span class="math inline">\(F\)</span> or its ends have the same <span class="math inline">\(F\)</span>-degree (Matamala-Zamora 2013).</li>
+</ol>
+<p>There is deliberately no item of the form “a 2-flow and a 3-flow covering <span class="math inline">\(E(G)\)</span>”: 5 is prime, so no product formulation exists (§4.3).</p>
+<p>And the conjecture as a whole is equivalent to each of:</p>
+<ul>
+<li>every 3-connected cubic graph has a nowhere-zero 5-flow (Zhang §2.8);</li>
+<li>every cyclically 6-edge-connected snark of girth <span class="math inline">\(\ge 11\)</span> and oddness <span class="math inline">\(\ge 6\)</span> has a nowhere-zero 5-flow (Kochol 2004, 2010; Mazzuoccolo-Steffen 2017);</li>
+<li>every bridgeless graph has circular flow number at most 5 (§6.3).</li>
+</ul>
+<h3 id="consequences-of-the-conjecture">6.2 Consequences of the conjecture</h3>
+<ul>
+<li><strong>Shortest cycle covers.</strong> If <span class="math inline">\(G\)</span> has a nowhere-zero 5-flow then <span class="math inline">\(G\)</span> has a cycle cover by 3 cycles of total length <span class="math inline">\(\le\tfrac85|E(G)|\)</span> (Jamshy-Raspaud-Tarsi 1989; Zhang Thm 8.7.1). The proof splits a positive 5-flow into four nonnegative 2-flows and averages over the five flows <span class="math inline">\(f, 5f_i-f\)</span>. The general bound is <span class="math inline">\(\tfrac53|E|\)</span> (Alon-Tarsi, Bermond-Jackson-Jaeger); the conjectured bound is <span class="math inline">\(\tfrac75|E|\)</span>.</li>
+<li><strong>Complexity.</strong> Kochol (1998): if the 5-flow conjecture is false, deciding whether a cubic graph has a nowhere-zero 5-flow is NP-complete. So the conjecture is either true or computationally hard, with no middle ground.</li>
+</ul>
+<h3 id="circular-flows">6.3 Circular flows</h3>
+<p>A nowhere-zero circular <span class="math inline">\(r\)</span>-flow (<span class="math inline">\(r\)</span> real) is a real flow with <span class="math inline">\(1\le|f(e)|\le r-1\)</span>; the <strong>circular flow number</strong> <span class="math inline">\(\Phi_c(G)\)</span> is the infimum of such <span class="math inline">\(r\)</span>. Goddyn, Tarsi and Zhang (1998) showed the infimum is attained and rational, and by Hoffman it equals <span class="math inline">\(\max_{(A,B)} (|[A,B]|+|[B,A]|)/\min(|[A,B]|,|[B,A]|)\)</span> minimised over orientations. Facts:</p>
+<ul>
+<li><span class="math inline">\(\Phi_c(G)\le\Phi(G)\)</span> (the integer flow number), and if <span class="math inline">\(\Phi_c(G)\)</span> is an integer <span class="math inline">\(k\)</span> then <span class="math inline">\(G\)</span> has a nowhere-zero integer <span class="math inline">\(k\)</span>-flow (Steffen 2001). Hence the 5-flow conjecture is exactly <span class="math inline">\(\Phi_c(G)\le 5\)</span> for all bridgeless <span class="math inline">\(G\)</span>.</li>
+<li>Cubic: <span class="math inline">\(\Phi_c=3\)</span> iff bipartite; <span class="math inline">\(\Phi_c\le 4\)</span> iff 3-edge-colourable; no cubic graph has <span class="math inline">\(\Phi_c\in(3,4)\)</span>; every rational in <span class="math inline">\([4,5]\)</span> is the circular flow number of some snark (Lukot’ka-Škoviera 2011, answering Pan-Zhu).</li>
+<li><span class="math inline">\(\Phi_c(P_{10})=5\)</span>. Mohar conjectured <span class="math inline">\(P_{10}\)</span> is the only snark with <span class="math inline">\(\Phi_c=5\)</span> (the “strong circular 5-flow conjecture”); Máčajová and Raspaud (2006) refuted it with an infinite family, all of cyclic connectivity 4. Esperet-Mazzuoccolo-Tarsi (2016) characterised the structure of graphs with <span class="math inline">\(\Phi_c\ge 5\)</span> via sets of transferable flow values modulo 5, gave several constructions, and showed recognising <span class="math inline">\(\Phi_c\ge 5\)</span> is NP-complete. Goedgebeur-Mattiolo-Mazzuoccolo (2021) unified the constructions and computed all snarks with <span class="math inline">\(\Phi_c=5\)</span> up to 36 vertices (98 of order 36).</li>
+<li><strong>Open (Steffen’s Problem 5.2):</strong> is <span class="math inline">\(P_{10}\)</span> the only <em>cyclically 5-edge-connected</em> snark with circular flow number 5? A positive answer for cyclically 6-edge-connected snarks would prove the 5-flow conjecture in the strong form <span class="math inline">\(\Phi_c&lt;5\)</span> for every snark except Petersen.</li>
+<li>Bounding <span class="math inline">\(\Phi_c\)</span> from above is also how the computer verifications work: an exact algorithm for <span class="math inline">\(\Phi_c\)</span> of snarks (Goedgebeur-Mattiolo-Mazzuoccolo 2020) is fast enough for all snarks up to 36 vertices.</li>
+</ul>
+<h3 id="cycle-double-covers">6.4 Cycle double covers</h3>
+<ul>
+<li><strong>Orientable 5-CDC conjecture (Archdeacon 1984, Jaeger 1988; Zhang Conj 2.5.4):</strong> every bridgeless graph has an orientable cycle double cover by at most 5 cycles. By Theorem 2.5.3 this <strong>implies</strong> the 5-flow conjecture.</li>
+<li><strong>5-CDC conjecture (Preissmann 1981, Celmins 1984; Zhang Conj 7.4.1):</strong> every bridgeless graph has a (not necessarily orientable) CDC by at most 5 cycles. Neither this nor the CDC conjecture is known to imply or follow from the 5-flow conjecture.</li>
+<li><strong>Petersen colouring conjecture (Jaeger 1988)</strong> implied the 5-CDC and Berge-Fulkerson conjectures. It was <strong>refuted in August 2026</strong>: Putman found a 112-vertex counterexample by SAT solving, and Jooken gave a human-checkable proof and announced a 52-vertex counterexample and an infinite cyclically 4-edge-connected family. This does not touch the 5-flow conjecture (there was no known implication in either direction), but it removes one of the “master conjectures” from the landscape and is a reminder that snark conjectures do fail.</li>
+</ul>
+<h3 id="group-connectivity-jaeger-linial-payan-tarsi-1992">6.5 Group connectivity (Jaeger-Linial-Payan-Tarsi 1992)</h3>
+<p><span class="math inline">\(G\)</span> is <strong><span class="math inline">\(\Gamma\)</span>-connected</strong> if for every orientation and every zero-sum boundary function <span class="math inline">\(b\colon V\to\Gamma\)</span> there is a nowhere-zero <span class="math inline">\(f\colon E\to\Gamma\)</span> with <span class="math inline">\(\partial f=b\)</span>; equivalently, every prescribed function <span class="math inline">\(c\colon E\to\Gamma\)</span> can be avoided pointwise by some <span class="math inline">\(\Gamma\)</span>-flow. Being <span class="math inline">\(\Gamma\)</span>-connected implies having a nowhere-zero <span class="math inline">\(\Gamma\)</span>-flow (take <span class="math inline">\(b=0\)</span>). Results (Zhang §9.5):</p>
+<ul>
+<li>graphs with two edge-disjoint spanning trees are <span class="math inline">\(\Gamma\)</span>-connected for all <span class="math inline">\(|\Gamma|\ge 4\)</span>; so 4-edge-connected graphs are <span class="math inline">\(\mathbb Z_5\)</span>-connected;</li>
+<li>3-edge-connected graphs are <span class="math inline">\(\Gamma\)</span>-connected for all <span class="math inline">\(|\Gamma|\ge 6\)</span> (the group-connectivity form of Seymour’s theorem; the closure lemma is Zhang Lemma 9.5.5);</li>
+<li>monotonicity fails: there is a graph that is <span class="math inline">\(\mathbb Z_5\)</span>-connected but not <span class="math inline">\(\mathbb Z_6\)</span>-connected (Zhang Fig. 9.1), so the 5 vs 6 gap is not an artefact of a monotone parameter.</li>
+</ul>
+<p><strong>Conjecture (JLPT; Zhang Conj 9.7.6):</strong> every 3-edge-connected graph is <span class="math inline">\(\mathbb Z_5\)</span>-connected. This implies the 5-flow conjecture. It is open, and no partial result beyond 4-edge-connectivity is known to the author.</p>
+<h3 id="modulo-orientations-and-jaegers-circular-flow-conjecture">6.6 Modulo orientations and Jaeger’s circular flow conjecture</h3>
+<p>A <strong>modulo <span class="math inline">\((2t+1)\)</span>-orientation</strong> has <span class="math inline">\(d^+(v)\equiv d^-(v)\)</span> mod <span class="math inline">\(2t+1\)</span> at every vertex; it is the same as a nowhere-zero <span class="math inline">\(\mathbb Z_{2t+1}\)</span>-flow with all values <span class="math inline">\(\pm1\)</span>, and also as a circular <span class="math inline">\((2+\tfrac1t)\)</span>-flow and a circular orientable <span class="math inline">\((2t+1)\)</span>-CDC (Zhang Thm 9.2.3).</p>
+<ul>
+<li><strong>Jaeger’s conjecture (1984):</strong> every <span class="math inline">\(4t\)</span>-edge-connected graph has a modulo <span class="math inline">\((2t+1)\)</span>-orientation. <span class="math inline">\(t=1\)</span> is the 3-flow conjecture. <span class="math inline">\(t=2\)</span> (every 8-edge-connected graph has a mod-5 orientation) <strong>implies the 5-flow conjecture</strong> (Zhang Ex. 9.2): triple every edge of a 3-edge-connected cubic graph to get a 9-edge-connected graph; a mod-5 orientation of it gives each original edge a value in <span class="math inline">\(\{\pm1,\pm3\}\)</span>, nonzero mod 5.</li>
+<li>Thomassen (2012) proved <span class="math inline">\((2k^2+k)\)</span>-edge-connectivity suffices for mod <span class="math inline">\(k\)</span>; Lovász-Thomassen-Wu-Zhang (2013) improved this to <span class="math inline">\((3k-3)\)</span>, so <strong>12-edge-connected graphs have mod-5 orientations</strong> and 6-edge-connected graphs have 3-flows.</li>
+<li>Han-Li-Wu-Zhang (2018) <strong>disproved</strong> Jaeger’s conjecture for all <span class="math inline">\(t\ge3\)</span> (there are <span class="math inline">\(4t\)</span>-edge-connected graphs with no mod <span class="math inline">\((2t+1)\)</span>-orientation, and <span class="math inline">\((4t+1)\)</span>-edge-connected ones for <span class="math inline">\(t\ge5\)</span>). The cases <span class="math inline">\(t=1\)</span> and <span class="math inline">\(t=2\)</span> survive. Delcourt et al. (2025) show almost all 9-regular graphs have mod-5 orientations.</li>
+</ul>
+<p>So “every 8-, 9-, 10- or 11-edge-connected graph has a modulo 5-orientation” is an open strengthening of the 5-flow conjecture that is squarely in range of the LTWZ machinery, and Section 9 treats it as a live route.</p>
+<h3 id="recent-variants-2025-2026">6.7 Recent variants (2025-2026)</h3>
+<ul>
+<li><strong>Reconfiguration.</strong> Esperet, Hendrey, Lagoutte, Marseloo, Norin and Steiner (Dec 2025) show that the reconfiguration analogue of the 5-flow conjecture (any two nowhere-zero 5-flows of a 2-edge-connected graph connected by single-cycle changes) is <strong>false</strong>, in both the <span class="math inline">\(\mathbb Z_5\)</span> and integer settings, while all nowhere-zero <span class="math inline">\(\mathbb Z_2^8\)</span>-flows are connected. Cranston, Li, Su, Wang and Xu (June 2026) characterise 3-flow-connectedness and reduce <span class="math inline">\(A\)</span>-flow-connectedness to cubic graphs.</li>
+<li><strong>Multidimensional flows.</strong> Gáborik, Kurz, Mazzuoccolo, Rajník and Rieg (Oct 2025) define Manhattan and Chebyshev flow numbers <span class="math inline">\(\Phi^1_d,\Phi^\infty_d\)</span> (rational; in dimension 2 they separate class 1 from class 2 cubic graphs) and propose conjectures built on “<span class="math inline">\(t\)</span>-flow-pairs” abstracted from Seymour’s proof, which they position as possibly stronger than the 5-flow conjecture.</li>
+<li><strong>Signed graphs.</strong> Bouchet’s conjecture (every flow-admissible signed graph has a nowhere-zero 6-flow) is the signed analogue; 8-flows for 3-edge-connected signed graphs and 6-flows for cyclically 5-edge-connected cubic signed graphs were shown in 2025-26. Signed graphs have their own 5-flow questions (signed ladders, signed Eulerian graphs), but they are a different problem.</li>
+</ul>
+<hr />
+<h2 id="the-toolbox-and-why-every-tool-stops-at-6">7. The toolbox, and why every tool stops at 6</h2>
+<p>It is worth stating plainly what each known technique can and cannot do.</p>
+<p><strong>1. Product/covering arguments (Matthews, Seymour).</strong> Produce flows in <span class="math inline">\(\mathbb Z_{k_1}\times\mathbb Z_{k_2}\)</span>. Cannot produce 5. This is not a limitation of cleverness but of arithmetic.</p>
+<p><strong>2. Closure/extension lemmas (Seymour’s <span class="math inline">\(\mathcal C_k\)</span>, JLPT <span class="math inline">\(k\)</span>-closure, Zhang Lemma 9.5.5).</strong> Adding a circuit with <span class="math inline">\(\le j\)</span> new edges to a <span class="math inline">\(\Gamma\)</span>-connected piece keeps it <span class="math inline">\(\Gamma\)</span>-connected as long as <span class="math inline">\(j&lt;|\Gamma|\)</span> forbidden values can be dodged, i.e. <span class="math inline">\(j\le|\Gamma|-1\)</span>. With <span class="math inline">\(\Gamma=\mathbb Z_5\)</span> one can add circuits with at most 4 new edges. Seymour’s trick is to first contract a cycle <span class="math inline">\(S\)</span> so that the rest is in <span class="math inline">\(\mathcal C_2\)</span>; with <span class="math inline">\(\mathbb Z_5\)</span> one may hope to contract <em>less</em>. A direct approach: find an even subgraph <span class="math inline">\(S\)</span> and a <span class="math inline">\(\mathbb Z_5\)</span>-flow on <span class="math inline">\(G/S\)</span> that is nonzero on <span class="math inline">\(E(G)\setminus E(S)\)</span> <em>and</em> whose lift can be corrected on <span class="math inline">\(S\)</span>; the correction needs a <span class="math inline">\(\mathbb Z_5\)</span>-flow supported on <span class="math inline">\(S\)</span> avoiding one forbidden value per edge of <span class="math inline">\(S\)</span>, which exists if <span class="math inline">\(S\)</span> is <span class="math inline">\(\mathbb Z_5\)</span>-connected as a graph, e.g. if <span class="math inline">\(S\)</span> is a union of disjoint circuits <strong>plus</strong> enough freedom. The failure point is that a circuit’s 2-flow gives only one degree of freedom (the multiplier), so on a circuit of <span class="math inline">\(S\)</span> carrying several distinct forbidden values one cannot always avoid all of them. Fan’s structure theorem (Zhang Thm 5.4.1) that <span class="math inline">\(S\)</span> can be chosen as disjoint circuits with a “last expanded edge” is exactly the kind of extra control that a <span class="math inline">\(\mathbb Z_5\)</span> argument would need more of.</p>
+<p><strong>3. Minimal-counterexample surgery (splitting, contraction, girth, small cuts, Kochol’s <span class="math inline">\(k\)</span>-pole sets).</strong> Very effective at narrowing the target, structurally incapable of closing it: girth and connectivity bounds can be pushed but snarks with arbitrarily large girth and with cyclic connectivity 6 exist.</p>
+<p><strong>4. 2-factor / oddness arguments (Jaeger, Steffen, Mazzuoccolo).</strong> Work by pairing odd circuits of a 2-factor and constructing a 4-flow on a modified graph, then repairing. They give the sharpest “class” results and have a clear next step (oddness 6), but oddness is unbounded on snarks, so this route needs a new idea to become general.</p>
+<p><strong>5. Modulo-orientation / LTWZ lifting.</strong> Proves mod <span class="math inline">\(k\)</span> orientations under high edge-connectivity by a strengthened inductive statement about prescribed boundaries, contracting and lifting. Yields mod-5 orientations at 12-edge-connectivity. Because tripling a cubic graph gives 9-edge-connectivity, the conjecture would follow from a “9-edge-connected” version, and the Han-Li-Wu-Zhang counterexamples do not touch <span class="math inline">\(t=2\)</span>.</p>
+<p><strong>6. Computation.</strong> Exhaustive over snarks to 36 vertices; circular flow numbers to 36; Kochol’s rank computations to girth 11. Growth of the snark census (there are 60,167,732 snarks on 36 vertices, and tens of billions expected at 38-40) makes brute force beyond ~38 expensive but not impossible with restriction to cyclically 6-edge-connected, girth-<span class="math inline">\(\ge 7\)</span> snarks, which are rare.</p>
+<p><strong>7. Flow polynomial / algebraic.</strong> The conjecture is <span class="math inline">\(F(G;5)&gt;0\)</span>. Known real flow roots cluster near 5 from both sides (§8), so no zero-free interval argument is available; the conjecture is “almost false” in the sense of Jacobsen-Salas.</p>
+<p>The honest summary: every general upper-bound proof factorises the group; the conjecture needs a <span class="math inline">\(\mathbb Z_5\)</span> argument; the only <span class="math inline">\(\mathbb Z_5\)</span> arguments in the literature are local (extension through small cuts, circuits with <span class="math inline">\(\le 4\)</span> new edges, pairs of odd circuits) and each is blocked by a family of snarks that escapes it.</p>
+<hr />
+<h2 id="the-flow-polynomial-and-computation">8. The flow polynomial and computation</h2>
+<p><strong>Real flow roots.</strong> Welsh conjectured that <span class="math inline">\(F(G;q)&gt;0\)</span> for all real <span class="math inline">\(q\ge4\)</span> (a broad generalisation of the 5-flow conjecture through the Birkhoff-Lewis conjecture for planar duals). Haggard, Pearce and Royle found the generalised Petersen graph <span class="math inline">\(G(16,6)\)</span> has real flow roots near 4.025 and 4.233; they then conjectured <span class="math inline">\(F(G;q)&gt;0\)</span> for <span class="math inline">\(q\ge5\)</span>. Jacobsen and Salas (2013, “Is the five-flow conjecture almost false?”) disproved that too: the families <span class="math inline">\(G(6n,6)\)</span> and <span class="math inline">\(G(7n,7)\)</span> have real flow roots accumulating at 5 from above (<span class="math inline">\(G(119,7)\)</span> has a root at <span class="math inline">\(\approx 5.0000198\)</span>), and another accumulation point near 5.2353. The current guesses are <span class="math inline">\(F(G;q)&gt;0\)</span> for <span class="math inline">\(q\ge6\)</span> (Jacobsen-Salas) or merely for <span class="math inline">\(q\ge c\)</span> for some constant (Dong 2020); Jackson proved <span class="math inline">\(F(G;q)&gt;0\)</span> for <span class="math inline">\(q\ge2\log_2 n\)</span>. None of the graphs with roots near 5 is a counterexample (they have Hamilton paths, hence 5-flows), but they show that the value 5 has no safety margin.</p>
+<p><strong>Deciding 5-flows on a given graph.</strong> For cubic <span class="math inline">\(G\)</span>, a nowhere-zero <span class="math inline">\(\mathbb Z_5\)</span>-flow is a choice of values in <span class="math inline">\(\{1,2,3,4\}\)</span> on edges with the mod-5 balance at each vertex; with one edge of each vertex fixed the others are determined, so a search over a spanning tree’s complement of <span class="math inline">\(4^{|E|-|V|+1}\)</span> assignments (or a SAT/CSP encoding) is straightforward for small graphs, and dynamic programming over a path or tree decomposition handles moderate size. For circular flow numbers, Goedgebeur-Mattiolo-Mazzuoccolo (2020) give an exact algorithm based on the Hoffman cut characterisation and Kochol-style boundary sets. Snark generation is available from the House of Graphs / snarkhunter (Brinkmann-Goedgebeur).</p>
+<hr />
+<h2 id="attack-routes-for-this-project">9. Attack routes for this project</h2>
+<p>Ordered from most incremental to most ambitious. Each item lists what a success would mean and what it needs.</p>
+<ol type="1">
+<li><p><strong>Oddness 6.</strong> Extend Mazzuoccolo-Steffen to cyclically 6-edge-connected cubic graphs of oddness 6 (or all oddness with cyclic connectivity <span class="math inline">\(\ge\)</span> some function). The pairing-and-repair method is explicit; the case analysis is the cost. Even a partial result (oddness 6 with girth <span class="math inline">\(\ge 11\)</span>) sharpens the ledger.</p></li>
+<li><p><strong>Circular flow number below 5 for cyclically 5- or 6-edge-connected snarks.</strong> Steffen’s Problem 5.2. Computationally: extend the census of snarks with <span class="math inline">\(\Phi_c=5\)</span> to 38-40 vertices restricted to cyclic connectivity <span class="math inline">\(\ge5\)</span>; theoretically: use the Esperet-Mazzuoccolo-Tarsi transferable-value structure to show a cyclic 5- or 6-cut cannot carry the obstruction. A theorem “<span class="math inline">\(\Phi_c(G)&lt;5\)</span> for cyclically 6-edge-connected snarks other than <span class="math inline">\(P_{10}\)</span>” would prove the conjecture in strengthened form.</p></li>
+<li><p><strong>Mod-5 orientations at lower edge-connectivity.</strong> Push the LTWZ bound <span class="math inline">\(3k-3=12\)</span> down toward 9 for <span class="math inline">\(k=5\)</span>. Any bound <span class="math inline">\(\le 9\)</span> proves the 5-flow conjecture via edge tripling. Jaeger’s conjecture is dead for <span class="math inline">\(t\ge3\)</span> but the <span class="math inline">\(t=2\)</span> case has no known obstruction, and the Delcourt et al. random-regular result is encouraging. This is the route with the most recent, live machinery.</p></li>
+<li><p><strong><span class="math inline">\(\mathbb Z_5\)</span>-connectivity of 3-edge-connected graphs.</strong> JLPT’s conjecture. A weaker but new target: <span class="math inline">\(\mathbb Z_5\)</span>-connectivity of 3-edge-connected graphs with a specified structure (for example cubic graphs plus one contracted cycle), which is exactly what a Seymour-style proof would need. Study the <span class="math inline">\(\mathbb Z_5\)</span>-connected-but-not-<span class="math inline">\(\mathbb Z_6\)</span>-connected example to understand what fails.</p></li>
+<li><p><strong>Kochol’s boundary-set calculus with computer assistance.</strong> Automate the <span class="math inline">\(k\)</span>-pole boundary-set computations to (a) push the girth bound past 11, (b) more usefully, attempt a reduction to cyclically 7-edge-connected snarks, which combined with the Jaeger-Swart conjecture (cyclic connectivity <span class="math inline">\(\le 6\)</span> for snarks) would be decisive, and independently would tighten the target.</p></li>
+<li><p><strong>Counterexample search.</strong> Use superposition (Kochol) to build cyclically 6-edge-connected snarks with oddness <span class="math inline">\(\ge6\)</span> and girth <span class="math inline">\(\ge 7\)</span> (girth 11 is much harder), and test <span class="math inline">\(\mathbb Z_5\)</span>-flows by SAT. Two outcomes are valuable: a counterexample ends the problem; a large verified family of the “dangerous” type is evidence and may reveal the structural reason they always have 5-flows.</p></li>
+<li><p><strong>A genuinely new <span class="math inline">\(\mathbb Z_5\)</span> extension lemma.</strong> The structural bottleneck of §7: find a class of “<span class="math inline">\(\mathbb Z_5\)</span>-extendable” configurations larger than “circuit with <span class="math inline">\(\le4\)</span> new edges”, e.g. two circuits sharing a path, or a theta with <span class="math inline">\(\le 6\)</span> new edges, so that every 3-connected cubic graph decomposes into them. This is the only item on the list that could give a short proof, and the only one with no existing partial results to build on.</p></li>
+</ol>
+<hr />
+<h2 id="bibliography">10. Bibliography</h2>
+<p><strong>Books and surveys</strong></p>
+<ul>
+<li>C.-Q. Zhang, <em>Integer Flows and Cycle Covers of Graphs</em>, Marcel Dekker, 1997. (Chapters 1-2, 5, 8.7, 9; the reference for everything marked “Zhang”.)</li>
+<li>C.-Q. Zhang, <em>Circuit Double Cover of Graphs</em>, LMS Lecture Notes 399, Cambridge, 2012.</li>
+<li>F. Jaeger, Nowhere-zero flow problems, in <em>Selected Topics in Graph Theory 3</em>, Academic Press, 1988, 71-95.</li>
+<li>P. D. Seymour, Nowhere-zero flows, in <em>Handbook of Combinatorics</em>, 1995.</li>
+<li>D. H. Younger, Integer flows, <em>J. Graph Theory</em> 7 (1983) 349-357.</li>
+<li>M. A. Fiol, G. Mazzuoccolo, E. Steffen, On measures of edge-uncolorability of cubic graphs: a brief survey and some new results, arXiv:1702.07156 (2017).</li>
+<li>F. Dong, A survey on the study of real zeros of flow polynomials, arXiv:2007.05195 (2020).</li>
+<li>Open Problem Garden, “5-flow conjecture”, https://www.openproblemgarden.org/op/5_flow_conjecture.</li>
+</ul>
+<p><strong>Origins and general bounds</strong></p>
+<ul>
+<li>W. T. Tutte, A contribution to the theory of chromatic polynomials, <em>Canad. J. Math.</em> 6 (1954) 80-91.</li>
+<li>W. T. Tutte, On the algebraic theory of graph colorings, <em>J. Combin. Theory</em> 1 (1966) 15-50.</li>
+<li>P. A. Kilpatrick, Tutte’s first colour-cycle conjecture, PhD thesis, Cape Town, 1975.</li>
+<li>F. Jaeger, Flows and generalized coloring theorems in graphs, <em>J. Combin. Theory Ser. B</em> 26 (1979) 205-216.</li>
+<li>P. D. Seymour, Nowhere-zero 6-flows, <em>J. Combin. Theory Ser. B</em> 30 (1981) 130-135.</li>
+<li>G. Fan, Integer flows and cycle covers, <em>J. Combin. Theory Ser. B</em> 54 (1992) 113-122.</li>
+<li>M. DeVos, E. Rollová, R. Šámal, A new proof of Seymour’s 6-flow theorem, <em>J. Combin. Theory Ser. B</em> 122 (2017) 187-195; M. DeVos, Another proof of Seymour’s 6-flow theorem, <em>J. Graph Theory</em> (2024); M. DeVos, J. Nurse, A short proof of Seymour’s 6-flow theorem, <em>Electron. J. Combin.</em> 32(4) (2025).</li>
+<li>K. R. Matthews, On the eulericity of a graph, <em>J. Graph Theory</em> 2 (1978) 143-148.</li>
+<li>C. H. C. Little, W. T. Tutte, D. H. Younger, A theorem on integer flows, <em>Ars Combin.</em> 26A (1988) 109-112.</li>
+</ul>
+<p><strong>Minimal counterexamples</strong></p>
+<ul>
+<li>U. A. Celmins, On cubic graphs that do not have an edge 3-coloring, PhD thesis, Waterloo, 1984.</li>
+<li>M. Möller, H. G. Carstens, G. Brinkmann, Nowhere-zero flows in low genus graphs, <em>J. Graph Theory</em> 12 (1988) 183-190.</li>
+<li>K. Sekine, C.-Q. Zhang, Decomposition of the flow polynomial, <em>Graphs Combin.</em> 13 (1997) 189-196.</li>
+<li>M. Kochol, Snarks without small cycles, <em>J. Combin. Theory Ser. B</em> 67 (1996) 34-47; A cyclically 6-edge-connected snark of order 118, <em>Discrete Math.</em> 161 (1996) 297-300.</li>
+<li>M. Kochol, Superposition and constructions of graphs without nowhere-zero k-flows, <em>European J. Combin.</em> 23 (2002) 281-306.</li>
+<li>M. Kochol, Polynomials associated with nowhere-zero flows, <em>J. Combin. Theory Ser. B</em> 84 (2002) 260-269.</li>
+<li>M. Kochol, Reduction of the 5-flow conjecture to cyclically 6-edge-connected snarks, <em>J. Combin. Theory Ser. B</em> 90 (2004) 139-145.</li>
+<li>M. Kochol, Restrictions on smallest counterexamples to the 5-flow conjecture, <em>Combinatorica</em> 26 (2006) 83-89.</li>
+<li>M. Kochol, Smallest counterexample to the 5-flow conjecture has girth at least eleven, <em>J. Combin. Theory Ser. B</em> 100 (2010) 381-389.</li>
+<li>M. Kochol, N. Krivoňáková, S. Smejová, K. Šranková, Matrix reduction in a combinatorial computation, <em>Inform. Process. Lett.</em> 111 (2011) 164-168.</li>
+<li>E. Steffen, Tutte’s 5-flow conjecture for highly cyclically connected cubic graphs, <em>Discrete Math.</em> 310 (2010) 385-389.</li>
+<li>E. Steffen, Intersecting 1-factors and nowhere-zero 5-flows, <em>Combinatorica</em> 35 (2015) 633-640.</li>
+<li>G. Mazzuoccolo, E. Steffen, Nowhere-zero 5-flows on cubic graphs with oddness 4, <em>J. Graph Theory</em> 85 (2017) 363-371.</li>
+<li>G. Brinkmann, J. Goedgebeur, J. Hägglund, K. Markström, Generation and properties of snarks, <em>J. Combin. Theory Ser. B</em> 103 (2013) 468-488.</li>
+<li>F. Jaeger, T. Swart, Conjectures 1 and 2, in <em>Combinatorics 79</em>, Ann. Discrete Math. 9 (1980) 305.</li>
+</ul>
+<p><strong>Graph classes</strong></p>
+<ul>
+<li>R. Steinberg, Tutte’s 5-flow conjecture for the projective plane, <em>J. Graph Theory</em> 8 (1984) 277-285.</li>
+<li>M. Kochol, Cubic graphs without a Petersen minor have nowhere-zero 5-flows, <em>Acta Math. Univ. Comenian.</em> 68 (1999) 249-252.</li>
+<li>N. Robertson, P. Seymour, R. Thomas, Tutte’s edge-colouring conjecture, <em>J. Combin. Theory Ser. B</em> 70 (1997) 166-183.</li>
+<li>K. Edwards, D. Sanders, P. Seymour, R. Thomas, Three-edge-colouring doublecross cubic graphs, <em>J. Combin. Theory Ser. B</em> 119 (2016) 66-95.</li>
+<li>Y. Inoue, K. Kawarabayashi, R. Matsuo, A. Miyashita, B. Mohar, T. Sonobe, Three-edge-coloring apex cubic graphs, arXiv:2608.22870 (Aug 2026).</li>
+<li>M. Matamala, J. Zamora, Nowhere-zero 5-flows and even (1,2)-factors, <em>Graphs Combin.</em> 29 (2013) 609-616.</li>
+<li>M. Kochol, Hypothetical complexity of the nowhere-zero 5-flow problem, <em>J. Graph Theory</em> 28 (1998) 1-11.</li>
+</ul>
+<p><strong>Circular flows, group connectivity, orientations</strong></p>
+<ul>
+<li>L. A. Goddyn, M. Tarsi, C.-Q. Zhang, On (k,d)-colorings and fractional nowhere-zero flows, <em>J. Graph Theory</em> 28 (1998) 155-161.</li>
+<li>E. Steffen, Circular flow numbers of regular multigraphs, <em>J. Graph Theory</em> 36 (2001) 24-34.</li>
+<li>Z. Pan, X. Zhu, Construction of graphs with given circular flow numbers, <em>J. Graph Theory</em> 43 (2003) 304-318.</li>
+<li>E. Máčajová, A. Raspaud, On the strong circular 5-flow conjecture, <em>J. Graph Theory</em> 52 (2006) 307-316.</li>
+<li>R. Lukot’ka, M. Škoviera, Snarks with given real flow numbers, <em>J. Graph Theory</em> 68 (2011) 189-201.</li>
+<li>L. Esperet, G. Mazzuoccolo, M. Tarsi, The structure of graphs with circular flow number 5 or more, and the complexity of their recognition problem, <em>J. Comb.</em> 7 (2016) 453-479.</li>
+<li>J. Goedgebeur, D. Mattiolo, G. Mazzuoccolo, Computational results and new bounds for the circular flow number of snarks, <em>Discrete Math.</em> 343 (2020) 112026; A unified approach to construct snarks with circular flow number 5, <em>J. Graph Theory</em> 96 (2021) 313-334.</li>
+<li>F. Jaeger, N. Linial, C. Payan, M. Tarsi, Group connectivity of graphs: a nonhomogeneous analogue of nowhere-zero flow properties, <em>J. Combin. Theory Ser. B</em> 56 (1992) 165-182.</li>
+<li>F. Jaeger, On circular flows in graphs, in <em>Finite and Infinite Sets</em>, Colloq. Math. Soc. János Bolyai 37 (1984) 391-402.</li>
+<li>C. Thomassen, The weak 3-flow conjecture and the weak circular flow conjecture, <em>J. Combin. Theory Ser. B</em> 102 (2012) 521-529.</li>
+<li>L. M. Lovász, C. Thomassen, Y. Wu, C.-Q. Zhang, Nowhere-zero 3-flows and modulo k-orientations, <em>J. Combin. Theory Ser. B</em> 103 (2013) 587-598.</li>
+<li>M. Han, J. Li, Y. Wu, C.-Q. Zhang, Counterexamples to Jaeger’s circular flow conjecture, <em>J. Combin. Theory Ser. B</em> 131 (2018) 1-11.</li>
+<li>M. Delcourt et al., Almost all 9-regular graphs have a modulo-5 orientation, <em>Electron. J. Combin.</em> 32(2) (2025).</li>
+</ul>
+<p><strong>Cycle covers and related conjectures</strong></p>
+<ul>
+<li>D. Archdeacon, Face colorings of embedded graphs, <em>J. Graph Theory</em> 8 (1984) 387-398.</li>
+<li>U. Jamshy, A. Raspaud, M. Tarsi, Short circuit covers for regular matroids with a nowhere zero 5-flow, <em>J. Combin. Theory Ser. B</em> 43 (1987) 354-357.</li>
+<li>J. Jooken, A human-checkable proof of the 112-vertex counterexample to the Petersen coloring conjecture, arXiv:2608.10028 (Aug 2026); the counterexample is due to Putman (2026).</li>
+</ul>
+<p><strong>Flow polynomial</strong></p>
+<ul>
+<li>J. L. Jacobsen, J. Salas, Is the five-flow conjecture almost false?, <em>J. Combin. Theory Ser. B</em> 103 (2013) 532-565.</li>
+<li>G. Haggard, D. J. Pearce, G. Royle, Computing Tutte polynomials, <em>ACM Trans. Math. Software</em> 37 (2010).</li>
+<li>B. Jackson, Zeros of chromatic and flow polynomials of graphs, <em>J. Geom.</em> 76 (2003) 95-109.</li>
+</ul>
+<p><strong>2025-2026 variants</strong></p>
+<ul>
+<li>L. Esperet, K. Hendrey, A. Lagoutte, M. Marseloo, S. Norin, R. Steiner, Nowhere-zero flow reconfiguration, arXiv:2512.17342 (Dec 2025).</li>
+<li>D. W. Cranston, J. Li, B. Su, Z. Wang, N. Xu, Reconfiguration of nowhere-zero flows, arXiv:2606.24685 (June 2026).</li>
+<li>L. Gáborik, S. Kurz, G. Mazzuoccolo, J. Rajník, F. Rieg, Manhattan and Chebyshev flows, arXiv:2510.22234 (Oct 2025).</li>
+</ul>
+
+</div>
+</body>
+</html>
