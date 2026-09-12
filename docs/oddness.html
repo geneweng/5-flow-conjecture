@@ -50,7 +50,7 @@
 <body>
 <div class="wrap">
   <header class="masthead"><div><p class="eyebrow">Working notes · September 2026</p><h1>Route: oddness 6</h1><p class="byline">Working notes, started 2026-09-12. Companion to the survey (§3, §9 route 1). Code: `tools/oddness.py`.</p></div><svg class="petersen" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Petersen graph"><g stroke="var(--accent)" stroke-width="1.6" fill="none"><line x1="60.0" y1="22.0" x2="98.0" y2="49.6"/><line x1="98.0" y1="49.6" x2="83.5" y2="94.4"/><line x1="83.5" y1="94.4" x2="36.5" y2="94.4"/><line x1="36.5" y1="94.4" x2="22.0" y2="49.6"/><line x1="22.0" y1="49.6" x2="60.0" y2="22.0"/><line x1="60.0" y1="22.0" x2="60.0" y2="44.0"/><line x1="98.0" y1="49.6" x2="77.1" y2="56.4"/><line x1="83.5" y1="94.4" x2="70.6" y2="76.6"/><line x1="36.5" y1="94.4" x2="49.4" y2="76.6"/><line x1="22.0" y1="49.6" x2="42.9" y2="56.4"/><line x1="60.0" y1="44.0" x2="70.6" y2="76.6"/><line x1="77.1" y1="56.4" x2="49.4" y2="76.6"/><line x1="70.6" y1="76.6" x2="42.9" y2="56.4"/><line x1="49.4" y1="76.6" x2="60.0" y2="44.0"/><line x1="42.9" y1="56.4" x2="77.1" y2="56.4"/></g><g fill="var(--ink)"><circle cx="60.0" cy="22.0" r="3"/><circle cx="98.0" cy="49.6" r="3"/><circle cx="83.5" cy="94.4" r="3"/><circle cx="36.5" cy="94.4" r="3"/><circle cx="22.0" cy="49.6" r="3"/><circle cx="60.0" cy="44.0" r="3"/><circle cx="77.1" cy="56.4" r="3"/><circle cx="70.6" cy="76.6" r="3"/><circle cx="49.4" cy="76.6" r="3"/><circle cx="42.9" cy="56.4" r="3"/></g></svg></header>
-  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#target">Target</a></li><li><a href="#the-method-steffen-2010-ms-2017-restated">The method (Steffen 2010, MS 2017), restated</a></li><li><a href="#what-changes-at-oddness-6-t3">What changes at oddness 6 (<span class="math inline">\(t=3\)</span>)</a></li><li><a href="#decisive-experiment-before-theory">Decisive experiment before theory</a></li><li><a href="#experiment-log">Experiment log</a></li><li><a href="#plan">Plan</a></li><li><a href="#towards-a-proof-that-the-four-classes-cannot-all-be-killed">Towards a proof that the four classes cannot all be killed</a></li></ol></nav>
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#target">Target</a></li><li><a href="#the-method-steffen-2010-ms-2017-restated">The method (Steffen 2010, MS 2017), restated</a></li><li><a href="#what-changes-at-oddness-6-t3">What changes at oddness 6 (<span class="math inline">\(t=3\)</span>)</a></li><li><a href="#decisive-experiment-before-theory">Decisive experiment before theory</a></li><li><a href="#experiment-log">Experiment log</a></li><li><a href="#plan">Plan</a></li><li><a href="#towards-a-proof-that-the-four-classes-cannot-all-be-killed">Towards a proof that the four classes cannot all be killed</a></li><li><a href="#stress-test-at-higher-oddness-does-the-four-class-phenomenon-scale">Stress test at higher oddness: does the four-class phenomenon scale?</a></li></ol></nav>
   <h2 id="target">0. Target</h2>
 <blockquote>
 <p><strong>(O6)</strong> Every cyclically 6-edge-connected cubic graph with oddness at most 6 has a nowhere-zero 5-flow.</p>
@@ -284,6 +284,187 @@
 <p><strong>Where cyclic 6-edge-connectivity enters.</strong> In the above, cyclic 6-connectivity was used only to (a) exclude bad cuts of size <span class="math inline">\(\le5\)</span> and (b) obtain the part-cut sizes in Lemma 6.4. Actually (a) needs no connectivity assumption at all: for <span class="math inline">\(m=5\)</span> one needs <span class="math inline">\(k\ge5=c_1=m\)</span>, hence <span class="math inline">\(c_2=0\)</span> and <span class="math inline">\(k\le q\le3\)</span>, impossible; for <span class="math inline">\(m=4\)</span>, <span class="math inline">\(k=4=c_1=m\)</span>, <span class="math inline">\(c_2=0\)</span>, <span class="math inline">\(k\le q\le 3\)</span>, impossible. Cuts of size 2 and 3 can be bad (<span class="math inline">\(k=2=c_1\)</span>, <span class="math inline">\(q\ge2\)</span>; <span class="math inline">\(k=3=c_1\)</span>, <span class="math inline">\(q=3\)</span>), which is what happens on <span class="math inline">\(R_2\)</span>. <strong>So the catalogue of Lemma 6.1 holds for every cyclically 4-edge-connected cubic graph</strong>, and cyclic 6-edge-connectivity is used only in interaction lemmas such as Lemma 6.4.</p>
 <p>Experiment on cyclically 5-connected (girth 5) graphs of the profiles <code>straddleA</code>, <code>straddleC</code>, <code>six12</code> (<code>CYC5=1 tools/killsets.py</code>, 1,440 instances): the same four cut types, no others; killed-class counts <span class="math inline">\(\{0{:}757,\ 1{:}506,\ 2{:}162,\ 3{:}15\}\)</span>; <strong>no instance with all four classes killed</strong>, but 3-kills are ten times more frequent than on the cyclically 6-connected graphs. So either the four-class statement is true already at cyclic 5-connectivity, or the counterexamples are rarer than 1 in 1,440 there.</p>
 <p><strong>Local lemma for two codimension-3 cuts.</strong> Let <span class="math inline">\(S,S&#39;\)</span> be tight for <span class="math inline">\(\varepsilon,\varepsilon&#39;\)</span> where <span class="math inline">\(\varepsilon&#39;\)</span> is <span class="math inline">\(\varepsilon\)</span> with <span class="math inline">\(P_3\)</span> flipped (after complementing, this is the general case of two classes differing in one coordinate), and put <span class="math inline">\(A=S\cap S&#39;\ni z_1,z_3\)</span>, <span class="math inline">\(B=V\setminus(S\cup S&#39;)\ni z_2,z_4\)</span>, <span class="math inline">\(C=S\setminus S&#39;\ni z_5\)</span>, <span class="math inline">\(D=S&#39;\setminus S\ni z_6\)</span>. Since <span class="math inline">\(\partial S,\partial S&#39;\subseteq E(H)\)</span> (for the 11- and 7-types) every edge between parts is an <span class="math inline">\(H\)</span>-edge, bichromatic under both colourings. Then: an <span class="math inline">\(A\)</span>–<span class="math inline">\(B\)</span> edge lies in both cuts, so its <span class="math inline">\(A\)</span>-end is black under <span class="math inline">\(\varepsilon\)</span> and under <span class="math inline">\(\varepsilon&#39;\)</span>, hence <strong>not on <span class="math inline">\(P_3\)</span></strong>; a <span class="math inline">\(C\)</span>–<span class="math inline">\(D\)</span> edge lies in both cuts, its <span class="math inline">\(C\)</span>-end is black under <span class="math inline">\(\varepsilon\)</span> and its <span class="math inline">\(D\)</span>-end black under <span class="math inline">\(\varepsilon&#39;\)</span>, which is only consistent if <strong>both ends lie on <span class="math inline">\(P_3\)</span></strong>; for <span class="math inline">\(P_3\)</span> itself, indexing its vertices <span class="math inline">\(v_0=z_5,\dots,v_L=z_6\)</span> (black under <span class="math inline">\(\varepsilon\)</span> iff the index is even), an edge of <span class="math inline">\(P_3\)</span> of type <span class="math inline">\(C\)</span>–<span class="math inline">\(B\)</span> or <span class="math inline">\(A\)</span>–<span class="math inline">\(D\)</span> has its <span class="math inline">\(C\)</span>- or <span class="math inline">\(A\)</span>-end at an even index, of type <span class="math inline">\(A\)</span>–<span class="math inline">\(C\)</span> or <span class="math inline">\(B\)</span>–<span class="math inline">\(D\)</span> its <span class="math inline">\(A\)</span>- or <span class="math inline">\(D\)</span>-end at an odd index, and <span class="math inline">\(P_3\)</span> has no <span class="math inline">\(A\)</span>–<span class="math inline">\(B\)</span> edge; <span class="math inline">\(P_1,P_2\)</span> have no <span class="math inline">\(C\)</span>–<span class="math inline">\(D\)</span> edge. The parities <span class="math inline">\(|\partial A|,|\partial B|\)</span> even and <span class="math inline">\(|\partial C|,|\partial D|\)</span> odd follow from which paths each part separates. I checked that these conditions are <em>consistent</em> (e.g. <span class="math inline">\(|AB|=4,|AD|=3,|CB|=2,|CD|=2,|AC|=1,|DB|=4\)</span>), in line with the observed coexistence of two 11-cuts; a contradiction can only come from three or four cuts at once, or from an inequality on part-cuts using cyclic 6-connectivity.</p>
+<h2 id="stress-test-at-higher-oddness-does-the-four-class-phenomenon-scale">7. Stress test at higher oddness: does the four-class phenomenon scale?</h2>
+<p>The proof strategy of §6 is “the tight cuts cannot jointly kill all <span class="math inline">\(2^{t-1}\)</span> classes”. If that were a general truth for every <span class="math inline">\(t\)</span> on cyclically 6-edge-connected graphs, the path-recolouring template would prove the 5-flow conjecture for all cyclically 6-edge-connected cubic graphs, which nobody expects to be this easy. So it is worth knowing <em>how</em> it fails, or fails to fail, at oddness <span class="math inline">\(8,10,12,14\)</span>: the first oddness at which the killed classes reach <span class="math inline">\(2^{t-1}\)</span> tells where the real difficulty sits, and the cut combinations that get closest are the model for what a proof at <span class="math inline">\(t=3\)</span> must exclude.</p>
+<p><strong>Catalogue at oddness <span class="math inline">\(2t\)</span>.</strong> The inequalities of §2 (<span class="math inline">\(5k&gt;3m\)</span>, <span class="math inline">\(k\le c_1\)</span>, <span class="math inline">\(k\le c_2+q\)</span>, <span class="math inline">\(c_1+c_2\le m\)</span>, <span class="math inline">\(q\le t\)</span>, <span class="math inline">\(k\equiv m\equiv c_1 \bmod 2\)</span>) give the following admissible <em>all-tight</em> types <span class="math inline">\((m,c_1,c_2,q)\)</span> with <span class="math inline">\(k=c_1=c_2+q\)</span> (the non-tight combinations are the same <span class="math inline">\(m\)</span> with larger <span class="math inline">\(c_1\)</span> or <span class="math inline">\(c_2\)</span> and are ruled out or not by the same parity arguments as in Lemma 6.1; every type seen in the experiments is all-tight). Bad cut sizes are <span class="math inline">\(m&lt;5t\)</span>; for each <span class="math inline">\(k\)</span> the sizes are <span class="math inline">\(2k-t\le m&lt;5k/3\)</span> with <span class="math inline">\(m\equiv k \bmod 2\)</span>.</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(t\)</span></th>
+<th>new all-tight types at this <span class="math inline">\(t\)</span> (beyond those at <span class="math inline">\(t-1\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td><span class="math inline">\((6,4,2,2)\)</span></td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="math inline">\((6,4,1,3)\)</span>, <span class="math inline">\((7,5,2,3)\)</span>, <span class="math inline">\((11,7,4,3)\)</span></td>
+</tr>
+<tr>
+<td>4</td>
+<td><span class="math inline">\((6,4,0,4)\)</span>, <span class="math inline">\((7,5,1,4)\)</span>, <span class="math inline">\((8,6,2,4)\)</span>, <span class="math inline">\((11,7,3,4)\)</span>, <span class="math inline">\((12,8,4,4)\)</span>, <span class="math inline">\((16,10,6,4)\)</span></td>
+</tr>
+<tr>
+<td>5</td>
+<td><span class="math inline">\((7,5,0,5)\)</span>, <span class="math inline">\((8,6,1,5)\)</span>, <span class="math inline">\((9,7,2,5)\)</span>, <span class="math inline">\((11,7,2,5)\)</span>, <span class="math inline">\((12,8,3,5)\)</span>, <span class="math inline">\((13,9,4,5)\)</span>, <span class="math inline">\((16,10,5,5)\)</span>, <span class="math inline">\((17,11,6,5)\)</span>, <span class="math inline">\((21,13,8,5)\)</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td><span class="math inline">\((8,6,0,6)\)</span>, <span class="math inline">\((9,7,1,6)\)</span>, <span class="math inline">\((10,8,2,6)\)</span>, <span class="math inline">\((11,7,1,6)\)</span>, <span class="math inline">\((12,8,2,6)\)</span>, <span class="math inline">\((13,9,3,6)\)</span>, <span class="math inline">\((14,10,4,6)\)</span>, <span class="math inline">\((16,10,4,6)\)</span>, <span class="math inline">\((17,11,5,6)\)</span>, <span class="math inline">\((18,12,6,6)\)</span>, <span class="math inline">\((21,13,7,6)\)</span>, <span class="math inline">\((22,14,8,6)\)</span>, <span class="math inline">\((26,16,10,6)\)</span></td>
+</tr>
+</tbody>
+</table></div>
+<p>Two patterns. (i) The <strong>largest</strong> bad cut at oddness <span class="math inline">\(2t\)</span> has <span class="math inline">\(m=5t-4\)</span>, <span class="math inline">\(k=3t-2\)</span>, <span class="math inline">\(c_2=2t-2\)</span>, <span class="math inline">\(q=t\)</span>: <span class="math inline">\((6,4,2,2)\)</span>, <span class="math inline">\((11,7,4,3)\)</span>, <span class="math inline">\((16,10,6,4)\)</span>, <span class="math inline">\((21,13,8,5)\)</span>, <span class="math inline">\((26,16,10,6)\)</span>. Concretely it is the union of <span class="math inline">\(t\)</span> same-coloured “<span class="math inline">\(z\)</span>-arcs” glued by the matching, exactly as the 11-cut of §4 is three such arcs; it separates all <span class="math inline">\(t\)</span> paths and kills one class. (ii) The <strong>smallest</strong> ones, <span class="math inline">\(m\in\{6,7,8,\dots\}\)</span> with <span class="math inline">\(c_2\in\{0,1,2\}\)</span>, are cuts consisting almost entirely of matching edges and separating <span class="math inline">\(q\ge m-2\)</span> paths; at <span class="math inline">\(t=4\)</span> the new pure-matching type <span class="math inline">\((6,4,0,4)\)</span> appears: six matching edges, <span class="math inline">\(S\)</span> containing one end of each of four paths, all four black. It is the first bad cut that is a <em>cyclic 6-cut made of matching edges only</em>, which is why the rings of blocks joined by 3+3 matching edges, harmless at <span class="math inline">\(t=3\)</span> (“a cut of matching edges has <span class="math inline">\(c_2=0\)</span> so is never bad”, §4), become dangerous at <span class="math inline">\(t\ge4\)</span>.</p>
+<p>Each all-tight cut separating <span class="math inline">\(q\)</span> paths fixes the relative colours of those <span class="math inline">\(q\)</span> paths, so it kills a fraction <span class="math inline">\(2^{1-q}\)</span> of the <span class="math inline">\(2^{t-1}\)</span> classes (Corollary 6.3 with <span class="math inline">\(|J^*|=q\)</span>; a cut crossed by more paths than it separates kills less). Killing all classes needs the killed sets to cover: at <span class="math inline">\(t=4\)</span> two <span class="math inline">\(q=2\)</span> cuts with complementary constraints suffice (the MS situation 1, excluded by Lemma 6.4 when both are pair cuts with the other paths avoiding them, but at <span class="math inline">\(t\ge4\)</span> a <span class="math inline">\(q=2\)</span> cut is typically crossed by further paths and then kills only a quarter or an eighth), or four <span class="math inline">\(q=3\)</span> cuts, or eight <span class="math inline">\(q=4\)</span> cuts with the eight distinct patterns.</p>
+<p><strong>Experiment log at higher oddness</strong> (<code>tools/killsets_t.py</code>, <code>tools/run_oddness.py</code> with the <code>t4…t8</code> profiles; cyclically 6-edge-connected by SAT as before; 40 to 100 0-edge choices per graph, all <span class="math inline">\(2^{t-1}\)</span> path-colouring classes tested per instance; “worst” = largest number of killed classes in one instance).</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>oddness <span class="math inline">\(2t\)</span></th>
+<th>classes</th>
+<th>family</th>
+<th>graphs × 0-edges</th>
+<th>instances with 0 killed</th>
+<th>worst kill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>8</td>
+<td>random <span class="math inline">\(8C_7{+}C_8{+}C_6\)</span> (<span class="math inline">\(n=70\)</span>)</td>
+<td>16 × 40</td>
+<td>555 / 640</td>
+<td>3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8</td>
+<td>5-block straddle rings (<span class="math inline">\(n=68\)</span>)</td>
+<td>16 × 40</td>
+<td>194 / 640</td>
+<td>6</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8</td>
+<td>4-block rings <span class="math inline">\([7,7,6]\)</span> (<span class="math inline">\(n=80\)</span>)</td>
+<td>16 × 40</td>
+<td>130 / 640</td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td>16</td>
+<td>6-block straddle rings</td>
+<td>12 × 40</td>
+<td>33 / 480</td>
+<td>13</td>
+</tr>
+<tr>
+<td>10</td>
+<td>16</td>
+<td>5-block rings <span class="math inline">\([7,7,6]\)</span> (<span class="math inline">\(n=100\)</span>)</td>
+<td>4 × 40</td>
+<td>7 / 160</td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td>12</td>
+<td>32</td>
+<td>random <span class="math inline">\(12C_7{+}C_8{+}C_6\)</span> (<span class="math inline">\(n=98\)</span>)</td>
+<td>4 × 40</td>
+<td>73 / 160</td>
+<td>6</td>
+</tr>
+<tr>
+<td>12</td>
+<td>32</td>
+<td>6-block rings <span class="math inline">\([7,7,6]\)</span> (<span class="math inline">\(n=120\)</span>)</td>
+<td>4 × 40 + 8 × 100</td>
+<td>17 / 960</td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td>12</td>
+<td>32</td>
+<td>6-block rings <span class="math inline">\([7,7,8]\)</span></td>
+<td>4 × 40</td>
+<td>3 / 160</td>
+<td>30</td>
+</tr>
+<tr>
+<td>12</td>
+<td>32</td>
+<td>3-block rings <span class="math inline">\([7,7,7,7,6]\)</span> (<span class="math inline">\(n=102\)</span>)</td>
+<td>4 × 60</td>
+<td>12 / 240</td>
+<td>24</td>
+</tr>
+<tr>
+<td>14</td>
+<td>64</td>
+<td>random <span class="math inline">\(14C_7{+}C_8\)</span> (<span class="math inline">\(n=106\)</span>)</td>
+<td>4 × 40</td>
+<td>19 / 160</td>
+<td>29</td>
+</tr>
+<tr>
+<td>14</td>
+<td>64</td>
+<td>7-block rings <span class="math inline">\([7,7,6]\)</span> (<span class="math inline">\(n=140\)</span>)</td>
+<td>4 × 40</td>
+<td>1 / 160</td>
+<td><strong>60</strong></td>
+</tr>
+<tr>
+<td>16</td>
+<td>128</td>
+<td>8-block rings <span class="math inline">\([7,7,6]\)</span> (<span class="math inline">\(n=160\)</span>)</td>
+<td>4 × 40</td>
+<td>0 / 160</td>
+<td><strong>126</strong></td>
+</tr>
+<tr>
+<td>16</td>
+<td>128</td>
+<td>4-block rings <span class="math inline">\([7,7,7,7,6]\)</span> (<span class="math inline">\(n=136\)</span>)</td>
+<td>4 × 60</td>
+<td>0 / 240</td>
+<td>112</td>
+</tr>
+</tbody>
+</table></div>
+<p>The full method (<code>run_oddness.py</code>, 100 to 150 0-edge choices per graph on the <code>t4rand</code>, <code>t4ring</code>, <code>t4str</code>, <code>t5rand</code>, <code>t6ring</code>, <code>t7str</code> profiles) never met an instance in which all path colourings fail, in agreement with the table: <strong>in no instance were all classes killed</strong>, at any oddness up to 16. (The <code>t5rand</code> run took 700 to 5,000 s per graph and the <code>t6</code>/<code>t7</code> runs did not start before the machine went down: the runner materialized the full product of 0-edge positions before sampling, which is <span class="math inline">\(7^{10}\approx3\cdot10^8\)</span> tuples for ten 7-circuits and <span class="math inline">\(7^{12}\)</span> for twelve; both runners now sample directly.)</p>
+<p>Reading of the table:</p>
+<ol type="1">
+<li><strong>Random cyclically 6-connected graphs are harmless at every oddness tried</strong>: at most a small fraction of the classes dies, mostly to the single maximal cut <span class="math inline">\((5t-4,3t-2,2t-2,t)\)</span> of pattern (i) and to 11-cuts. The catalogue types seen are exactly the all-tight ones of the table above, and nothing outside it: at <span class="math inline">\(t=7\)</span> the types <span class="math inline">\((31,19,12,7)\)</span>, <span class="math inline">\((27,17,10,7)\)</span>, <span class="math inline">\((26,16,9,7)\)</span>, <span class="math inline">\((22,14,7,7)\)</span> appear, at <span class="math inline">\(t=8\)</span> additionally <span class="math inline">\((20,14,6,8)\)</span>, <span class="math inline">\((19,13,5,8)\)</span>, <span class="math inline">\((19,13,6,7)\)</span>, <span class="math inline">\((6,6,0,6)\)</span>.</li>
+<li><strong>Rings of blocks are the dangerous structure</strong>, and they get relatively more dangerous as <span class="math inline">\(t\)</span> grows: the fraction of surviving classes in the worst instance is <span class="math inline">\(1/8\)</span>, <span class="math inline">\(1/16\)</span>, <span class="math inline">\(2/32\)</span>, <span class="math inline">\(4/64\)</span>, <span class="math inline">\(2/128\)</span>. The killers there are the small cuts made mostly of matching edges, <span class="math inline">\((6,4,2,2)\)</span>, <span class="math inline">\((8,6,2,4)\)</span>, <span class="math inline">\((7,5,1,4)\)</span>, <span class="math inline">\((9,7,2,5)\)</span>, <span class="math inline">\((12,8,4,4)\)</span>, i.e. a block or a union of consecutive blocks with a few circuit edges added or removed, plus the 11-cuts inside blocks. With four odd circuits per block instead of two the rings are a little less deadly (24/32 and 112/128), presumably because the intervals of blocks then contain more path ends and their imbalance is harder to push to the threshold.</li>
+<li><strong>Anatomy of the 7-of-8 instance at oddness 8</strong> (<code>tools/survivors.py</code> on <code>worst_t4ring_23.json</code>, a 4-block ring <span class="math inline">\([7,7,6]\)</span>, <span class="math inline">\(n=80\)</span>; paths <span class="math inline">\(P_0\)</span>: blocks 0–3, <span class="math inline">\(P_1\)</span>: 0–1, <span class="math inline">\(P_2\)</span>: 3–2, <span class="math inline">\(P_3\)</span>: 2–1). Exactly three cuts do all the killing:
+<ul>
+<li>a pair-type 6-cut <span class="math inline">\(S_A\)</span> = block 3 minus two vertices, separating <span class="math inline">\(P_0,P_2\)</span> and crossed by no other path, killing the four classes with <span class="math inline">\(\varepsilon_2=1\)</span>;</li>
+<li>an 11-cut <span class="math inline">\(S_B\)</span> (20 vertices of block 2, 7 of block 3) separating <span class="math inline">\(P_0,P_2,P_3\)</span> with <span class="math inline">\(P_1\)</span> disjoint from it, killing the two classes <span class="math inline">\((\varepsilon_1,\varepsilon_3)=(\ast,1)\)</span> inside <span class="math inline">\(\varepsilon_2=0\)</span>;</li>
+<li>an 11-cut <span class="math inline">\(S_C\)</span> (20 vertices of block 0, 13 of block 3) separating <span class="math inline">\(P_0,P_1,P_2\)</span> with <span class="math inline">\(P_3\)</span> disjoint from it, killing the two classes <span class="math inline">\((\varepsilon_1,\varepsilon_3)=(1,\ast)\)</span>.</li>
+</ul>
+The survivor is <span class="math inline">\((\varepsilon_1,\varepsilon_3)=(0,0)\)</span>. It survives for a <em>combinatorial</em> reason: inside the half <span class="math inline">\(\varepsilon_2=0\)</span> (a <span class="math inline">\(2\times2\)</span> grid indexed by <span class="math inline">\((\varepsilon_1,\varepsilon_3)\)</span>) the two 11-cuts each kill a line, one horizontal and one vertical, and two such lines always meet. A full kill by this kind of configuration would need the two 11-cuts to kill <em>parallel</em> lines, i.e. to separate the same triple of paths with patterns differing only on the third path. That is precisely the situation of the “local lemma for two codimension-3 cuts” at the end of §6 (two cuts on the same triple, differing on one path), which I found locally consistent but never observed. So the oddness-8 data points back to the same open question as oddness 6: <strong>can two 11-cuts on the same triple of paths differ in the colour of exactly one path end?</strong> At <span class="math inline">\(t=3\)</span> this is situation 4 of the cover problem (a pair cut plus two codim-3 cuts) and the ring instance shows that everything else in situation 4 does occur.</li>
+<li>The worst instances at oddness 12 and 16 are built the same way from 20 to 60 distinct witness cuts, nearly all inside one block or one pair of consecutive blocks, and the surviving classes always come in the same “two lines meet” pattern; I have not found a full kill in about 4,000 ring instances.</li>
+</ol>
+<p>What this changes in the plan of §5: the single most valuable lemma is now (L-A) for the specific case of two codim-3 cuts on the same triple with patterns differing in one coordinate; if it is false (such pairs exist), rings at oddness 8 should exhibit full kills and the template fails there, which would sharpen what an oddness-6 proof must use; if it is true, it kills situation 4 at <span class="math inline">\(t=3\)</span> and, together with Lemma 6.4, leaves situations 2, 3 and 5.</p>
 
   </div>
 </body>

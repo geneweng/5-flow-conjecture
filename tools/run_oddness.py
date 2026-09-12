@@ -11,6 +11,17 @@ from gen_cyc6 import generate, generate_rings, generate_straddle
 from oddness import canonical_colouring, H_components, partition, balanced
 from mod5 import nz_flow_Z5, triple
 
+def sample_zero_choices(odd, k, rng):
+    """k distinct 0-edge choices (one position per odd circuit) without materializing the product
+    (7^12 tuples for twelve 7-circuits exhausts memory)."""
+    total = 1
+    for C in odd: total *= len(C)
+    if total <= 4 * k:
+        space = list(itertools.product(*[range(len(C)) for C in odd])); return rng.sample(space, min(k, total))
+    seen = set()
+    while len(seen) < k: seen.add(tuple(rng.randrange(len(C)) for C in odd))
+    return sorted(seen)
+
 profiles = {
     "6x7+8":      [7] * 6 + [8],
     "6x7+2x6":    [7] * 6 + [6, 6],
@@ -68,8 +79,7 @@ for name in which:
         odd = [C for C in circuits if len(C) % 2]
         E = list(G.edges())
         has5 = nz_flow_Z5(n, E)
-        zero_space = list(itertools.product(*[range(len(C)) for C in odd]))
-        zero_space = rng.sample(zero_space, min(int(__import__("os").environ.get("NZERO", "120")), len(zero_space)))
+        zero_space = sample_zero_choices(odd, int(__import__("os").environ.get("NZERO", "120")), rng)
         paths_ok = all_ok = 0
         for zc in zero_space:
             col = canonical_colouring(G, M, circuits, zc)
