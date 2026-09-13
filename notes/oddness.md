@@ -464,3 +464,17 @@ Exhaustive sweep of the stage-1 graph (`zero_sweep_stage1.log`): exactly four fa
 
 **Why the axis stops at five of seven.** On the seven-failure graph with the other five 0-edges fixed, moving circuit 5's 0-edge through its positions $j=0,\dots,6$ gives: $j=1,\dots,5$: $H$ is three paths pairing $z_5$ with vertex 16, and 7 with 30, and 26 with 5, and all colourings are killed; $j=0$: the pairing changes (7 with 16, $z_5$ with 30) and 4 of 8 colourings survive; $j=6$: an even circuit of $H$ appears (four components) and 8 of 16 survive. So the failing positions are exactly those for which the **pairing of the six ends by $H$ is unchanged**; the killers (whole circuit plus arcs around the required ends, the arc around $z_5$ sliding with it) survive the move as long as the paths keep their ends. The failing set of a 2-factor is therefore bounded by the region of 0-edge space on which the pairing is constant, and moving a 0-edge across a position where the routing switches (a path re-pairs, or an even circuit of $H$ splits off) repairs the method at once. This is the structural reason the robust climb stalls: stage 4 (union of neighbourhoods, two seeds, two hours) and the axis runs did not get beyond seven and five respectively. A 2-factor for which every 0-edge choice fails would need the pairing to be constant over all $7^6$ choices, which the rerouting mechanism (each move of a 0-edge flips the exit side of every path through that circuit) makes impossible in general. So (O6′) is safe from this line of attack, and its proof can use exactly this: **some 0-edge move changes the pairing, and a pairing change repairs the failure.**
 Both axis climbs (3,000 steps each) ended at five of seven positions, and both stage-4 climbs (400 steps on 150-choice samples, two hours each) at seven failing choices in total: no further growth. All robust runs are finished.
+
+**Every re-pairing move repairs (empirical lemma).** From every known failing 0-edge choice of the six archived instances (13 failing choices, 468 one-step moves of a single 0-edge), classifying each move by what it does to $H$ (circuit-level pairing of the six ends, number of components) and whether the method succeeds at the new choice:
+
+| move type | repaired | still failing |
+|---|---|---|
+| pairing unchanged, same number of components | 96 | 15 |
+| pairing changed, same number of components | **291** | **0** |
+| number of components changed | 52 | 14 |
+
+So a move that re-pairs the paths repaired the method in all 291 cases, and every failing choice has such a move (at least 16 of its 36 moves). This is the statement to prove:
+
+> **(L-repair)** If the canonical colourings $c$ and $c'$ differ in one 0-edge and the paths of $H(c')$ pair the six ends differently from those of $H(c)$, then not both $c$ and $c'$ are failures of the fixed-2-factor template.
+
+Together with "every choice has a re-pairing move" (a routing statement about a 0-edge shift through a circuit that some path crosses), (L-repair) gives (O6′) immediately: from a failing choice, one re-pairing step reaches a success. The 14 failures with a changed number of components are all on the seven-failure graph's axis, where positions 1 and 4 give a four-component $H$ (16 colourings) that is nevertheless fully killed; so an even circuit of $H$ does not by itself rescue, only a re-pairing did so in every case observed.
