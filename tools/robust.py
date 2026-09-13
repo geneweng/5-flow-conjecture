@@ -10,8 +10,16 @@ fn, seed, steps = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]); K = int(sys.a
 rng = random.Random(seed); d = json.load(open(fn)); G = nx.Graph(); G.add_edges_from(map(tuple, d["edges"])); circuits = d["circuits"]
 cedges = {frozenset((C[i], C[(i + 1) % len(C)])) for C in circuits for i in range(len(C))}
 odd = [C for C in circuits if len(C) % 2]
+def neigh(zc): return {tuple(list(zc[:i]) + [j] + list(zc[i + 1:])) for i in range(len(odd)) for j in range(len(odd[i]))}
 if os.environ.get("NEIGH") == "1":   # the one-step neighbourhood of the base choice (all positions of each single 0-edge)
-    sample = sorted({tuple(d["zero"][:i] + [j] + d["zero"][i + 1:]) for i in range(len(odd)) for j in range(len(odd[i]))})
+    sample = sorted(neigh(d["zero"]))
+elif os.environ.get("NEIGH") == "2":   # union of one-step neighbourhoods of every currently failing choice (from the dump's sample, else the base)
+    M0 = {frozenset(e) for e in G.edges()} - cedges; seeds = []
+    for zc in d.get("sample", [d["zero"]]):
+        col = canonical_colouring(G, M0, circuits, zc); comps = H_components(G, col)
+        if not any(balanced(G, partition(comps, f)) for f in itertools.product((0, 1), repeat=len(comps))): seeds.append(tuple(zc))
+    if not seeds: seeds = [tuple(d["zero"])]
+    sample = sorted(set().union(*[neigh(z) for z in seeds])); print("failing seeds:", seeds, "sample size", len(sample), flush=True)
 else:
     sample = [tuple(d["zero"])] + [tuple(rng.randrange(len(C)) for C in odd) for _ in range(K - 1)]
 def evaluate(G):
