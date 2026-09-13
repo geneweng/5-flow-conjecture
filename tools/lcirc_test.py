@@ -51,8 +51,10 @@ for i, (S, dS, touched, bnd, zok, pair) in enumerate(cands):
     L = live[i]
     if not L: continue
     lc[len(L)] += 1
+    oddidx = {ci: k for k, ci in enumerate(c for c in range(ncirc) if len(circuits[c]) % 2)}
     for ci in range(ncirc):
-        k = len({zc[ci] for zc in L})
+        if ci not in oddidx: continue                     # even circuits carry no 0-edge
+        k = len({zc[oddidx[ci]] for zc in L})
         (marg_touched if ci in touched else marg_free)[k] += 1
         if ci not in touched and k == len(circuits[ci]): worst.append((len(S), dS, len(L), ci))
 print(f"candidates with live > 0: {sum(lc.values())}; live-count distribution: {dict(sorted(lc.items()))}")
