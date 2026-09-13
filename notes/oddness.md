@@ -379,3 +379,19 @@ The data gives about $0.24$ for this expectation on the 42-vertex instance. Sinc
 > **(L-circ)** For a candidate tight set $S$ and a circuit $C$ disjoint from $S$ that carries a path segment relevant to the tightness of $S$, at most $\lceil |C|/2\rceil$ positions of $C$'s 0-edge keep $S$ bad for some colouring.
 
 Two such circuits with the arc pinning $1/49$ already give density $\le (4/7)^2/49\approx0.7\%$ per 11-cut, against the $B/4N\approx11$ union bound, which would bring the total below $4N$ for the 42-vertex instance; the data suggests the truth is stronger still. This is where I would start the written proof.
+
+## 14. Resume checklist (paused 2026-09-13)
+
+**State.** Five verified counterexamples to the fixed-2-factor template (§12, `data/`, `data/README.md`); computer-verified exclusions §10; the averaging plan §13 with (L-avg′) and (L-circ). All tools in `tools/`, all logs (`*.log`, gitignored) in `tools/`.
+
+**Running when paused** (single-threaded, they finish on their own):
+- `tools/lcirc_n42.log`: `lcirc_test.py` on the 42-vertex instance, all 117,649 0-edge choices × all 10,104 candidate sets; ends with the lines "candidates with live > 0", "marginal sizes over circuits DISJOINT from S", "marginal sizes over circuits meeting S". (L-circ) predicts that the marginal sizes over disjoint circuits are at most 4 (of 7) whenever the circuit matters; a count of 7 means the circuit is irrelevant to that set, which is allowed. Look at the "examples of disjoint circuits with all 7 positions live" line.
+- `tools/lcirc_n50.log`: same for the 50-vertex instance.
+
+**To pick up.**
+1. Read the two logs above and record the marginal-size distributions in §13; decide whether (L-circ) holds as stated (max 4 of 7 for relevant circuits) or needs the notion of "relevant circuit" made precise (a circuit is relevant iff some path segment inside $S$ passes through it, or its $z$ is an end of such a path).
+2. If it holds: write the proof of (L-circ) from the rerouting mechanism (a path entering circuit $C$ at $u$ leaves from the neighbour selected by the parity of $C$'s 0-edge position), then bound the number of candidate sets that can be live at all (arc pinning, §13) and assemble (L-avg′) for the 42-vertex instance by hand, then in general.
+3. If it fails: the live sets of the counterexamples (`cut_density.py`, the per-circuit marginals printed in §13) are the place to see why.
+4. Independent lines left open: a 0-edge-robust counterexample seems impossible (two-point tests, §13); the enumeration `enum_covers.py` can be extended with codimension-3 pair cuts as point-killers (the 54-vertex instance uses them); `t4_realize.py`/`fullkill_sat.py` remain as verifiers.
+
+Commands: `python3 tools/verify_fullkill.py data/<instance>.json` (verification), `python3 tools/avg_true.py data/<instance>.json 600` (averaging total), `python3 tools/cut_density.py data/<instance>.json` (killer densities), `python3 tools/lcirc_test.py data/<instance>.json` (per-circuit marginals, 20–30 min).
