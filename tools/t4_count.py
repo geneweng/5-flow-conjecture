@@ -78,10 +78,40 @@ for r in range(1, UMAX + 1):
             m.Add(nn <= 3).OnlyEnforceIf(small); m.Add(sum(n[a] for a in A if a not in Us) <= 3).OnlyEnforceIf(csmall)
             m.Add(d >= 6).OnlyEnforceIf([small.Not(), csmall.Not()])
 m.Add(sum(v for v, c in x.values()) <= 44)
+# ---- 2-factor circuits as closed walks through atoms via colour-2 crossings.
+# Classes k = 0..5: the odd circuit of z_{k+1} (z-atoms in order 1111,0000,1100,0011,1010,0101); class 6: all even circuits.
+zatom_of = {0: cells.index((1,1,1,1)), 1: cells.index((0,0,0,0)), 2: cells.index((1,1,0,0)), 3: cells.index((0,0,1,1)), 4: cells.index((1,0,1,0)), 5: cells.index((0,1,0,1))}
+upairs = [(a, b) for a in A for b in A if a < b]
+t2 = {(a, b): sum(v for (i, p, q), (v, c) in x.items() if c == 2 and {p, q} == {a, b}) for (a, b) in upairs}
+w = {(k, a, b): m.NewIntVar(0, 9, f"w{k}_{a}_{b}") for k in range(7) for (a, b) in upairs}
+for (a, b) in upairs: m.Add(sum(w[k, a, b] for k in range(7)) == t2[a, b])
+deg = {}
+for k in range(7):
+    for a in A:
+        deg[k, a] = sum(w[k, p, q] for (p, q) in upairs if a in (p, q))
+        hh = m.NewIntVar(0, 20, ""); m.Add(deg[k, a] == 2 * hh)            # closed walk: even degree at every atom
+for a in A:
+    m.Add(sum(deg[k, a] for k in range(7)) + zc[a] <= n[a])                # every colour-2 crossing uses its own vertex; z has none
+for k in range(6):
+    za = zatom_of[k]
+    small = m.NewBoolVar(""); m.Add(n[za] <= 6).OnlyEnforceIf(small); m.Add(n[za] >= 7).OnlyEnforceIf(small.Not())
+    m.Add(deg[k, za] >= 2).OnlyEnforceIf(small)                              # a circuit of length >= 7 must leave a small atom
+    # a 3-vertex z-atom {u,z,w} is traversed only by z's own circuit
+    three = m.NewBoolVar(""); m.Add(n[za] == 3).OnlyEnforceIf(three); m.Add(n[za] != 3).OnlyEnforceIf(three.Not())
+    for kk in range(7):
+        if kk != k: m.Add(deg[kk, za] == 0).OnlyEnforceIf(three)
+    m.Add(deg[k, za] == 2).OnlyEnforceIf(three)
+# room for circuit visits: each visit of a circuit to an atom uses >= 2 vertices (the visit through z uses 3)
+for a in A:
+    m.Add(sum(deg[k, a] for k in range(7)) + zc[a] <= n[a])
 m.Add(sum(n[a] for a in A) >= 42)                     # six odd circuits of length >= 7
 for a in A:
     if zc[a]: m.Add(n[a] >= 3)                        # a z has two non-H edges inside its atom
 NMAX = int(__import__("os").environ.get("NMAX", "60")); m.Add(sum(n[a] for a in A) <= NMAX)
+if __import__("os").environ.get("MINATOM"):
+    MA = int(__import__("os").environ["MINATOM"])
+    for a in A:
+        e = m.NewBoolVar(""); m.Add(n[a] == 0).OnlyEnforceIf(e); m.Add(n[a] >= MA).OnlyEnforceIf(e.Not())
 def add_union(U):
     Us = set(U); dU = sum(v for (i, p, q), (v, c) in x.items() if (p in Us) != (q in Us)); nUv = sum(n[a] for a in U)
     d = m.NewIntVar(0, 200, ""); m.Add(d == dU); nn = m.NewIntVar(0, 8000, ""); m.Add(nn == nUv); cn = m.NewIntVar(0, 8000, ""); m.Add(cn == sum(n[a] for a in A if a not in Us))

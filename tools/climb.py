@@ -55,7 +55,9 @@ name, seed, steps = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 rng = random.Random(seed); T0 = float(os.environ.get("TEMP", "0.5")); RESTART = int(os.environ.get("RESTART", "1500"))
 pr = profiles[name]
 def fresh():
-    gs = generate_straddle(pr[0], pr[1], rng, 1) if isinstance(pr, tuple) else (generate_rings(pr, rng, 1) if isinstance(pr[0], list) else generate(pr, rng, 1))
+    gs = []
+    while not gs:
+        gs = generate_straddle(pr[0], pr[1], rng, 1) if isinstance(pr, tuple) else (generate_rings(pr, rng, 1) if isinstance(pr[0], list) else generate(pr, rng, 1))
     G, circuits = gs[0]; odd = [C for C in circuits if len(C) % 2]
     return G, circuits, odd, [rng.randrange(len(C)) for C in odd], {}
 G, circuits, odd, zc, ref = fresh()
