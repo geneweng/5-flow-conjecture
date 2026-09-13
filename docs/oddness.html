@@ -50,7 +50,7 @@
 <body>
 <div class="wrap">
   <header class="masthead"><div><p class="eyebrow">Working notes · September 2026</p><h1>Route: oddness 6</h1><p class="byline">Working notes, started 2026-09-12. Companion to the survey (§3, §9 route 1). Code: `tools/oddness.py`.</p></div><svg class="petersen" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Petersen graph"><g stroke="var(--accent)" stroke-width="1.6" fill="none"><line x1="60.0" y1="22.0" x2="98.0" y2="49.6"/><line x1="98.0" y1="49.6" x2="83.5" y2="94.4"/><line x1="83.5" y1="94.4" x2="36.5" y2="94.4"/><line x1="36.5" y1="94.4" x2="22.0" y2="49.6"/><line x1="22.0" y1="49.6" x2="60.0" y2="22.0"/><line x1="60.0" y1="22.0" x2="60.0" y2="44.0"/><line x1="98.0" y1="49.6" x2="77.1" y2="56.4"/><line x1="83.5" y1="94.4" x2="70.6" y2="76.6"/><line x1="36.5" y1="94.4" x2="49.4" y2="76.6"/><line x1="22.0" y1="49.6" x2="42.9" y2="56.4"/><line x1="60.0" y1="44.0" x2="70.6" y2="76.6"/><line x1="77.1" y1="56.4" x2="49.4" y2="76.6"/><line x1="70.6" y1="76.6" x2="42.9" y2="56.4"/><line x1="49.4" y1="76.6" x2="60.0" y2="44.0"/><line x1="42.9" y1="56.4" x2="77.1" y2="56.4"/></g><g fill="var(--ink)"><circle cx="60.0" cy="22.0" r="3"/><circle cx="98.0" cy="49.6" r="3"/><circle cx="83.5" cy="94.4" r="3"/><circle cx="36.5" cy="94.4" r="3"/><circle cx="22.0" cy="49.6" r="3"/><circle cx="60.0" cy="44.0" r="3"/><circle cx="77.1" cy="56.4" r="3"/><circle cx="70.6" cy="76.6" r="3"/><circle cx="49.4" cy="76.6" r="3"/><circle cx="42.9" cy="56.4" r="3"/></g></svg></header>
-  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#target">Target</a></li><li><a href="#the-method-steffen-2010-ms-2017-restated">The method (Steffen 2010, MS 2017), restated</a></li><li><a href="#what-changes-at-oddness-6-t3">What changes at oddness 6 (<span class="math inline">\(t=3\)</span>)</a></li><li><a href="#decisive-experiment-before-theory">Decisive experiment before theory</a></li><li><a href="#experiment-log">Experiment log</a></li><li><a href="#plan">Plan</a></li><li><a href="#towards-a-proof-that-the-four-classes-cannot-all-be-killed">Towards a proof that the four classes cannot all be killed</a></li><li><a href="#stress-test-at-higher-oddness-does-the-four-class-phenomenon-scale">Stress test at higher oddness: does the four-class phenomenon scale?</a></li><li><a href="#directed-search-and-exact-search-started-2026-09-12-evening">Directed search and exact search (started 2026-09-12 evening)</a></li><li><a href="#the-end-graph-survivability-as-a-not-all-equal-problem">The end graph: survivability as a not-all-equal problem</a></li></ol></nav>
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#target">Target</a></li><li><a href="#the-method-steffen-2010-ms-2017-restated">The method (Steffen 2010, MS 2017), restated</a></li><li><a href="#what-changes-at-oddness-6-t3">What changes at oddness 6 (<span class="math inline">\(t=3\)</span>)</a></li><li><a href="#decisive-experiment-before-theory">Decisive experiment before theory</a></li><li><a href="#experiment-log">Experiment log</a></li><li><a href="#plan">Plan</a></li><li><a href="#towards-a-proof-that-the-four-classes-cannot-all-be-killed">Towards a proof that the four classes cannot all be killed</a></li><li><a href="#stress-test-at-higher-oddness-does-the-four-class-phenomenon-scale">Stress test at higher oddness: does the four-class phenomenon scale?</a></li><li><a href="#directed-search-and-exact-search-started-2026-09-12-evening">Directed search and exact search (started 2026-09-12 evening)</a></li><li><a href="#the-end-graph-survivability-as-a-not-all-equal-problem">The end graph: survivability as a not-all-equal problem</a></li><li><a href="#computer-verified-exclusions-in-the-cover-problem-oddness-6-pure-case">Computer-verified exclusions in the cover problem (oddness 6, pure case)</a></li><li><a href="#state-of-play-end-of-2026-09-12">State of play (end of 2026-09-12)</a></li></ol></nav>
   <h2 id="target">0. Target</h2>
 <blockquote>
 <p><strong>(O6)</strong> Every cyclically 6-edge-connected cubic graph with oddness at most 6 has a nowhere-zero 5-flow.</p>
@@ -592,6 +592,119 @@
 <p>The parity tool of MS applies to every set <span class="math inline">\(U\)</span> whose boundary lies in <span class="math inline">\(E(H)\)</span>: <span class="math inline">\(|\partial U|\equiv\)</span> number of paths separated by <span class="math inline">\(U \pmod 2\)</span> (every path crosses <span class="math inline">\(\partial U\)</span> an odd number of times iff separated, even circuits of <span class="math inline">\(H\)</span> cross evenly). For two tight 11-cuts with <span class="math inline">\(s=0\)</span> realizing adjacent classes this gives, with <span class="math inline">\(A=S\cap S&#39;\)</span>, <span class="math inline">\(B=V\setminus(S\cup S&#39;)\)</span>, <span class="math inline">\(C=S\setminus S&#39;\)</span>, <span class="math inline">\(D=S&#39;\setminus S\)</span>: <span class="math inline">\(d(A),d(B)\)</span> even, <span class="math inline">\(d(C),d(D)\)</span> odd, <span class="math inline">\(AD+BC=AC+BD\)</span>, and <span class="math inline">\(AB+CD+(AD+BC)=11\)</span>; the colour conditions force every <span class="math inline">\(A\)</span>–<span class="math inline">\(B\)</span> edge onto <span class="math inline">\(P_1\cup P_2\)</span> and every <span class="math inline">\(C\)</span>–<span class="math inline">\(D\)</span> edge onto <span class="math inline">\(P_3\)</span>. These are consistent for two cuts (as observed); (T4) needs the same bookkeeping on the 16 atoms of four cuts, which I have not done.</p>
 <p><strong>Computer-assisted attack on (T4), pure case</strong> (<code>tools/t4_abstract.py</code>). For four tight 11-cuts of type <span class="math inline">\((11,7,4,3)\)</span> with <span class="math inline">\(s=0\)</span> realizing the four classes, every edge between two of the 16 atoms is an <span class="math inline">\(H\)</span>-edge on a path, so each path is a walk through atoms with segments (atom, length). The model has: segments with lengths and position parities; colours alternating <span class="math inline">\(1,2,1,\dots\)</span> from each <span class="math inline">\(z\)</span>; the black-end rule at every crossing of every <span class="math inline">\(S_j\)</span> under its pattern colouring; <span class="math inline">\(7\)</span> colour-1 and <span class="math inline">\(4\)</span> colour-2 crossings per cut with per-path crossing numbers odd; per-atom parities (<span class="math inline">\(n_a\equiv z_a\)</span>, colour-1 crossings at <span class="math inline">\(a\)</span> <span class="math inline">\(\equiv z_a\)</span>, colour-2 crossings at <span class="math inline">\(a\)</span> even, from the three perfect matchings colour 1, colour 2 <span class="math inline">\(\cup\)</span> <span class="math inline">\(\{z\}\)</span>, colours 0/3); and for atom unions <span class="math inline">\(U\)</span> (at most two atoms) the cubic and connectivity facts <span class="math inline">\(d(U)\le3n(U)\)</span>, <span class="math inline">\(n(U)\le5\Rightarrow d(U)\ge n(U)+2\)</span> (girth 6), <span class="math inline">\(n(U)\ge1\Rightarrow d(U)\ge3\)</span>, <span class="math inline">\(d(U)\le5\Rightarrow n(U)\le3\)</span> (cyclic 6-edge-connectivity; the complement holds at least four <span class="math inline">\(z\)</span>’s). All of these are necessary conditions, so infeasibility is a proof. <strong>Result: with at most 8 segments per path the system is infeasible (131 s).</strong> A complete proof needs up to 37 segments per path (a path crosses each cut at most 9 times); the model with 12 segments was not decided in 500 s before the crossing-count structure was added. Extension in progress.</p>
 <p><strong>Blueprint A is impossible, by hand.</strong> Its cut <span class="math inline">\(S_4\)</span> consists of three 3-vertex <span class="math inline">\(z\)</span>-atoms <span class="math inline">\(\{u,z,w\}\)</span> (<span class="math inline">\(u\)</span> across the 0-edge, <span class="math inline">\(w\)</span> across the colour-3 edge), 9 vertices with <span class="math inline">\(d=11\)</span>, hence 8 internal edges: the six <span class="math inline">\(z\)</span>-edges and two <span class="math inline">\(H\)</span>-edges between the atoms. Tightness (<span class="math inline">\(k=7\)</span> on 9 vertices) allows only one white vertex, so the two internal <span class="math inline">\(H\)</span>-edges must share their white end, i.e. some <span class="math inline">\(u_1\)</span> has its colour-1 edge to one atom and its colour-2 edge to another. But every non-<span class="math inline">\(z\)</span> vertex of a 3-vertex <span class="math inline">\(z\)</span>-atom is a circuit neighbour of its <span class="math inline">\(z\)</span>, so a colour-2 edge between two such atoms puts two <span class="math inline">\(z\)</span>’s on one circuit of <span class="math inline">\(F_2\)</span>, which the canonical colouring forbids. Two internal colour-1 edges give two white vertices (<span class="math inline">\(k\le5\)</span>), and zero internal <span class="math inline">\(H\)</span>-edges give <span class="math inline">\(d=15\)</span>. So the relaxation misses the circuit structure. Adding the odd circuits as closed walks through the atoms (colour-2 crossings partitioned among circuit classes, even degree per atom, room <span class="math inline">\(c_2(a)+z(a)\le n(a)\)</span>, a circuit must leave an atom of fewer than 7 vertices, a 3-vertex <span class="math inline">\(z\)</span>-atom is traversed only by its own circuit) the relaxation is <strong>still feasible</strong> (blueprint C: atoms 0000:3, 0011:3, 0101:7, 1010:7, 1100:7, 1111:15, <span class="math inline">\(N=42\)</span>). The abstraction adapts to every fact added; it will not deliver (T4). Its remaining use is to propose blueprints for the realization model, which is running on C.</p>
+<h2 id="computer-verified-exclusions-in-the-cover-problem-oddness-6-pure-case">10. Computer-verified exclusions in the cover problem (oddness 6, pure case)</h2>
+<p>The count relaxation was generalized to arbitrary configurations of tight cuts with <span class="math inline">\(s=0\)</span> (<code>tools/count_general.py</code>, <code>tools/enum_covers.py</code>): <span class="math inline">\(J\)</span> cuts, <span class="math inline">\(2^J\)</span> atoms, one walk per path with forced crossing colours, the cut counts <span class="math inline">\((c_1,c_2)\)</span>, per-path odd crossing numbers, atom parities, circuit classes, <span class="math inline">\(N\ge42\)</span>, and the cubic/girth/connectivity facts for atom unions (lazily for all <span class="math inline">\(2^J\)</span> unions), plus, in the latest version, walk connectivity for paths and odd circuits. A pair cut of codimension 2 is modelled with the avoided path entirely on one side (“placement”), which the model distinguishes. Every constraint is a necessary condition, so INFEASIBLE is a proof. Validation: a single pair cut and the two-cut placement observed in the <code>straddle6A</code> near miss are feasible; the Mazzuoccolo–Steffen situation 1 (same pair, opposite signs) is infeasible in all 12 placements, reproducing Lemma 6.4.</p>
+<p>Enumeration of all <strong>minimal covers of the four classes</strong> by lines (pair 6-cuts) and points (11-cuts or 7-cuts), 204 configurations:</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>situation</th>
+<th>configurations</th>
+<th>infeasible</th>
+<th>feasible relaxation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1: two parallel lines</td>
+<td>12</td>
+<td>12</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2: three lines, one per pair</td>
+<td>32</td>
+<td><strong>32</strong></td>
+<td>0</td>
+</tr>
+<tr>
+<td>3: two lines + one point</td>
+<td>96</td>
+<td>72</td>
+<td>24 (all with an 11-cut point and the two avoided paths on opposite sides)</td>
+</tr>
+<tr>
+<td>4: one line + two points</td>
+<td>48</td>
+<td>12 (both points 7-cuts)</td>
+<td>36</td>
+</tr>
+<tr>
+<td>5: four points</td>
+<td>16</td>
+<td>1 (four 7-cuts)</td>
+<td>9 feasible (all with at least two 11-cuts), 6 undecided at 2 minutes (7-heavy mixtures)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Lemma 10.1 (situation 2 is impossible, pure case).</strong> Three tight pair cuts of type <span class="math inline">\((6,4,2,2)\)</span> with <span class="math inline">\(s=0\)</span>, each avoided by its third path, whose end pairs form a triangle, cannot coexist in a cyclically 6-edge-connected cubic graph with the canonical colouring. (Computer proof: all 32 placements infeasible.)</p>
+<p><strong>Lemma 10.2.</strong> In situation 3 the point-killer cannot be a 7-cut; with an 11-cut the two avoided paths must lie on opposite sides of their pair cuts (one inside, one outside). In situation 4 the two point-killers cannot both be 7-cuts.</p>
+<p>What remains open at the class level, with <span class="math inline">\(s=0\)</span>: situation 3 with an 11-cut and mixed placement, situation 4 with at least one 11-cut, and situation 5 (four 11-cuts, or 11/7 mixtures). These are exactly the configurations whose relaxations are feasible, so any proof of them needs information beyond atom counts and parities (the order of crossings along the paths, or the geometry of the circuits). The near misses found by the climbers are of these types: three 11-cuts (situation 5 minus one), and two pair cuts with opposite placements plus an 11-cut (situation 3 minus nothing: the <code>straddle6A</code> instance has all three cuts but its third pair cut is missing, i.e. it is a 3-kill of type situation 3 that would need a fourth cut).</p>
+<p><strong>What the proofs use (ablation).</strong> Re-solving the infeasible configurations with constraint groups removed (circuit classes; the cubic/girth/cyclic-connectivity facts on atom unions, including the lazily generated ones):</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>configuration</th>
+<th>full</th>
+<th>without circuits</th>
+<th>without union facts</th>
+<th>without both</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>situation 1 (MS), placement 00</td>
+<td>infeasible</td>
+<td>feasible</td>
+<td>feasible</td>
+<td>feasible</td>
+</tr>
+<tr>
+<td>situation 2, placement 000</td>
+<td>infeasible</td>
+<td>infeasible</td>
+<td>feasible</td>
+<td>feasible</td>
+</tr>
+<tr>
+<td>situation 2, placement 111</td>
+<td>infeasible</td>
+<td>infeasible</td>
+<td>feasible</td>
+<td>feasible</td>
+</tr>
+<tr>
+<td>situation 2, b01 s1 placement 010</td>
+<td>infeasible</td>
+<td>feasible</td>
+<td>feasible</td>
+<td>feasible</td>
+</tr>
+</tbody>
+</table></div>
+<p>So the union facts (cyclic 6-edge-connectivity and girth applied to unions of atoms, the setting of the MS uncrossing) are needed in every proof, and the circuit structure of the 2-factor (each odd circuit is a closed walk through the atoms leaving any atom of fewer than 7 vertices, a 3-vertex <span class="math inline">\(z\)</span>-atom is traversed only by its own circuit) is needed for situation 1 and for some placements of situation 2. The two “symmetric” placements of situation 2 (all avoided paths outside, or all inside) fall to uncrossing and counting alone, and are the natural first targets for a written proof. In the model, MS’s Lemma 6.4 is not reproduced by their parity argument but by the circuit facts; whether the parity argument is implicitly present in the union facts I have not checked.</p>
+<p><strong>Lemma 10.3 (situation 2, symmetric placements, by hand).</strong> Let <span class="math inline">\(S_{12},S_{13},S_{23}\)</span> be tight pair cuts of type <span class="math inline">\((6,4,2,2)\)</span> with <span class="math inline">\(s=0\)</span>, <span class="math inline">\(S_{12}\cap Z=\{z_1,z_3\}\)</span>, <span class="math inline">\(S_{13}\cap Z=\{z_1,z_5\}\)</span>, <span class="math inline">\(S_{23}\cap Z=\{z_3,z_5\}\)</span>, and suppose each cut has its third path entirely outside (<span class="math inline">\(P_3\cap S_{12}=P_2\cap S_{13}=P_1\cap S_{23}=\emptyset\)</span>). Then <span class="math inline">\(G\)</span> is not cyclically 6-edge-connected. (The all-inside placement is the same statement after complementing the three cuts and renaming ends.)</p>
+<p><em>Proof.</em> Write atoms by membership <span class="math inline">\((S_{12},S_{13},S_{23})\)</span>. Every edge between two atoms lies in some <span class="math inline">\(\partial S_{ij}\subseteq E(H)\)</span> and, as no even circuit of <span class="math inline">\(H\)</span> crosses, is a path edge. <span class="math inline">\(P_1\)</span> avoids <span class="math inline">\(S_{23}\)</span>, so its vertices lie in atoms with third coordinate 0; likewise <span class="math inline">\(P_2\)</span> has second coordinate 0 and <span class="math inline">\(P_3\)</span> first coordinate 0. Atom 111 carries no path vertex, hence no boundary edge, hence is empty. Put <span class="math inline">\(A=S_{12}\cap S_{13}=110\ni z_1\)</span>, <span class="math inline">\(B=S_{12}\setminus S_{13}=100\cup101\ni z_3\)</span>, <span class="math inline">\(C=S_{13}\setminus S_{12}=010\cup011\ni z_5\)</span>, <span class="math inline">\(D=000\cup001\ni z_2,z_4,z_6\)</span>. Each <span class="math inline">\(z\)</span> keeps its two non-<span class="math inline">\(H\)</span> neighbours in its own atom (non-<span class="math inline">\(H\)</span> edges never join atoms), so <span class="math inline">\(n(A),n(B),n(C)\ge3\)</span> and <span class="math inline">\(n(D)\ge9\)</span>. Boundaries of the four parts lie in <span class="math inline">\(E(H)\)</span>, and each part separates exactly one path (<span class="math inline">\(A\)</span>: <span class="math inline">\(P_1\)</span>; <span class="math inline">\(B\)</span>: <span class="math inline">\(P_2\)</span>; <span class="math inline">\(C\)</span>: <span class="math inline">\(P_3\)</span>; <span class="math inline">\(D\)</span>: all three), so <span class="math inline">\(d(A),d(B),d(C),d(D)\)</span> are odd. Cyclic 6-edge-connectivity gives <span class="math inline">\(d(X)\ge6\)</span> unless <span class="math inline">\(X\)</span> is acyclic with at most 3 vertices, and <span class="math inline">\(d(X)=n(X)+2\)</span> for such <span class="math inline">\(X\)</span>; hence each of <span class="math inline">\(d(A),d(B),d(C)\)</span> is <span class="math inline">\(5\)</span> (the part being exactly <span class="math inline">\(\{u,z,w\}\)</span>, the <span class="math inline">\(z\)</span> with its two non-<span class="math inline">\(H\)</span> neighbours) or <span class="math inline">\(\ge7\)</span>, and <span class="math inline">\(d(D)\ge7\)</span>. Submodularity gives <span class="math inline">\(d(A)+d(D)\le d(S_{12})+d(S_{13})=12\)</span> and <span class="math inline">\(d(B)+d(C)\le12\)</span>. Therefore <span class="math inline">\(d(A)=5\)</span>, <span class="math inline">\(A=\{u_1,z_1,w_1\}\)</span>, and <span class="math inline">\(\{d(B),d(C)\}\)</span> is <span class="math inline">\(\{5,5\}\)</span>, <span class="math inline">\(\{5,7\}\)</span> or <span class="math inline">\(\{7,5\}\)</span>.</p>
+<p>No edge joins <span class="math inline">\(B\)</span> to <span class="math inline">\(C\)</span>: the pairs <span class="math inline">\((100,011),(101,010),(101,011)\)</span> share no path, and an edge <span class="math inline">\(100\to010\)</span> would leave <span class="math inline">\(S_{12}\)</span> and enter <span class="math inline">\(S_{13}\)</span> on <span class="math inline">\(P_1\)</span>, which forces colour 1 and colour 2 at once (Lemma 6.2 with <span class="math inline">\(z_1\)</span> in both cuts). Likewise <span class="math inline">\(e(110,101)=e(110,011)=e(110,001)=0\)</span>. With <span class="math inline">\(a=e(110,100)\)</span>, <span class="math inline">\(b=e(110,010)\)</span>, <span class="math inline">\(c=e(110,000)\)</span>, <span class="math inline">\(p=e(B,D)\)</span>, <span class="math inline">\(q=e(C,D)\)</span>: <span class="math inline">\(a+b+c=d(A)=5\)</span>, <span class="math inline">\(b+c+p=d(S_{12})=6\)</span>, <span class="math inline">\(a+c+q=d(S_{13})=6\)</span>, so <span class="math inline">\(p=a+1\)</span>, <span class="math inline">\(q=b+1\)</span>, <span class="math inline">\(d(B)=a+p=2a+1\)</span>, <span class="math inline">\(d(C)=2b+1\)</span>. If <span class="math inline">\(d(B)=5\)</span> then <span class="math inline">\(B=\{u_3,z_3,w_3\}\)</span> lies in the atom 101 of <span class="math inline">\(z_3\)</span>, atom 100 is empty, <span class="math inline">\(a=0\)</span> and <span class="math inline">\(d(B)=1\)</span>, a contradiction; so <span class="math inline">\(d(B)=7\)</span>, <span class="math inline">\(d(C)=5\)</span>, and symmetrically atom 010 is empty, <span class="math inline">\(b=0\)</span>, <span class="math inline">\(d(C)=1\)</span>, a contradiction. <span class="math inline">\(\square\)</span></p>
+<p>This is exactly the computation the solver performs; the other placements of situation 2 additionally use that the odd circuit through a <span class="math inline">\(z\)</span> in a 3-vertex atom must leave that atom through both of its non-<span class="math inline">\(z\)</span> vertices, which forbids colour-2 edges between two such atoms.</p>
+<p><strong>Corrected ablation over all 129 infeasible configurations</strong> (<code>enum_covers_v2.log</code>): without the union facts every one of them becomes feasible; without the circuit facts 33 stay infeasible (8 of the 32 placements of situation 2, 24 of the 72 infeasible situation-3 configurations, and the four-7-cut cover) and 96 become feasible. So the union facts (cyclic 6-edge-connectivity and girth on atom unions) carry every proof, and the circuit facts are needed for situation 1, for 24 placements of situation 2, for the other 48 situation-3 exclusions and for the 12 situation-4 exclusions. <strong>Lemma 10.4.</strong> Four tight 7-cuts of type <span class="math inline">\((7,5,2,3)\)</span> with <span class="math inline">\(s=0\)</span> cannot realize the four classes.</p>
+<h2 id="state-of-play-end-of-2026-09-12">11. State of play (end of 2026-09-12)</h2>
+<p><strong>What is proved.</strong> In the pure setting (tight cuts with <span class="math inline">\(s=0\)</span>; pair cuts of codimension 2; cyclically 6-edge-connected cubic graph with the canonical colouring of a 6-odd 2-factor), the four colouring classes cannot be covered by: two parallel pair cuts (Lemma 6.4, MS, reproduced); three pair cuts (Lemma 10.1, computer; Lemma 10.3 by hand for the symmetric placements); two pair cuts and a 7-cut, or two pair cuts and an 11-cut with both avoided paths on the same side (Lemma 10.2); one pair cut and two 7-cuts (Lemma 10.2); four 7-cuts (Lemma 10.4). Every one of these proofs runs on the cyclic-connectivity and girth facts for unions of atoms; most also use that the odd circuit through a <span class="math inline">\(z\)</span> leaves a small <span class="math inline">\(z\)</span>-atom through both non-<span class="math inline">\(z\)</span> vertices.</p>
+<p><strong>What is open.</strong> The covers that survive the atom relaxation: situation 3 with an 11-cut and the two avoided paths on opposite sides; situation 4 with at least one 11-cut; situation 5 with at least two 11-cuts (7-heavy mixtures undecided). Their relaxations are feasible even with circuit walks and walk connectivity added, so no argument at the level of atoms, crossing counts and parities can exclude them: a proof must use the order of crossings along the paths or the vertex-level structure of the circuits. The realization of two blueprints as actual graphs was undecided by CP-SAT after two hours each. The climbers reach the corresponding near misses within seconds (three 11-cuts; two pair cuts with opposite placements plus an 11-cut) and never complete them: about 100,000 evaluated states at oddness 6 with no full kill.</p>
+<p><strong>What would decide it.</strong> Either a vertex-level exact model that keeps the cut sets fixed to a blueprint and scales (the current realization model has too much symmetry on 40 to 60 free vertices), or a lemma about two 11-cuts whose patterns differ on one path that uses the crossing order (the local lemma of §6 is the atom-level shadow of it, and it is consistent). If (O6) is false for this template, the counterexample lives in exactly these three configurations, and the straddle rings are the place to look.</p>
 
   </div>
 </body>
