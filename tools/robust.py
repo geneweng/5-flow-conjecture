@@ -2,7 +2,7 @@
 (girth >= 6, cyclic 6-edge-connectivity on accepted moves) maximizing the number of 0-edge choices,
 in a fixed sample, for which NO 2-colouring of H (all components) is balanced; secondary objective:
 total killed colourings over the sample.   usage: robust.py DUMP SEED STEPS [SAMPLE]"""
-import sys, json, random, itertools, time
+import sys, os, json, random, itertools, time
 import networkx as nx
 from oddness import canonical_colouring, H_components, partition, balanced
 from gen_cyc6 import cyclically_6_connected
@@ -10,7 +10,10 @@ fn, seed, steps = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]); K = int(sys.a
 rng = random.Random(seed); d = json.load(open(fn)); G = nx.Graph(); G.add_edges_from(map(tuple, d["edges"])); circuits = d["circuits"]
 cedges = {frozenset((C[i], C[(i + 1) % len(C)])) for C in circuits for i in range(len(C))}
 odd = [C for C in circuits if len(C) % 2]
-sample = [tuple(d["zero"])] + [tuple(rng.randrange(len(C)) for C in odd) for _ in range(K - 1)]
+if os.environ.get("NEIGH") == "1":   # the one-step neighbourhood of the base choice (all positions of each single 0-edge)
+    sample = sorted({tuple(d["zero"][:i] + [j] + d["zero"][i + 1:]) for i in range(len(odd)) for j in range(len(odd[i]))})
+else:
+    sample = [tuple(d["zero"])] + [tuple(rng.randrange(len(C)) for C in odd) for _ in range(K - 1)]
 def evaluate(G):
     M = {frozenset(e) for e in G.edges()} - cedges; fails = 0; killed = 0
     for zc in sample:
