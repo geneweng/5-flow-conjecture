@@ -273,7 +273,7 @@ Enumeration of all **minimal covers of the four classes** by lines (pair 6-cuts)
 | 2: three lines, one per pair | 32 | **32** | 0 |
 | 3: two lines + one point | 96 | 72 | 24 (all with an 11-cut point and the two avoided paths on opposite sides) |
 | 4: one line + two points | 48 | 12 (both points 7-cuts) | 36 |
-| 5: four points | 16 | 0 so far | 5 feasible, rest undecided at 2 minutes |
+| 5: four points | 16 | 1 (four 7-cuts) | 9 feasible (all with at least two 11-cuts), 6 undecided at 2 minutes (7-heavy mixtures) |
 
 **Lemma 10.1 (situation 2 is impossible, pure case).** Three tight pair cuts of type $(6,4,2,2)$ with $s=0$, each avoided by its third path, whose end pairs form a triangle, cannot coexist in a cyclically 6-edge-connected cubic graph with the canonical colouring. (Computer proof: all 32 placements infeasible.)
 
@@ -299,3 +299,5 @@ So the union facts (cyclic 6-edge-connectivity and girth applied to unions of at
 No edge joins $B$ to $C$: the pairs $(100,011),(101,010),(101,011)$ share no path, and an edge $100\to010$ would leave $S_{12}$ and enter $S_{13}$ on $P_1$, which forces colour 1 and colour 2 at once (Lemma 6.2 with $z_1$ in both cuts). Likewise $e(110,101)=e(110,011)=e(110,001)=0$. With $a=e(110,100)$, $b=e(110,010)$, $c=e(110,000)$, $p=e(B,D)$, $q=e(C,D)$: $a+b+c=d(A)=5$, $b+c+p=d(S_{12})=6$, $a+c+q=d(S_{13})=6$, so $p=a+1$, $q=b+1$, $d(B)=a+p=2a+1$, $d(C)=2b+1$. If $d(B)=5$ then $B=\{u_3,z_3,w_3\}$ lies in the atom 101 of $z_3$, atom 100 is empty, $a=0$ and $d(B)=1$, a contradiction; so $d(B)=7$, $d(C)=5$, and symmetrically atom 010 is empty, $b=0$, $d(C)=1$, a contradiction. $\square$
 
 This is exactly the computation the solver performs; the other placements of situation 2 additionally use that the odd circuit through a $z$ in a 3-vertex atom must leave that atom through both of its non-$z$ vertices, which forbids colour-2 edges between two such atoms.
+
+**Corrected ablation over all 129 infeasible configurations** (`enum_covers_v2.log`): without the union facts every one of them becomes feasible; without the circuit facts 33 stay infeasible (8 of the 32 placements of situation 2, 24 of the 72 infeasible situation-3 configurations, and the four-7-cut cover) and 96 become feasible. So the union facts (cyclic 6-edge-connectivity and girth on atom unions) carry every proof, and the circuit facts are needed for situation 1, for 24 placements of situation 2, for the other 48 situation-3 exclusions and for the 12 situation-4 exclusions. **Lemma 10.4.** Four tight 7-cuts of type $(7,5,2,3)$ with $s=0$ cannot realize the four classes.
