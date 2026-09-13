@@ -9,7 +9,7 @@ import networkx as nx
 from gen_cyc6 import generate_straddle, generate, generate_rings, cyclically_6_connected
 from oddness import canonical_colouring, H_components, partition
 from badcuts import violating_set, classify, profiles
-profiles.update({'t4ring': [[7, 7, 6]] * 4, 'ring3': [[7, 7, 6]] * 3, 'rand7': [7] * 6 + [8], 'rand9': [7] * 4 + [9, 9, 6]})
+profiles.update({'t4ring': [[7, 7, 6]] * 4, 'ring3': [[7, 7, 6]] * 3, 'rand7': [7] * 6 + [8], 'rand9': [7] * 4 + [9, 9, 6], 'six7': [7] * 6})
 INF = 10 ** 6
 def mincut(G, black, inside=(), outside=()):
     D = nx.DiGraph()
