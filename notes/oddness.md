@@ -280,3 +280,14 @@ Enumeration of all **minimal covers of the four classes** by lines (pair 6-cuts)
 **Lemma 10.2.** In situation 3 the point-killer cannot be a 7-cut; with an 11-cut the two avoided paths must lie on opposite sides of their pair cuts (one inside, one outside). In situation 4 the two point-killers cannot both be 7-cuts.
 
 What remains open at the class level, with $s=0$: situation 3 with an 11-cut and mixed placement, situation 4 with at least one 11-cut, and situation 5 (four 11-cuts, or 11/7 mixtures). These are exactly the configurations whose relaxations are feasible, so any proof of them needs information beyond atom counts and parities (the order of crossings along the paths, or the geometry of the circuits). The near misses found by the climbers are of these types: three 11-cuts (situation 5 minus one), and two pair cuts with opposite placements plus an 11-cut (situation 3 minus nothing: the `straddle6A` instance has all three cuts but its third pair cut is missing, i.e. it is a 3-kill of type situation 3 that would need a fourth cut).
+
+**What the proofs use (ablation).** Re-solving the infeasible configurations with constraint groups removed (circuit classes; the cubic/girth/cyclic-connectivity facts on atom unions, including the lazily generated ones):
+
+| configuration | full | without circuits | without union facts | without both |
+|---|---|---|---|---|
+| situation 1 (MS), placement 00 | infeasible | feasible | feasible | feasible |
+| situation 2, placement 000 | infeasible | infeasible | feasible | feasible |
+| situation 2, placement 111 | infeasible | infeasible | feasible | feasible |
+| situation 2, b01 s1 placement 010 | infeasible | feasible | feasible | feasible |
+
+So the union facts (cyclic 6-edge-connectivity and girth applied to unions of atoms, the setting of the MS uncrossing) are needed in every proof, and the circuit structure of the 2-factor (each odd circuit is a closed walk through the atoms leaving any atom of fewer than 7 vertices, a 3-vertex $z$-atom is traversed only by its own circuit) is needed for situation 1 and for some placements of situation 2. The two "symmetric" placements of situation 2 (all avoided paths outside, or all inside) fall to uncrossing and counting alone, and are the natural first targets for a written proof. In the model, MS's Lemma 6.4 is not reproduced by their parity argument but by the circuit facts; whether the parity argument is implicitly present in the union facts I have not checked.

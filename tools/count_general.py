@@ -45,16 +45,18 @@ def solve(ends, cuts, UMAX=2, TIME=300, NOCIRC=False, NOUNION=False, NOPAR=False
     n = {}
     for a in A:
         visits = sum(v for i in ends for v in inn(i, a)) + sum(1 for i in ends if cells.index(ends[i][0]) == a)
-        n[a] = m.NewIntVar(0, 500, f"n{a}"); m.Add(n[a] >= visits)
-        h = m.NewIntVar(0, 250, ""); m.Add(n[a] == 2 * h + zc[a] % 2)
+        n[a] = m.NewIntVar(0, 500, f"n{a}")
+        if os.environ.get("NOVIS") != "1": m.Add(n[a] >= visits)
+        if os.environ.get("NONPAR") != "1":
+            h = m.NewIntVar(0, 250, ""); m.Add(n[a] == 2 * h + zc[a] % 2)
         inc1 = [v for (i, p, q), (v, c) in x.items() if (p == a or q == a) and c == 1]
         inc2 = [v for (i, p, q), (v, c) in x.items() if (p == a or q == a) and c == 2]
         if os.environ.get('NOPAR') != '1':
             h1 = m.NewIntVar(0, 100, ""); m.Add(sum(inc1) == 2 * h1 + zc[a] % 2)
             h2 = m.NewIntVar(0, 100, ""); m.Add(sum(inc2) == 2 * h2)
-        m.Add(sum(inc2) + zc[a] <= n[a])                           # colour-2 crossings use distinct non-z vertices
-        if zc[a]: m.Add(n[a] >= 3)
-        if all(cells.index(ends[i][0]) != a for i in ends):
+        if os.environ.get("NOROOM") != "1": m.Add(sum(inc2) + zc[a] <= n[a])
+        if zc[a] and os.environ.get("NOZ3") != "1": m.Add(n[a] >= 3)
+        if os.environ.get("NONOV") != "1" and all(cells.index(ends[i][0]) != a for i in ends):
             nov = m.NewBoolVar(""); m.Add(sum(v for i in ends for v in inn(i, a)) == 0).OnlyEnforceIf(nov); m.Add(sum(v for i in ends for v in inn(i, a)) >= 1).OnlyEnforceIf(nov.Not())
             big = m.NewBoolVar(""); m.Add(n[a] >= 6).OnlyEnforceIf([nov, big]); m.Add(n[a] == 0).OnlyEnforceIf([nov, big.Not()])
     if os.environ.get('NO42') != '1': m.Add(sum(n[a] for a in A) >= 42)
@@ -112,7 +114,7 @@ def solve(ends, cuts, UMAX=2, TIME=300, NOCIRC=False, NOUNION=False, NOPAR=False
         st = solver.Solve(m); rounds += 1; 
         if st not in (cp_model.OPTIMAL, cp_model.FEASIBLE): return solver.StatusName(st), None
         sol_x = {k: solver.Value(v) for k, (v, c) in x.items()}; sol_n = [solver.Value(n[a]) for a in A]
-        bad = violated(sol_x, sol_n)
+        bad = [] if NOUNION else violated(sol_x, sol_n)
         # walk connectivity (subtour elimination): a path's transitions must form one trail from its start atom;
         # an odd circuit's colour-2 crossings must form one closed walk through its z-atom
         import networkx as nx
