@@ -59,3 +59,9 @@ print(f"candidates with live > 0: {sum(lc.values())}; live-count distribution: {
 print("marginal sizes over circuits DISJOINT from S:", dict(sorted(marg_free.items())))
 print("marginal sizes over circuits meeting S (whole or arc):", dict(sorted(marg_touched.items())))
 print("examples of disjoint circuits with all 7 positions live (|S|, d, live, circuit):", worst[:10], "... total", len(worst))
+out = sys.argv[1].rsplit("/", 1)[-1].replace(".json", "") + "_live.json"
+json.dump([{"S": sorted(S), "d": dS, "k": 2 if dS == 6 else 1, "live": live[i]} for i, (S, dS, touched, bnd, zok, pair) in enumerate(cands) if live[i]], open(out, "w"))
+T = sum((2 if dS == 6 else 1) * len(live[i]) for i, (S, dS, touched, bnd, zok, pair) in enumerate(cands))
+N = 1
+for C in odd: N *= len(C)
+print(f"EXACT averaging total T = sum_S live(S) k(S) = {T}  vs 4N = {4*N}  (T/4N = {T/(4*N):.4f}); live sets dumped to {out}")
