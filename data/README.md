@@ -1,12 +1,13 @@
 # Counterexamples to the fixed-2-factor flow-partition template at oddness 6
 
-Three cubic graphs, each cyclically 6-edge-connected with girth 6, each with a 2-factor of six odd circuits and a choice of one 0-edge per odd circuit, such that in the canonical colouring (matching = colour 1, circuit edges alternately 2 and 3, the 0-edges colour 0) the subgraph H of colours 1 and 2 consists of three paths and no even circuit, and **all eight proper 2-colourings of H give unbalanced valuations** w = ±5/3 (Mazzuoccolo–Steffen's construction fails for this 2-factor and these 0-edges). Verify with `python3 tools/verify_fullkill.py data/<file>.json` (checks cubicity, girth, cyclic 6-edge-connectivity by SAT, the 2-factor, and every witness cut by arithmetic). Each file records the witness set S per colouring; the files with `_edges.txt` give edge lists with colours.
+Four cubic graphs, each cyclically 6-edge-connected with girth 6, each with a 2-factor of six odd circuits and a choice of one 0-edge per odd circuit, such that in the canonical colouring (matching = colour 1, circuit edges alternately 2 and 3, the 0-edges colour 0) the subgraph H of colours 1 and 2 consists of three paths and no even circuit, and **all eight proper 2-colourings of H give unbalanced valuations** w = ±5/3 (Mazzuoccolo–Steffen's construction fails for this 2-factor and these 0-edges). Verify with `python3 tools/verify_fullkill.py data/<file>.json` (checks cubicity, girth, cyclic 6-edge-connectivity by SAT, the 2-factor, and every witness cut by arithmetic). Each file records the witness set S per colouring; the files with `_edges.txt` give edge lists with colours.
 
 | file | vertices | circuit lengths | killing cuts |
 |---|---|---|---|
 | `oddness6_template_counterexample.json` | 60 | 7,6,7,6,7,7,6,7,7 | four 11-cuts of 13, 13, 15, 17 vertices |
 | `oddness6_template_counterexample_n60b.json` | 60 | 7,6,7,6,7,7,6,7,7 | four 11-cuts of 13 vertices each |
 | `oddness6_template_counterexample_n50.json` | 50 | 7,7,7,7,7,7,8 | four 11-cuts of 13, 15, 21, 23 vertices |
+| `oddness6_template_counterexample_n54.json` | 54 | 7,6,7,7,7,6,7,7 | four 11-cuts |
 
 For the first instance all 117,649 other choices of 0-edges admit a balanced colouring (`tools/zero_sweep.py`), so the failure is an isolated point of the 0-edge space; the graphs have nowhere-zero 5-flows.
 
