@@ -124,6 +124,14 @@ for eps in itertools.product((0, 1), repeat=t):
     # structure of tight cuts (Lemma 6.1): at most 5t-4 cut edges, imbalance at least 4, at least 6 vertices on each side
     m.Add(sum(cut_terms) <= 5 * t - 4).OnlyEnforceIf(kill); m.Add(imbalance >= 4).OnlyEnforceIf(kill)
     m.Add(sum(S) >= 6).OnlyEnforceIf(kill); m.Add(sum(S) <= n - 6).OnlyEnforceIf(kill)
+# symmetry breaking: the z of the first odd circuit carries label 1, the z of the second label <= 2; x[0] = 0
+if not (len(sys.argv) > 4):
+    for v in odd[0]: m.AddImplication(zvar[v], lab[v][1])
+    if t >= 3:
+        for v in odd[1]: m.AddImplication(zvar[v], lab[v][t].Not())
+    m.Add(x[0] == 0)
+if __import__("os").environ.get("ALLKILL") == "1":
+    for kl in kills: m.Add(kl == 1)
 m.Maximize(sum(kills))
 if HINT:   # warm start from a dumped instance (killsets/climb json): map its circuits onto ours in order
     from oddness import canonical_colouring, H_components, partition
@@ -154,9 +162,39 @@ if HINT:   # warm start from a dumped instance (killsets/climb json): map its ci
     for hv, v in vmap.items():
         for l in range(t + 1): hint(lab[v][l], 1 if labh[hv] == l else 0)
     hodd = [C for C in hc if len(C) % 2]
-    for hC, zi in zip(hodd, d["zero"]): hint(zvar[vmap[hC[zi]]], 1)
+    for hC, zi in zip(hodd, d["zero"]):
+        if __import__("os").environ.get("FIXZ") == "1": m.Add(zvar[vmap[hC[zi]]] == 1)
+        else: hint(zvar[vmap[hC[zi]]], 1)
+    spec = __import__("os").environ.get("S4SPEC")
+    if spec:   # structured fourth cut for one surviving colouring: whole:<ci>;arcs:<ci>,<cj>;evens:<ci,...>;eps:<b,b,b>
+        kv = dict(part.split(":") for part in spec.split(";"))
+        whole = int(kv["whole"]); arcs = [int(c) for c in kv["arcs"].split(",")]; evens = [int(c) for c in kv["evens"].split(",") if c]
+        eps = tuple(int(b) for b in kv["eps"].split(",")); S, kill = Svars[eps]; m.Add(kill == 1)
+        zidx = {hc.index(hC): zi for hC, zi in zip(hodd, d["zero"])}
+        for ci, C in enumerate(circuits):
+            if ci == whole or ci in evens:
+                for v in C: m.Add(S[v] == 1)
+            elif ci in arcs:
+                L = len(C); z0 = zidx[ci]
+                ring = [C[(z0 + k) % L] for k in range(L)]        # ring[0] = z, ring[k] = k steps forward, ring[-k] backward
+                m.Add(S[ring[0]] == 1)
+                for k in range(1, L // 2 + 1):
+                    m.AddImplication(S[ring[k]], S[ring[k - 1]]); m.AddImplication(S[ring[-k]], S[ring[-(k - 1)]] if k > 1 else S[ring[0]])
+                m.Add(sum(S[v] for v in C) <= L - 1)
+            else:
+                for v in C: m.Add(S[v] == 0)
+        print("structured S4:", spec, flush=True)
     print("hint loaded from", HINT, flush=True)
-    if __import__("os").environ.get("FIXS") == "1":     # debug: also fix the witness sets of the dump
+    if "S" not in d:   # climber dumps carry no witness sets: recompute them
+        from badcuts import violating_set
+        d["S"] = {}
+        for eps in itertools.product((0, 1), repeat=t):
+            ff = list(f)
+            for i, b in zip(pidx, eps): ff[i] = b
+            Sw = violating_set(Gh, partition(comps, ff))
+            if Sw is not None: d["S"][str(eps)] = sorted(Sw)
+        print("witness sets recomputed for", len(d["S"]), "killed colourings", flush=True)
+    if __import__("os").environ.get("FIXS") == "1":     # also fix the witness sets of the dump
         for k, Sl in d["S"].items():
             eps = tuple(int(ch) for ch in k if ch in "01"); Sm = {vmap[v] for v in Sl}
             S, kill = Svars[eps]; m.Add(kill == 1)
