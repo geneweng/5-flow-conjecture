@@ -591,3 +591,68 @@ So for two-position shifts the picture is completely sharp: the row-$E$ classes 
 2. If pursuing a proof: the $3\times2$ grid of §16 is the object; the unknown is a mechanism forbidding newborn killers for *some* shift, using the four killers of the failing choice. Data to look at: `tools/shift2b_all.log` (role-labelled compositions of all grid killers at two-position shifts).
 3. If pursuing a write-up: §12 (counterexamples), §10 (exclusions), §16 (grid) and this section are the content; `data/README.md` has the verification instructions.
 4. Other routes in this repository: the mod-5 orientation route (`notes/mod5-orientation.md`) was left at the SAT experiments stage.
+
+## 18. Review and new lines of attack (2026-09-19)
+
+*Written on resuming after the pause of §17. The ideas concern the whole project, not only the oddness route; they are recorded here because this file is the running log.*
+
+### 18.0 What the review says
+
+Three things stand out when §§1–17, the mod-5 notes and the survey are read together.
+
+1. **Both routes study the same object.** Jaeger's balanced valuation $w=\pm\tfrac53$ (§1), the half-set $S$ of Lemma C in `mod5-orientation.md` ($\bigl||X\cap S|-|X|/2\bigr|\le0.3\,d_G(X)$) and the $V_1/V_2$ classes of a Matamala–Zamora even $(1,2)$-factor are one and the same bipartition of $V$: the 5-flow conjecture for cubic graphs is the statement that **some $\pm1$ vector $\chi$ on $V$ has $|\chi(X)|\le\tfrac35 d(X)$ for every $X$**; Seymour's theorem is the same statement with $\tfrac23$, 3-edge-colourability is $\tfrac12$. The oddness route restricts $\chi$ to the MS family (proper colourings of $H$), the mod-5 route tried to build $\chi$ by LTWZ induction.
+2. **The oddness route died of a rare event, not of a structural obstruction.** The template fails at isolated 0-edge choices because four tight 11-cuts coincide; (L-repair) is "six rare events do not coincide". Statements of that kind are true with overwhelming probability and have no mechanism. The lesson of §17 (test against the null model) applies to every continuation along those lines, so the ideas below avoid statements of the form "a coincidence does not happen".
+3. **Every failure ever found is an 11-cut failure.** Pair 6-cuts and 7-cuts never completed a cover, and §10 proves most of that. This is the opening for 18.1.
+
+### 18.1 Idea A — a theorem within reach: circular flow number $\le 11/2$ at oddness 6
+
+Balanced valuations work for real $r$: a cubic graph has a circular nowhere-zero $r$-flow if some bipartition has $r\,|b_X-a_X|\le(r-2)\,d(X)$ for all $X$. Redo the catalogue of §2 for general $r$. The constraints $k\le c_1$, $k\le c_2+q$, $c_1+c_2\le m$, $q\le3$, $k\equiv m$ give $k\le(m+3)/2$ with the parity of $m$, so the extremal ratios $k/m$ are
+
+| $m$ | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 |
+|---|---|---|---|---|---|---|---|---|---|
+| max $k$ | 4 | 5 | 4 | 5 | 6 | 7 | 6 | 7 | 8 |
+| $k/m$ | .667 | .714 | .5 | .556 | .6 | **.636** | .5 | .538 | .571 |
+
+A set is bad for $r$ iff $k/m>(r-2)/r$. At $r=5$ the threshold is $.6$ and the bad types are $(6,4)$, $(7,5)$, $(11,7)$. **At $r=\tfrac{11}2$ the threshold is exactly $7/11$: the 11-cuts are no longer bad, and the only bad cuts are the 6-cuts with $k=4$ and the 7-cuts with $k=5$.** For $5<r<\tfrac{11}2$ nothing changes relative to $r=5$ (the template jumps from 5 to $5.5$, there is nothing in between).
+
+*Check on the archives* (`tools/template_ratio.py`: exact $\max_S|b_S-a_S|/d(S)$ per colouring by Dinkelbach iteration on min-cuts): on **all 26 archived template failures** (six in `data/`, twenty `tools/fullkill_*.json`, 42–78 vertices), at the failing 0-edge choice the best colouring has worst ratio exactly $7/11$, i.e. the template yields a circular $\tfrac{11}2$-flow there; the only other value that occurs is $2/3$ (pair cuts, on the 54- and 78-vertex families, never for all colourings).
+
+So the statement
+
+> **(C6)** Every cyclically 6-edge-connected cubic graph with a 2-factor of at most six odd circuits has circular flow number at most $\tfrac{11}2$, for *every* such 2-factor and *every* choice of 0-edges.
+
+is exactly "the four classes cannot be covered by 6-cuts and 7-cuts", and §10 already has, in the pure case, situation 1 (12/12 infeasible), situation 2 (32/32), situation 3 with a 7-cut point (Lemma 10.2), situation 4 with two 7-cut points (Lemma 10.2) and four 7-cuts (Lemma 10.4). To my knowledge nothing below 6 is known for oddness 6 (literature check 2026-09-19: Steffen's cyclic-connectivity theorem needs connectivity 12 at oddness 6; no general bound $6-\varepsilon$ is known), so (C6) would be a new theorem, and it has the right shape: no rare events, only the deterministic exclusions that the relaxation of §10 is able to prove. **Remaining work:**
+1. point-killers of type $(6,4,1,3)$ (the 6-cut with one non-$H$ boundary edge) are not in the enumeration of §10: add them as a third kind of point to `enum_covers.py`;
+2. the impure cases: even circuits of $H$ crossing the cuts ($s>0$) and pair cuts of codimension 3 ($r_3\ge2$ in (L-C) of §6);
+3. $H$ with even circuits (eight or more colourings per class; more freedom, should only help, but the cover problem has to be restated);
+4. the six "7-heavy" situation-5 mixtures of §10 were undecided only because they contained 11-cuts *or* timed out; re-run the pure-7 and 7/(6,4,1,3) mixtures with a long time limit;
+5. hand proofs in the style of Lemma 10.3 for a written version.
+
+### 18.2 Idea B — measure the distance from the template to the truth ("defect" experiment)
+
+For a fixed 2-factor $F_2$ with matching $M$, *every* nowhere-zero $\mathbb Z_5$-flow of $G$ is visible: contracting the circuits, a flow is a map $\varphi\colon M\to\mathbb Z_5^*$ with zero net sum at every circuit such that **the partial sums of $\varphi$ around each circuit omit a residue** (the omitted residue fixes the additive constant of the flow on the circuit). So fixing the 2-factor loses nothing; what loses is the MS sub-family, in which the partial sums alternate between two values except at one 0-edge per odd circuit. Between "one defect per odd circuit" and "all flows" there is a hierarchy that nobody has looked at.
+
+*Experiment (cheap, ILP or SAT):* on the 26 failing instances at their failing choices, and on random choices, compute the minimum number of monochromatic $H$-edges over all balanced $\pm\tfrac53$ bipartitions (equivalently the Hamming distance from the template family to a true solution), and record where the defects sit relative to the four killing 11-cuts. If the answer is always 1 or 2 and the defects sit on the killers' boundaries, the natural conjecture is "template + one extra defect always works", whose obstruction catalogue (the analogue of §2 with $q\le4$) can be computed exactly as before. This replaces the search over 0-edge moves (which change the colourings globally and produced the rare-event picture) by a *local* enlargement of the family.
+
+### 18.3 Idea C — the zonotope form and rounding
+
+By 18.0(1), with $Z(G)=\sum_{uv\in E}[-(e_u-e_v),\,e_u-e_v]=\{w:\ |w(X)|\le d(X)\ \forall X\}$, the conjecture is: **$\tfrac35Z(G)$ contains a $\pm1$ vector.** This is a discrepancy problem over a submodular constraint family, and the standard machinery of that field has not been tried on flows:
+
+- *Iterative rounding / Lovett–Meka walk.* Start at $w=0$, move inside $Z(G)\cap[-\tfrac53,\tfrac53]^V$, freezing coordinates that reach $\pm\tfrac53$ and staying on tight cuts. Tight sets are closed under union and intersection ($d$ submodular, $w$ modular), so the active cut constraints reduce to a chain, and the walk is stuck only when every link of the chain contains exactly one unfrozen vertex; at such a point every coordinate lies in $\tfrac13\mathbb Z$. So the procedure ends at a very rigid kind of point, and the question becomes a finite repair problem at the chain. For $r=6$ the same procedure ends in $\tfrac12\mathbb Z$.
+- *Experiment:* run the walk on snarks and on the cyclically 6-connected test graphs for a range of $r$, record the smallest $r$ at which it succeeds and the shape of the stuck chains. A first target is a rounding proof of a *known* bound (8-flow: $r=8$, $w=\pm\tfrac43$; then 6), because a rounding proof does not factor the group and therefore does not stop at 6 for arithmetic reasons (survey §7, item 1).
+
+### 18.4 Idea D — count instead of decide
+
+Dvořák, Mohar and Šámal proved exponentially many $\mathbb Z_3$-, $\mathbb Z_4$-, $\mathbb Z_6$-flows because the counting statement inducts better than existence. For $\mathbb Z_5$ nothing is known, and Jacobsen–Salas show $F(G;q)$ has roots accumulating at 5, so the count is where the conjecture is "almost false". *Experiment:* compute $F(G;5)$ (tree-decomposition DP) on the snark census and on the project's cyclically 6-connected graphs, and run the matching-swap climbers with objective $\min F(G;5)^{1/n}$. Questions: is $P_{10}$ (240 flows) extremal for $F^{1/n}$; does the minimum over cyclically 6-connected graphs stay bounded away from 1; which local structures depress the count? A conjecture "$F(G;5)\ge c^{\,n}$ for 3-connected cubic $G$" with the right extremal family is a better induction hypothesis than existence, and the climbers built for §8 and §12 can be reused unchanged.
+
+### 18.5 Smaller items
+
+- **Unused freedom in the averaging argument (§13).** The first-moment bound failed because the number of live 11-cuts grows with $n$ while $N=7^6$ is fixed. The phases of the even circuits of $F_2$ (each flip re-routes $H$) multiply $N$ by $2^{\#\text{even circuits}}$, which does grow with $n$; a killer must have $\partial S\subseteq E(H)$, so each even circuit *crossing* a candidate cut halves its density. Measure how the per-set live density behaves under phase flips before investing more.
+- **Mod-5 route.** The Cranston–Li style list (minimal multigraphs of small order that are not strongly $\mathbb Z_5$-connected) is still the first thing to compute; by 18.0(1) a "troublesome" configuration is also a configuration of sparse cuts in the zonotope picture, so 18.3 and that list inform each other.
+- **Steffen's Problem 5.2** ($P_{10}$ the only cyclically 5-connected snark with $\Phi_c=5$): idea A is a step in this direction, since it produces upper bounds on $\Phi_c$ rather than on the integer flow number; if (C6) goes through, ask the same question for the threshold between the $(6,4)$ and $(7,5)$ types ($r=6$ kills the 6-cuts: is $\Phi_c<6$ provable for *all* oddness under cyclic 6-connectivity by excluding 7-cut covers alone?).
+
+### 18.6 Order of work
+
+1. (C6): extend `enum_covers.py` by the $(6,4,1,3)$ points and the impure cases; this is days, not weeks, and yields a statement worth writing up together with §12.
+2. The defect experiment 18.2 (an afternoon); decides whether the template can be enlarged locally.
+3. The rounding experiment 18.3 and the counting experiment 18.4, in parallel as background jobs.
