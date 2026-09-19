@@ -6,12 +6,12 @@
 all with even circuits of H allowed to cross (s free).  A sub-configuration of a realizable configuration is
 realizable, so the search is hierarchical: all pairs of items first, then every minimal cover that contains no
 infeasible pair (then no infeasible triple).
-usage: enum_c6.py pairs|covers [TIME] [PURE]      (results cached in tools/enum_c6_cache.json)"""
+usage: enum_c6.py pairs|covers|retry|verify [TIME] [PURE]      (results cached in tools/enum_c6_cache.json)"""
 import itertools, sys, time, json, os
 from count_c6 import solve
 HERE = os.path.dirname(os.path.abspath(__file__)); CACHE = os.path.join(HERE, "enum_c6_cache.json")
 MODE = sys.argv[1] if len(sys.argv) > 1 else "pairs"; TIME = float(sys.argv[2]) if len(sys.argv) > 2 else 60
-PURE = len(sys.argv) > 3 and sys.argv[3] == "PURE"
+PURE = len(sys.argv) > 3 and sys.argv[3] == "PURE"; UMAX = int(os.environ.get("UMAX", "2"))
 ALL = [(0, 0), (0, 1), (1, 0), (1, 1)]; PAIRS = [(0, 1), (0, 2), (1, 2)]
 def line(pair, b, p):
     if pair == (0, 1): mem = {1: 1, 2: 0, 3: 1 - b, 4: b, 5: p, 6: p}; killed = {(b, 0), (b, 1)}
@@ -44,7 +44,7 @@ def status(names, T=TIME):
     key = ("PURE " if PURE else "") + " ".join(sorted(names))
     if key in cache and (cache[key] != "UNKNOWN" or T <= cache.get(key + " T", 0)): return cache[key]
     ends, cuts = config(sorted(names)); t0 = time.time()
-    st, sol = solve(ends, cuts, 2, T, PURE=PURE)
+    st, sol = solve(ends, cuts, UMAX, T, PURE=PURE, workers=8)      # fewer initial union facts = weaker but much faster model; INFEASIBLE is a proof either way
     cache[key] = st; cache[key + " T"] = T
     tmp = CACHE + ".tmp"; json.dump(cache, open(tmp, "w"), indent=0); os.replace(tmp, CACHE)
     print(f"{key:60s} {st:10s} [{time.time()-t0:.0f}s] {sol if sol else ''}", flush=True)
@@ -70,6 +70,16 @@ if MODE == "pairs":
     for a, b in itertools.combinations(names, 2):
         if items[a][2] == items[b][2] and a[0] == b[0] == "P": continue      # two points on the same class: not needed in a minimal cover
         status((a, b))
+elif MODE == "verify":     # certificate check: every minimal cover contains a sub-configuration proved INFEASIBLE
+    cv = covers(); by = {2: 0, 3: 0, 4: 0}; open_ = []
+    for c in cv:
+        r = next((r for r in (2, 3, 4) for s in itertools.combinations(c, r) if cache.get(" ".join(sorted(s))) == "INFEASIBLE"), None)
+        if r is None: open_.append(c)
+        else: by[r] += 1
+    print(len(cv), "minimal covers; smallest infeasible sub-configuration has size:", by, "; open:", len(open_))
+    for c in open_: print("  OPEN", c)
+elif MODE == "retry":      # re-solve the undecided configurations with the given (longer) time limit
+    for key in [k for k, v in list(cache.items()) if v == "UNKNOWN" and not k.startswith("PURE")]: status(key.split())
 else:
     cv = covers(); print(len(cv), "minimal covers", flush=True); left = []
     for c in cv:

@@ -1,0 +1,1 @@
+{"n": 10, "flags": "-ctf", "resmod": null, "count": 1, "bridged": 0, "gcd": 240, "mod5": {"0": 1}, "F4mod6": {"0": 1}, "lowest": [[240, "ICOf@pSb?"]], "secs": 0.0, "classified": [{"lam": 3, "girth": 5, "tri": 0, "c4": 0, "cyc": 5, "F4": 0, "F5": 240, "g6": "ICOf@pSb?", "classes": ["c3", "c4", "c5g5"]}]}

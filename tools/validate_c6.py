@@ -35,7 +35,7 @@ for fn in sys.argv[1:]:
     evens = list(itertools.product((0, 1), repeat=len(cidx))) if os.environ.get("EVENFLIPS") == "1" else [tuple([0] * len(cidx))]
     for ev in evens:
         killers = {}
-        for bits in itertools.product((0, 1), repeat=3):
+        for bits in itertools.product((0,), (0, 1), (0, 1)):      # one colouring per class (complements give the complementary sets)
             f = [0] * len(comps)
             for i, b in zip(pidx, bits): f[i] = b
             for i, b in zip(cidx, ev): f[i] = b
@@ -57,7 +57,7 @@ for fn in sys.argv[1:]:
         def cfg(sub):
             ends = {i: (tuple(int(P[0] in S) for S, _ in sub), tuple(int(P[-1] in S) for S, _ in sub)) for i, P in enumerate(paths)}
             return ends, [v[0] for _, v in sub]
-        subsets = [s for r in (1, 2) for s in itertools.combinations(ks, r)] + ([tuple(ks)] if len(ks) > 2 else [])
+        subsets = [s for r in (1, 2, 3) for s in itertools.combinations(ks, r) if os.environ.get('ALLSUB') == '1' or (all(v[1][0] != 11 for _, v in s) if os.environ.get('NON11ONLY') == '1' else any(v[1][0] != 11 for _, v in s))]
         for sub in subsets:
             ends, cuts = cfg(sub); st, sol = solve(ends, cuts, 2, 120)
             desc = "+".join(f"{v[1][0]}{'x' if v[0]['cross'] else ''}{'n' if v[0]['nonH'] else ''}" for _, v in sub)

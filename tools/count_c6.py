@@ -17,7 +17,7 @@ import sys, os, itertools, time
 import networkx as nx
 from ortools.sat.python import cp_model
 
-def solve(ends, cuts, UMAX=2, TIME=300, PURE=False, NOCIRC=False, NOUNION=False, workers=4, rounds_max=60):
+def solve(ends, cuts, UMAX=2, TIME=300, PURE=False, NOCIRC=False, NOUNION=False, workers=4, rounds_max=400, verbose=False):
     J = len(cuts)
     cells = list(itertools.product((0, 1), repeat=J)); A = range(len(cells)); nc = len(cells)
     zc = {a: sum(1 for i in ends for c in ends[i] if c == cells[a]) for a in A}
@@ -155,7 +155,7 @@ def solve(ends, cuts, UMAX=2, TIME=300, PURE=False, NOCIRC=False, NOUNION=False,
         return bad
     solver = cp_model.CpSolver(); solver.parameters.max_time_in_seconds = TIME; solver.parameters.num_workers = workers
     rounds = 0; t0 = time.time()
-    while rounds < rounds_max and time.time() - t0 < 4 * TIME:
+    while rounds < rounds_max and time.time() - t0 < 6 * TIME:
         st = solver.Solve(m); rounds += 1
         if st not in (cp_model.OPTIMAL, cp_model.FEASIBLE): return solver.StatusName(st), None
         sol_x = {k: solver.Value(v) for k, (v, c) in x.items()}; sol_n = [solver.Value(n[a]) for a in A]
@@ -183,5 +183,6 @@ def solve(ends, cuts, UMAX=2, TIME=300, PURE=False, NOCIRC=False, NOUNION=False,
             sol = {''.join(map(str, cells[a])): sol_n[a] for a in A if sol_n[a]}
             sol["s"] = sum(solver.Value(v) for v in u.values()); return "FEASIBLE", sol
         bad.sort(key=lambda t: (bin(t[0]).count("1"), t[2]))
-        for mask, nUv, d in bad[:40]: add_union([a for a in A if mask >> a & 1])
+        if verbose: print(f"  round {rounds}: {len(bad)} violated unions, {sub_added} walk cuts, n={sum(sol_n)} [{time.time()-t0:.0f}s]", flush=True)
+        for mask, nUv, d in bad[:300]: add_union([a for a in A if mask >> a & 1])
     return "UNKNOWN", None
