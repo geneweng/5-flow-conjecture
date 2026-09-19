@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Experiment B — defect distance from the MS template to a 5-flow (2026-09-19)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+  <style>
+  :root{--paper:#f6f6f3;--paper2:#ecede8;--ink:#1c1f23;--ink2:#4f5760;--rule:#cfd3cc;--accent:#2b5c85;--accent2:#9a4b2f;--code:#e9ebe6;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}}
+  :root[data-theme="dark"]{--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}
+  html{color-scheme:light dark}
+  body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;padding-block:0 4rem;padding-inline:clamp(16px,4vw,40px);margin:0}
+  .wrap{max-width:46rem;margin:0 auto}
+  header.masthead{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;padding-block:3rem 1.5rem;border-bottom:2px solid var(--ink)}
+  header.masthead h1{font-family:"Source Sans 3","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 .6rem;text-wrap:balance}
+  header.masthead .byline{color:var(--ink2);font-size:.95rem;margin:0;max-width:34rem}
+  .eyebrow{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 .4rem}
+  .petersen{flex:none}
+  .sitenav{font-family:"Source Sans 3",Arial,sans-serif;font-size:.9rem;color:var(--ink2);margin:1rem 0 0}
+.conj{font-size:1.2rem;line-height:1.4;margin:2rem 0;padding:1rem 1.2rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  .conj .lbl{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.3rem}
+  nav.toc{margin:2rem 0 2.5rem;padding:1rem 1.2rem;border:1px solid var(--rule)}
+  nav.toc ol{margin:0;padding-left:1.4rem;columns:2;column-gap:2rem;font-family:"Source Sans 3",Arial,sans-serif;font-size:.95rem;line-height:1.5}
+  nav.toc li{break-inside:avoid;padding:.1rem 0}
+  @media (max-width:520px){nav.toc ol{columns:1}header.masthead{grid-template-columns:1fr}.petersen{width:84px;height:84px}}
+  h2{font-family:"Source Sans 3",Arial,sans-serif;font-weight:700;font-size:1.45rem;line-height:1.2;margin:3rem 0 1rem;padding-top:1rem;border-top:1px solid var(--rule);text-wrap:balance}
+  h3{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:1.08rem;margin:2rem 0 .6rem;text-wrap:balance}
+  p{margin:0 0 1rem}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  blockquote{margin:1.2rem 0;padding:.7rem 1.1rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  blockquote p:last-child{margin-bottom:0}
+  ul,ol{padding-left:1.4rem}li{margin-bottom:.35rem}
+  hr{border:0;height:0;margin:0}
+  .tbl{overflow-x:auto;margin:1.2rem 0}
+  table{border-collapse:collapse;width:100%;font-family:"Source Sans 3",Arial,sans-serif;font-size:.92rem;line-height:1.4;font-variant-numeric:tabular-nums}
+  th{text-align:left;font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--ink);padding:.45rem .6rem .35rem}
+  td{border-bottom:1px solid var(--rule);padding:.45rem .6rem;vertical-align:top}
+  td:first-child{font-weight:600}
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code);padding:.05em .3em;border-radius:2px}
+  strong{font-weight:600}
+  mjx-container[display="true"]{margin:.6rem 0;overflow-x:auto;overflow-y:hidden}
+  section.refs ul{padding-left:1.2rem;font-size:.93rem}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+  </style>
+  </head>
+<body>
+<div class="wrap">
+  <header class="masthead"><div><p class="eyebrow">Working notes · September 2026</p><h1>Experiment B — defect distance from the MS template to a 5-flow (2026-09-19)</h1><p class="byline"></p></div><svg class="petersen" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Petersen graph"><g stroke="var(--accent)" stroke-width="1.6" fill="none"><line x1="60.0" y1="22.0" x2="98.0" y2="49.6"/><line x1="98.0" y1="49.6" x2="83.5" y2="94.4"/><line x1="83.5" y1="94.4" x2="36.5" y2="94.4"/><line x1="36.5" y1="94.4" x2="22.0" y2="49.6"/><line x1="22.0" y1="49.6" x2="60.0" y2="22.0"/><line x1="60.0" y1="22.0" x2="60.0" y2="44.0"/><line x1="98.0" y1="49.6" x2="77.1" y2="56.4"/><line x1="83.5" y1="94.4" x2="70.6" y2="76.6"/><line x1="36.5" y1="94.4" x2="49.4" y2="76.6"/><line x1="22.0" y1="49.6" x2="42.9" y2="56.4"/><line x1="60.0" y1="44.0" x2="70.6" y2="76.6"/><line x1="77.1" y1="56.4" x2="49.4" y2="76.6"/><line x1="70.6" y1="76.6" x2="42.9" y2="56.4"/><line x1="49.4" y1="76.6" x2="60.0" y2="44.0"/><line x1="42.9" y1="56.4" x2="77.1" y2="56.4"/></g><g fill="var(--ink)"><circle cx="60.0" cy="22.0" r="3"/><circle cx="98.0" cy="49.6" r="3"/><circle cx="83.5" cy="94.4" r="3"/><circle cx="36.5" cy="94.4" r="3"/><circle cx="22.0" cy="49.6" r="3"/><circle cx="60.0" cy="44.0" r="3"/><circle cx="77.1" cy="56.4" r="3"/><circle cx="70.6" cy="76.6" r="3"/><circle cx="49.4" cy="76.6" r="3"/><circle cx="42.9" cy="56.4" r="3"/></g></svg></header>
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#set-up">Set-up</a></li><li><a href="#results">Results</a></li><li><a href="#reading">Reading</a></li></ol></nav>
+  <p>Implements §18.2 of <code>oddness.md</code>. Script: <code>tools/defect_min.py</code> (run with no arguments; about 90 s on 2 cores); raw output: <code>tools/defect_min_results.json</code>.</p>
+<h2 id="set-up">Set-up</h2>
+<p>For each archived template failure (graph, 2-factor, failing 0-edge choice; <span class="math inline">\(H\)</span> = colours 1, 2 of the canonical colouring) we minimise, over <strong>all</strong> balanced <span class="math inline">\(\pm\tfrac53\)</span> bipartitions, the number of monochromatic <span class="math inline">\(H\)</span>-edges (“defects”). The template family is exactly the bipartitions with 0 defects.</p>
+<p>Balancedness is modelled exactly by a flow: black/white is balanced iff there is an integer flow <span class="math inline">\(f\)</span> with <span class="math inline">\(|f(e)|\le3\)</span> and net outflow <span class="math inline">\(+5\)</span> at black and <span class="math inline">\(-5\)</span> at white vertices (max-flow/min-cut on the network of <code>oddness.balanced</code>). CP-SAT model: <span class="math inline">\(x_v\in\{0,1\}\)</span>, <span class="math inline">\(f_e\in[-3,3]\)</span>, <span class="math inline">\(d_e\in\{0,1\}\)</span> per <span class="math inline">\(H\)</span>-edge with <span class="math inline">\(x_u\oplus x_v\oplus d_e=1\)</span>, conservation <span class="math inline">\(\sum_{\rm out}f-\sum_{\rm in}f=10x_v-5\)</span>, minimise <span class="math inline">\(\sum d_e\)</span>; <code>num_workers=2</code>. Every bipartition the solver returned, and every bipartition produced in the enumeration, was re-checked with <code>oddness.balanced</code> (assertions in the script; none failed). Every CP-SAT run ended with status OPTIMAL or INFEASIBLE (no time-outs).</p>
+<p>Enumeration: optimal <strong>defect sets</strong> are enumerated with no-good cuts on the <span class="math inline">\(d\)</span>-variables until infeasible (complete for every instance; cap 200 never reached). For each defect set all <span class="math inline">\(2^{\#\text{comp}-1}\)</span> bipartitions with exactly that defect set (up to global complement) are tested by min cut.</p>
+<p>Killers: for every proper colouring of <span class="math inline">\(H\)</span> (8, or 16 when <span class="math inline">\(H\)</span> has an even circuit) the min-cut witness <code>badcuts.violating_set</code> (smaller side) is computed; where the instance JSON has a stored field <code>S</code> those sets are added. Stored and computed sets coincide for 4 of the 5 data files that have <code>S</code>; for <code>tc_n54</code> they differ (both are used). A defect edge is classified <strong>bdry</strong> if it lies in the boundary of at least one killer, else <strong>in</strong> if both ends lie inside some killer’s smaller side, else <strong>out</strong>.</p>
+<p>Instances: 26 files (<code>data/oddness6_*.json</code>, <code>tools/fullkill_*.json</code>); 5 of the <code>fullkill_*</code> files are the same (graph, 2-factor, 0-edges) as a <code>data/</code> file, so there are <strong>21 distinct instances</strong>. Abbreviations: <code>tc</code> = <code>oddness6_template_counterexample</code>, <code>fk_</code> = <code>fullkill_</code>.</p>
+<h2 id="results">Results</h2>
+<h3 id="main-table">Main table</h3>
+<p>Columns: <strong>min</strong> = minimum number of defects; <strong>c2-only / c1-only</strong> = minimum when defects are allowed only on colour-2 / only on colour-1 (matching) edges; <strong>working / all c2</strong> = number of colour-2 <span class="math inline">\(H\)</span>-edges that work as the single defect / number of colour-2 <span class="math inline">\(H\)</span>-edges; <strong>bip.</strong> = number of balanced 1-defect bipartitions up to complement; <strong>working bdry/in/out</strong> and <strong>all c2 bdry/in/out</strong> = killer classification of the working defect edges and, as baseline, of all colour-2 edges; <strong>T/N</strong> = balanced 1-defect bipartitions that are / are not a <em>template</em> bipartition for another 0-edge choice on the same 2-factor (see below); <strong>sets all-N</strong> = working defect edges none of whose bipartitions is of type T.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+</colgroup>
+<thead>
+<tr>
+<th>instance</th>
+<th>n</th>
+<th>H</th>
+<th>killers (size/cut)</th>
+<th>min</th>
+<th>c2-only</th>
+<th>c1-only</th>
+<th>working / all c2</th>
+<th>bip.</th>
+<th>working: bdry/in/out</th>
+<th>all c2: bdry/in/out</th>
+<th>T/N</th>
+<th>sets all-N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>robust_stage2b_n50</td>
+<td>50</td>
+<td>3P+1C</td>
+<td>13/11 15/11 19/11 21/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>17/22</td>
+<td>71</td>
+<td>8/7/2</td>
+<td>12/8/2</td>
+<td>60/11</td>
+<td>3</td>
+</tr>
+<tr>
+<td>tc</td>
+<td>60</td>
+<td>3P+0C</td>
+<td>13/11 13/11 15/11 17/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>25/27</td>
+<td>61</td>
+<td>9/4/12</td>
+<td>9/4/14</td>
+<td>41/20</td>
+<td>8</td>
+</tr>
+<tr>
+<td>tc_n42</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>13/11 13/11 13/11 15/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/18</td>
+<td>41</td>
+<td>9/3/6</td>
+<td>9/3/6</td>
+<td>39/2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>tc_n50</td>
+<td>50</td>
+<td>3P+0C</td>
+<td>13/11 15/11 21/11 23/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/22</td>
+<td>43</td>
+<td>8/7/3</td>
+<td>10/8/4</td>
+<td>40/3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>tc_n54</td>
+<td>54</td>
+<td>3P+0C</td>
+<td>12/6 16/6 21/11 27/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>20/24</td>
+<td>38</td>
+<td>9/8/3</td>
+<td>11/10/3</td>
+<td>30/8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>tc_n60b</td>
+<td>60</td>
+<td>3P+0C</td>
+<td>13/11 13/11 13/11 13/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>23/27</td>
+<td>57</td>
+<td>8/3/12</td>
+<td>8/3/16</td>
+<td>40/17</td>
+<td>7</td>
+</tr>
+<tr>
+<td>fk_climb_six7_1110_1643</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>13/11 13/11 15/11 15/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>17/18</td>
+<td>44</td>
+<td>8/5/4</td>
+<td>8/5/5</td>
+<td>39/5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>fk_climb_six7_43_1905 (= tc_n42)</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>13/11 13/11 13/11 15/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/18</td>
+<td>41</td>
+<td>9/3/6</td>
+<td>9/3/6</td>
+<td>39/2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>fk_climb_six7_514_1901</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>13/11 13/11 13/11 15/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/18</td>
+<td>39</td>
+<td>11/4/3</td>
+<td>11/4/3</td>
+<td>36/3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>fk_climb_six7_521_1890</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>15/11 15/11 19/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>16/18</td>
+<td>37</td>
+<td>11/3/2</td>
+<td>12/4/2</td>
+<td>35/2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>fk_climb_six7_531_1801</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>13/11 13/11 13/11 17/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>17/18</td>
+<td>40</td>
+<td>9/4/4</td>
+<td>10/4/4</td>
+<td>39/1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>fk_climb_six7_538_2174</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>15/11 21/11 21/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>17/18</td>
+<td>33</td>
+<td>9/8/0</td>
+<td>9/9/0</td>
+<td>29/4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>fk_climb_straddle6A_31_22440</td>
+<td>78</td>
+<td>3P+0C</td>
+<td>25/11 30/6 33/11 37/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>28/36</td>
+<td>48</td>
+<td>8/19/1</td>
+<td>10/24/2</td>
+<td>28/20</td>
+<td>11</td>
+</tr>
+<tr>
+<td>fk_climb_straddleA_709_2275</td>
+<td>54</td>
+<td>3P+1C</td>
+<td>22/6 27/11 27/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>19/24</td>
+<td>80</td>
+<td>8/10/1</td>
+<td>8/15/1</td>
+<td>64/16</td>
+<td>3</td>
+</tr>
+<tr>
+<td>fk_complete_102</td>
+<td>60</td>
+<td>3P+0C</td>
+<td>13/11 13/11 15/11 17/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>24/27</td>
+<td>61</td>
+<td>9/4/11</td>
+<td>9/4/14</td>
+<td>41/20</td>
+<td>7</td>
+</tr>
+<tr>
+<td>fk_complete_103</td>
+<td>60</td>
+<td>3P+0C</td>
+<td>13/11 13/11 15/11 17/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>24/27</td>
+<td>57</td>
+<td>9/4/11</td>
+<td>9/4/14</td>
+<td>41/16</td>
+<td>7</td>
+</tr>
+<tr>
+<td>fk_complete_106</td>
+<td>54</td>
+<td>3P+0C</td>
+<td>12/6 13/11 16/6 27/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>22/24</td>
+<td>35</td>
+<td>10/9/3</td>
+<td>10/11/3</td>
+<td>25/10</td>
+<td>4</td>
+</tr>
+<tr>
+<td>fk_complete_3 (= tc)</td>
+<td>60</td>
+<td>3P+0C</td>
+<td>13/11 13/11 15/11 17/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>25/27</td>
+<td>61</td>
+<td>9/4/12</td>
+<td>9/4/14</td>
+<td>41/20</td>
+<td>8</td>
+</tr>
+<tr>
+<td>fk_complete_33</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>15/11 15/11 21/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>16/18</td>
+<td>37</td>
+<td>12/4/0</td>
+<td>12/6/0</td>
+<td>36/1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>fk_complete_34</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>15/11 15/11 15/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>16/18</td>
+<td>40</td>
+<td>12/3/1</td>
+<td>12/3/3</td>
+<td>35/5</td>
+<td>0</td>
+</tr>
+<tr>
+<td>fk_complete_501</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>13/11 15/11 15/11 19/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>16/18</td>
+<td>40</td>
+<td>9/4/3</td>
+<td>9/4/5</td>
+<td>39/1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>fk_complete_505</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>13/11 15/11 17/11 19/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>16/18</td>
+<td>38</td>
+<td>11/5/0</td>
+<td>12/5/1</td>
+<td>38/0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>fk_complete_512</td>
+<td>42</td>
+<td>3P+0C</td>
+<td>13/11 13/11 15/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/18</td>
+<td>40</td>
+<td>10/5/3</td>
+<td>10/5/3</td>
+<td>39/1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>fk_complete_7 (= tc_n54)</td>
+<td>54</td>
+<td>3P+0C</td>
+<td>12/6 16/6 21/11 27/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>20/24</td>
+<td>38</td>
+<td>8/9/3</td>
+<td>10/11/3</td>
+<td>30/8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>fk_complete_8 (= tc_n50)</td>
+<td>50</td>
+<td>3P+0C</td>
+<td>13/11 15/11 21/11 23/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/22</td>
+<td>43</td>
+<td>8/7/3</td>
+<td>10/8/4</td>
+<td>40/3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>fk_complete_9 (= tc_n60b)</td>
+<td>60</td>
+<td>3P+0C</td>
+<td>13/11 13/11 13/11 13/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>23/27</td>
+<td>57</td>
+<td>8/3/12</td>
+<td>8/3/16</td>
+<td>40/17</td>
+<td>7</td>
+</tr>
+</tbody>
+</table></div>
+<p>(The two rows for <code>tc_n54</code>/<code>fk_complete_7</code> differ in the bdry/in split only because the stored <code>S</code> of the data file is added to the killer list there.)</p>
+<h3 id="minimum-defect-count">(1) Minimum defect count</h3>
+<p><strong>The minimum is 1 on all 26 files (21 distinct instances)</strong>, including the 78-vertex instance and the instances whose killers include pair-type 6-cuts.</p>
+<h3 id="where-the-defects-are">(2) Where the defects are</h3>
+<ul>
+<li><strong>Colour.</strong> In every optimal solution of every instance the single defect is a <strong>colour-2 edge</strong>. No single colour-1 defect is ever feasible. This is forced by parity: an <span class="math inline">\(H\)</span>-path starts at a <span class="math inline">\(z\)</span> with a colour-1 edge, so a colour-1 defect cuts the path into two pieces of odd order whose majority colours agree (the two ends of the defect edge have the same colour); with all other components properly coloured this gives <span class="math inline">\(|{\rm black}|-|{\rm white}|=\pm2\)</span>, and <span class="math inline">\(|A|=|B|\)</span> fails. A colour-2 defect cuts a path into two pieces of even order.</li>
+<li><strong>How many edges work.</strong> Over the 21 distinct instances, <strong>405 of the 458 colour-2 edges (88%) work as the single defect</strong>; in 3 of the 11 distinct 42-vertex instances all 18 do. (The denominator includes the colour-2 edges on the even <span class="math inline">\(H\)</span>-circuit of the two distinct instances that have one; those cannot work alone, see below.) By parity of the 2-factor circuit carrying the edge: 352/378 (93%) of the colour-2 edges on odd circuits work, 53/80 (66%) of those on even circuits.</li>
+<li><strong>Which path.</strong> Working defects occur on every <span class="math inline">\(H\)</span>-path that has a colour-2 edge (the only path without one is the 1-edge path of <code>fk_climb_six7_521_1890</code>), never on an even <span class="math inline">\(H\)</span>-circuit (a circuit needs an even number of defects), in numbers following the number of colour-2 edges on the component (e.g. <code>tc_n42</code>: paths with 17, 15, 7 edges carry 8, 7, 3 working defects = all their colour-2 edges). Positions along the path are spread over the whole path (always odd positions, being colour 2). Per-edge data (path ends, position, circuit) are in the JSON.</li>
+<li><strong>Relative to the killers.</strong> Working edges: 197 bdry / 123 in / 85 out; all colour-2 edges: 210 / 143 / 105. So the success rate is 94% on killer boundaries, 86% inside, 81% outside: a mild enrichment only; <strong>the defects are not confined to the killers’ boundaries</strong>. A sharper test, per balanced 1-defect bipartition (980 in total): take the nearest proper colouring of <span class="math inline">\(H\)</span> (component-wise majority) and its own killer; the defect edge is on that killer’s boundary in 240 cases (24%), inside it in 211 (22%), outside in 529 (54%). Note that a defect at position <span class="math inline">\(i\)</span> of a path is the same thing as the proper colouring with the tail beyond <span class="math inline">\(i\)</span> flipped, so a defect changes <span class="math inline">\(b_S-a_S\)</span> for every <span class="math inline">\(S\)</span> meeting that tail, however far the defect edge itself is from <span class="math inline">\(\partial S\)</span>.</li>
+</ul>
+<h3 id="all-optimal-solutions">(3) All optimal solutions</h3>
+<p>Complete enumeration for every instance: 16–28 optimal defect edges per instance (column “working”), 33–84 balanced 1-defect bipartitions per instance up to complement (980 over the 21 distinct instances); a working defect edge carries between 1 and 8 balanced bipartitions (of the 4, or 8 with an even <span class="math inline">\(H\)</span>-circuit, available).</p>
+<p><strong>Relation to moving a 0-edge (T/N).</strong> A bipartition is a template bipartition for some other 0-edge choice on the same 2-factor iff all matching edges are bichromatic and each odd circuit has a position <span class="math inline">\(p\)</span> with the edges <span class="math inline">\(p+1,p+3,\dots\)</span> bichromatic (convention of <code>canonical_colouring</code>; the mirrored convention was tested too and never made a difference), each even circuit keeping its colour-2 class (swapping the two classes of an even circuit was tested too and never helped). Of the 980 balanced 1-defect bipartitions, <strong>814 (83%) are of this kind, always with exactly one 0-edge moved</strong> (type T): these are the known single-0-edge-move repairs of §12 seen from the other side. <strong>166 (17%) are not template bipartitions for any 0-edge choice of this 2-factor</strong> (type N), and 59 of the 405 working defect edges have only type-N bipartitions. Type N is rare on the 42-vertex instances (0–5 bipartitions each) and common on the instances with even circuits in the 2-factor (up to 20 of 48 on the 78-vertex instance), in line with the defects on even circuits, which can never be of type T.</p>
+<h3 id="control-non-failing-0-edge-choices">(4) Control: non-failing 0-edge choices</h3>
+<p>30 uniformly random 0-edge choices on each of <code>tc_n42</code>, <code>fk_climb_six7_1110_1643</code>, <code>fk_complete_505</code> (42 vertices; no product of positions materialised): all 90 sampled choices were non-failing, and the CP-SAT minimum was <strong>0 for all 90</strong>, as expected; the model agrees with the template test.</p>
+<p>Additional: the 7 failing 0-edge choices of the 0-edge-robust instance <code>data/oddness6_robust_stage2b_n50.json</code> (field <code>fails</code>):</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr>
+<th>zero</th>
+<th>H</th>
+<th>killers (size/cut)</th>
+<th>min</th>
+<th>c2-only</th>
+<th>c1-only</th>
+<th>working / all c2</th>
+<th>bip.</th>
+<th>working: bdry/in/out</th>
+<th>all c2: bdry/in/out</th>
+<th>T/N</th>
+<th>sets all-N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[1,0,2,5,2,1]</td>
+<td>3P+1C</td>
+<td>13/11 15/11 19/11 19/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>19/22</td>
+<td>77</td>
+<td>9/7/3</td>
+<td>9/7/6</td>
+<td>63/14</td>
+<td>4</td>
+</tr>
+<tr>
+<td>[1,0,2,5,2,3]</td>
+<td>3P+0C</td>
+<td>13/11 15/11 19/11 23/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>19/22</td>
+<td>41</td>
+<td>9/8/2</td>
+<td>10/8/4</td>
+<td>33/8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>[5,0,2,5,2,1]</td>
+<td>3P+1C</td>
+<td>13/11 15/11 19/11 21/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>17/22</td>
+<td>71</td>
+<td>8/7/2</td>
+<td>12/8/2</td>
+<td>60/11</td>
+<td>3</td>
+</tr>
+<tr>
+<td>[5,0,2,5,2,2]</td>
+<td>3P+0C</td>
+<td>13/11 13/11 15/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/22</td>
+<td>43</td>
+<td>10/7/1</td>
+<td>11/8/3</td>
+<td>36/7</td>
+<td>2</td>
+</tr>
+<tr>
+<td>[5,0,2,5,2,3]</td>
+<td>3P+0C</td>
+<td>13/11 15/11 19/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/22</td>
+<td>39</td>
+<td>7/7/4</td>
+<td>10/8/4</td>
+<td>31/8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>[5,0,2,5,2,4]</td>
+<td>3P+1C</td>
+<td>13/11 13/11 15/11 15/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>18/22</td>
+<td>84</td>
+<td>11/6/1</td>
+<td>13/6/3</td>
+<td>71/13</td>
+<td>2</td>
+</tr>
+<tr>
+<td>[5,0,2,5,2,5]</td>
+<td>3P+0C</td>
+<td>13/11 13/11 19/11 21/11</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>17/22</td>
+<td>35</td>
+<td>11/5/1</td>
+<td>13/6/3</td>
+<td>30/5</td>
+<td>3</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="variants">(5) Variants</h3>
+<ul>
+<li>Defects on colour-2 edges only: minimum <strong>1</strong> everywhere (same as unrestricted).</li>
+<li>Defects on colour-1 (matching) edges only: feasible everywhere, minimum <strong>2</strong> everywhere (1 is excluded by the parity argument above).</li>
+</ul>
+<h2 id="reading">Reading</h2>
+<ol type="1">
+<li>On every archived failure the template is at Hamming distance exactly 1 from a nowhere-zero 5-flow: one monochromatic colour-2 edge suffices, and the choice of that edge is almost free (88% of all colour-2 edges work; 100% on three 42-vertex instances). The statement “template + one colour-2 defect always works” holds on all 21 + 6 tested (instance, failing choice) pairs; nothing in the data distinguishes a preferred place for the defect, in particular not the killers’ boundaries.</li>
+<li>Most of this is the known single-0-edge-move repair in another guise: 83% of the balanced 1-defect bipartitions are template bipartitions of a 0-edge choice differing in one circuit. The remaining 17% (166 bipartitions, 59 defect edges with no T-type bipartition at all) are 5-flows outside the template family of <em>every</em> 0-edge choice of the 2-factor; they are concentrated on 2-factors with even circuits.</li>
+<li>Matching edges alone can also absorb the failure, at cost 2 instead of 1.</li>
+<li>The experiment says nothing about instances where the template fails for <em>all</em> 0-edge choices (none is known), and all instances here come from the same search pipeline (11-cut and pair-6-cut killers, <span class="math inline">\(H\)</span> = three paths plus at most one even circuit).</li>
+</ol>
+
+  </div>
+</body>
+</html>

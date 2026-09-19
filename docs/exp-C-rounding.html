@@ -1,0 +1,2927 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Experiment C — rounding inside the zonotope (2026-09-19)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+  <style>
+  :root{--paper:#f6f6f3;--paper2:#ecede8;--ink:#1c1f23;--ink2:#4f5760;--rule:#cfd3cc;--accent:#2b5c85;--accent2:#9a4b2f;--code:#e9ebe6;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}}
+  :root[data-theme="dark"]{--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}
+  html{color-scheme:light dark}
+  body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;padding-block:0 4rem;padding-inline:clamp(16px,4vw,40px);margin:0}
+  .wrap{max-width:46rem;margin:0 auto}
+  header.masthead{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;padding-block:3rem 1.5rem;border-bottom:2px solid var(--ink)}
+  header.masthead h1{font-family:"Source Sans 3","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 .6rem;text-wrap:balance}
+  header.masthead .byline{color:var(--ink2);font-size:.95rem;margin:0;max-width:34rem}
+  .eyebrow{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 .4rem}
+  .petersen{flex:none}
+  .sitenav{font-family:"Source Sans 3",Arial,sans-serif;font-size:.9rem;color:var(--ink2);margin:1rem 0 0}
+.conj{font-size:1.2rem;line-height:1.4;margin:2rem 0;padding:1rem 1.2rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  .conj .lbl{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.3rem}
+  nav.toc{margin:2rem 0 2.5rem;padding:1rem 1.2rem;border:1px solid var(--rule)}
+  nav.toc ol{margin:0;padding-left:1.4rem;columns:2;column-gap:2rem;font-family:"Source Sans 3",Arial,sans-serif;font-size:.95rem;line-height:1.5}
+  nav.toc li{break-inside:avoid;padding:.1rem 0}
+  @media (max-width:520px){nav.toc ol{columns:1}header.masthead{grid-template-columns:1fr}.petersen{width:84px;height:84px}}
+  h2{font-family:"Source Sans 3",Arial,sans-serif;font-weight:700;font-size:1.45rem;line-height:1.2;margin:3rem 0 1rem;padding-top:1rem;border-top:1px solid var(--rule);text-wrap:balance}
+  h3{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:1.08rem;margin:2rem 0 .6rem;text-wrap:balance}
+  p{margin:0 0 1rem}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  blockquote{margin:1.2rem 0;padding:.7rem 1.1rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  blockquote p:last-child{margin-bottom:0}
+  ul,ol{padding-left:1.4rem}li{margin-bottom:.35rem}
+  hr{border:0;height:0;margin:0}
+  .tbl{overflow-x:auto;margin:1.2rem 0}
+  table{border-collapse:collapse;width:100%;font-family:"Source Sans 3",Arial,sans-serif;font-size:.92rem;line-height:1.4;font-variant-numeric:tabular-nums}
+  th{text-align:left;font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--ink);padding:.45rem .6rem .35rem}
+  td{border-bottom:1px solid var(--rule);padding:.45rem .6rem;vertical-align:top}
+  td:first-child{font-weight:600}
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code);padding:.05em .3em;border-radius:2px}
+  strong{font-weight:600}
+  mjx-container[display="true"]{margin:.6rem 0;overflow-x:auto;overflow-y:hidden}
+  section.refs ul{padding-left:1.2rem;font-size:.93rem}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+  </style>
+  </head>
+<body>
+<div class="wrap">
+  <header class="masthead"><div><p class="eyebrow">Working notes · September 2026</p><h1>Experiment C — rounding inside the zonotope (2026-09-19)</h1><p class="byline"></p></div><svg class="petersen" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Petersen graph"><g stroke="var(--accent)" stroke-width="1.6" fill="none"><line x1="60.0" y1="22.0" x2="98.0" y2="49.6"/><line x1="98.0" y1="49.6" x2="83.5" y2="94.4"/><line x1="83.5" y1="94.4" x2="36.5" y2="94.4"/><line x1="36.5" y1="94.4" x2="22.0" y2="49.6"/><line x1="22.0" y1="49.6" x2="60.0" y2="22.0"/><line x1="60.0" y1="22.0" x2="60.0" y2="44.0"/><line x1="98.0" y1="49.6" x2="77.1" y2="56.4"/><line x1="83.5" y1="94.4" x2="70.6" y2="76.6"/><line x1="36.5" y1="94.4" x2="49.4" y2="76.6"/><line x1="22.0" y1="49.6" x2="42.9" y2="56.4"/><line x1="60.0" y1="44.0" x2="70.6" y2="76.6"/><line x1="77.1" y1="56.4" x2="49.4" y2="76.6"/><line x1="70.6" y1="76.6" x2="42.9" y2="56.4"/><line x1="49.4" y1="76.6" x2="60.0" y2="44.0"/><line x1="42.9" y1="56.4" x2="77.1" y2="56.4"/></g><g fill="var(--ink)"><circle cx="60.0" cy="22.0" r="3"/><circle cx="98.0" cy="49.6" r="3"/><circle cx="83.5" cy="94.4" r="3"/><circle cx="36.5" cy="94.4" r="3"/><circle cx="22.0" cy="49.6" r="3"/><circle cx="60.0" cy="44.0" r="3"/><circle cx="77.1" cy="56.4" r="3"/><circle cx="70.6" cy="76.6" r="3"/><circle cx="49.4" cy="76.6" r="3"/><circle cx="42.9" cy="56.4" r="3"/></g></svg></header>
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol></ol></nav>
+  <p>Implements §18.3 of <code>oddness.md</code>. Script <code>tools/zono_round.py</code> (written by a subagent, which stalled twice before reporting; this reduced run was made by hand: single process, 20 restarts, graphs Petersen, <span class="math inline">\(J_5\)</span>, <span class="math inline">\(J_7\)</span>, <span class="math inline">\(GP(13,3)\)</span>, <span class="math inline">\(R_2\)</span>, the 42-vertex template counterexample <code>cx42</code>; <span class="math inline">\(r\in\{8,6,\tfrac{11}2,5\}\)</span> and <span class="math inline">\(\tfrac92\)</span> on the snarks). Tables below are generated by <code>tools/zono_round_report.py tools/zono_round_results.json</code>.</p>
+<p><strong>Procedures.</strong> <code>walk</code><span class="math inline">\(\delta\)</span>: Lovett–Meka-style random walk from <span class="math inline">\(w=0\)</span> inside <span class="math inline">\(Z(G)\cap[-c,c]^V\)</span>, <span class="math inline">\(c=r/(r-2)\)</span>, Gaussian steps of size <span class="math inline">\(\delta c\)</span> orthogonal to the frozen coordinates and to the indicator vectors of the cuts that became tight (a step leaving <span class="math inline">\(Z(G)\)</span> is shortened to the boundary, the blocking cut found by max-flow, constraints are sticky); <code>walkray</code>: every step runs to the next constraint; <code>lp</code>: iterative LP rounding in the flow formulation (random objective, freeze the coordinates at <span class="math inline">\(\pm c\)</span>, repeat); <code>walk+lp</code>: walk, then LP rounding from the stuck point’s frozen pattern. (A first version of the walk was unsound — its results are discarded, kept only in the scratch directory of the session.) Ground truth by CP-SAT: existence of a <span class="math inline">\(\pm c\)</span> vector, whether the frozen pattern of a stuck run extends to one (“extends”), and the minimum number of frozen signs to flip.</p>
+<p><strong>Reading.</strong> 1. <em>The rigidity predicted in §18.3 is exact:</em> in every stuck run (hundreds) every link of the maximal chain of tight sets contains at most one unfrozen vertex and all unfrozen coordinates lie in <span class="math inline">\(\tfrac1b\mathbb Z\)</span> (<span class="math inline">\(b=3\)</span> for <span class="math inline">\(r=5\)</span>, <span class="math inline">\(7\)</span> for <span class="math inline">\(r=\tfrac{11}2\)</span>, <span class="math inline">\(2\)</span> for <span class="math inline">\(r=6\)</span>, <span class="math inline">\(3\)</span> for <span class="math inline">\(r=8\)</span>). 2. <em>But the stuck configurations are not local.</em> The number of unfrozen coordinates is about <span class="math inline">\(n/2\)</span> on the larger graphs (median 22 of 42 on <code>cx42</code>, 19.5 of 40 on <span class="math inline">\(R_2\)</span> at <span class="math inline">\(r=5\)</span>), the chain has 20–25 links with boundary sizes ranging over everything from 5 to 23, and the unfrozen vertices span the whole graph (their diameter equals the graph’s). Only on Petersen is the stuck set small (2–4 vertices, all chain cuts of size <span class="math inline">\(\le7\)</span>). 3. <em>Success rates.</em> The random walks essentially never reach <span class="math inline">\(r\le6\)</span> except on Petersen (and reach <span class="math inline">\(r=8\)</span> in a few per cent of runs). LP rounding is much better: it finds the exact optimum of the grid on Petersen (<span class="math inline">\(5\)</span>), <span class="math inline">\(J_5\)</span> and <span class="math inline">\(J_7\)</span> (<span class="math inline">\(\tfrac92\)</span>); on <code>cx42</code> it reaches <span class="math inline">\(\tfrac{11}2\)</span> (2/20) and not 5; on <span class="math inline">\(R_2\)</span> it reaches 6, and 5 once with walk+lp. At <span class="math inline">\(r=8\)</span> it succeeds in 30–100 % of runs. 4. <em>Frozen patterns are often wrong.</em> The frozen signs of a stuck run extend to a genuine <span class="math inline">\(\pm c\)</span> vector in roughly one to two thirds of the sampled cases; otherwise 1–3 (once 4) frozen signs have to be flipped.</p>
+<p>So rounding that does not factor the group does work at <span class="math inline">\(r=8\)</span> with good probability and degrades steadily towards 5; there is no sign of a wall at 6, but also no sign of a finite local repair problem: a stuck point is a global object (half the vertices unfrozen, a chain through cuts of all sizes). As implemented this is not a proof strategy. What could still be tried: a potential-function (entropy / partial-colouring) analysis of the LP rounding at <span class="math inline">\(r=8\)</span>, where it succeeds often, to see whether it yields <em>any</em> bound by this route.</p>
+<h3 id="t1.-ground-truth-cp-sat-does-zg-contain-a--rr-2-vector">T1. Ground truth (CP-SAT): does Z(G) contain a +-r/(r-2) vector?</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>graph</th>
+<th>n</th>
+<th>diam</th>
+<th>9/2</th>
+<th>5</th>
+<th>11/2</th>
+<th>6</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>10</td>
+<td>2</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>20</td>
+<td>4</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>28</td>
+<td>5</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>26</td>
+<td>5</td>
+<td>n/a</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>40</td>
+<td>7</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>42</td>
+<td>6</td>
+<td>n/a</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t2walk0.1.-successes-out-of-20-restarts-x-no--c-vector-exists-na-cell-not-run">T2[walk0.1]. Successes out of 20 restarts (‘x’ = no +-c vector exists, ‘n/a’ = cell not run)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>graph</th>
+<th>9/2</th>
+<th>5</th>
+<th>11/2</th>
+<th>6</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>x</td>
+<td>2</td>
+<td>5</td>
+<td>10</td>
+<td>16</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>n/a</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>x</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>n/a</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t2walk0.03.-successes-out-of-5-restarts-x-no--c-vector-exists-na-cell-not-run">T2[walk0.03]. Successes out of 5 restarts (‘x’ = no +-c vector exists, ‘n/a’ = cell not run)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>graph</th>
+<th>9/2</th>
+<th>5</th>
+<th>11/2</th>
+<th>6</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>x</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>n/a</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>x</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>n/a</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t2walkray.-successes-out-of-20-restarts-x-no--c-vector-exists-na-cell-not-run">T2[walkray]. Successes out of 20 restarts (‘x’ = no +-c vector exists, ‘n/a’ = cell not run)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>graph</th>
+<th>9/2</th>
+<th>5</th>
+<th>11/2</th>
+<th>6</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>x</td>
+<td>6</td>
+<td>4</td>
+<td>7</td>
+<td>19</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>n/a</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>x</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>n/a</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t2lp.-successes-out-of-20-restarts-x-no--c-vector-exists-na-cell-not-run">T2[lp]. Successes out of 20 restarts (‘x’ = no +-c vector exists, ‘n/a’ = cell not run)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>graph</th>
+<th>9/2</th>
+<th>5</th>
+<th>11/2</th>
+<th>6</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>x</td>
+<td>11</td>
+<td>11</td>
+<td>14</td>
+<td>20</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>3</td>
+<td>3</td>
+<td>5</td>
+<td>9</td>
+<td>11</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>11</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>n/a</td>
+<td>0</td>
+<td>5</td>
+<td>7</td>
+<td>11</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>x</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>n/a</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>6</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t2walk0.1lp.-successes-out-of-20-restarts-x-no--c-vector-exists-na-cell-not-run">T2[walk0.1+lp]. Successes out of 20 restarts (‘x’ = no +-c vector exists, ‘n/a’ = cell not run)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>graph</th>
+<th>9/2</th>
+<th>5</th>
+<th>11/2</th>
+<th>6</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>x</td>
+<td>6</td>
+<td>11</td>
+<td>14</td>
+<td>20</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>2</td>
+<td>3</td>
+<td>7</td>
+<td>5</td>
+<td>8</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>10</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>n/a</td>
+<td>3</td>
+<td>1</td>
+<td>5</td>
+<td>10</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>x</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>n/a</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>6</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t3.-smallest-r-of-the-grid-at-which-some-restart-succeeds">T3. Smallest r of the grid at which some restart succeeds</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>graph</th>
+<th>exists (exact)</th>
+<th>walk0.1</th>
+<th>walk0.03</th>
+<th>walkray</th>
+<th>lp</th>
+<th>walk0.1+lp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>9/2</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>9/2</td>
+<td>9/2</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>9/2</td>
+<td>8</td>
+<td>8</td>
+<td>none</td>
+<td>9/2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>5</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>11/2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>5</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>6</td>
+<td>5</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>5</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>11/2</td>
+<td>6</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t4.-stuck-runs.-u-number-of-unfrozen-coordinates-links-strongly-connected-components-of-the-residual-digraph-links-of-a-maximal-chain-of-tight-sets-d-boundary-sizes-of-the-chain-sets-flip-min-number-of-frozen-signs-to-change-so-that-the-frozen-pattern-extends-to-a--c-vector-in-z-exact-first-10-stuck-runs-per-cell-null-same-for-uniformly-random-signs-on-the-same-frozen-se">T4. Stuck runs. u = number of unfrozen coordinates; links = strongly connected components of the residual digraph (= links of a maximal chain of tight sets); d = boundary sizes of the chain sets; flip = min number of frozen signs to change so that the frozen pattern extends to a +-c vector in Z (exact, first 10 stuck runs per cell); null = same for uniformly random signs on the same frozen se</h3>
+<h4 id="t4walk0.1">T4[walk0.1]</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr>
+<th>graph</th>
+<th>r</th>
+<th>stuck</th>
+<th>u med (range)</th>
+<th>in (1/b)Z</th>
+<th>max unfrozen per link</th>
+<th>links med</th>
+<th>links with &gt;1 vertex med</th>
+<th>sticky cuts med</th>
+<th>chain d range</th>
+<th>chain d&lt;=7 share</th>
+<th>unfrozen diam med / graph diam</th>
+<th>extends</th>
+<th>flip hist</th>
+<th>null hist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>5</td>
+<td>18</td>
+<td>4 (2-4)</td>
+<td>18/18</td>
+<td>1</td>
+<td>5</td>
+<td>2</td>
+<td>3</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>11/2</td>
+<td>15</td>
+<td>4 (2-4)</td>
+<td>15/15</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>6</td>
+<td>10</td>
+<td>2 (2-2)</td>
+<td>10/10</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>1.5 / 2</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:3</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>8</td>
+<td>4</td>
+<td>2 (2-2)</td>
+<td>4/4</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>5-5</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>3/3</td>
+<td>0:3</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>5</td>
+<td>20</td>
+<td>9 (5-14)</td>
+<td>20/20</td>
+<td>1</td>
+<td>10</td>
+<td>5</td>
+<td>8</td>
+<td>5-12</td>
+<td>0.41</td>
+<td>4 / 4</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 2:2</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>11/2</td>
+<td>20</td>
+<td>7 (4-11)</td>
+<td>20/20</td>
+<td>1</td>
+<td>8</td>
+<td>5</td>
+<td>6</td>
+<td>6-12</td>
+<td>0.35</td>
+<td>4 / 4</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>6</td>
+<td>20</td>
+<td>7 (4-10)</td>
+<td>20/20</td>
+<td>1</td>
+<td>9</td>
+<td>4</td>
+<td>6</td>
+<td>6-11</td>
+<td>0.30</td>
+<td>4 / 4</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>8</td>
+<td>19</td>
+<td>4 (2-8)</td>
+<td>19/19</td>
+<td>1</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>6-11</td>
+<td>0.15</td>
+<td>3 / 4</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>5</td>
+<td>20</td>
+<td>13 (8-19)</td>
+<td>20/20</td>
+<td>1</td>
+<td>15</td>
+<td>7</td>
+<td>12</td>
+<td>5-16</td>
+<td>0.29</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 2:2</td>
+<td>0:1 1:1 3:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>11/2</td>
+<td>20</td>
+<td>13 (10-20)</td>
+<td>20/20</td>
+<td>1</td>
+<td>14</td>
+<td>6</td>
+<td>12</td>
+<td>6-15</td>
+<td>0.20</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>1:2 2:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>6</td>
+<td>20</td>
+<td>11 (8-16)</td>
+<td>20/20</td>
+<td>1</td>
+<td>13</td>
+<td>6.5</td>
+<td>10</td>
+<td>6-15</td>
+<td>0.14</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>8</td>
+<td>18</td>
+<td>6 (2-11)</td>
+<td>18/18</td>
+<td>1</td>
+<td>8</td>
+<td>5</td>
+<td>5</td>
+<td>6-16</td>
+<td>0.08</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:2 2:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>5</td>
+<td>20</td>
+<td>13 (6-16)</td>
+<td>20/20</td>
+<td>1</td>
+<td>15</td>
+<td>6</td>
+<td>12</td>
+<td>5-15</td>
+<td>0.24</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>1:2 4:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>11/2</td>
+<td>20</td>
+<td>11.5 (5-18)</td>
+<td>20/20</td>
+<td>1</td>
+<td>12</td>
+<td>5</td>
+<td>10.5</td>
+<td>6-15</td>
+<td>0.21</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>1:2 2:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>6</td>
+<td>20</td>
+<td>10 (3-16)</td>
+<td>20/20</td>
+<td>1</td>
+<td>11.5</td>
+<td>5</td>
+<td>9</td>
+<td>6-14</td>
+<td>0.20</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>8</td>
+<td>19</td>
+<td>6 (2-9)</td>
+<td>19/19</td>
+<td>1</td>
+<td>7</td>
+<td>4</td>
+<td>5</td>
+<td>6-16</td>
+<td>0.06</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>5</td>
+<td>20</td>
+<td>19.5 (14-25)</td>
+<td>20/20</td>
+<td>1</td>
+<td>23</td>
+<td>9</td>
+<td>18.5</td>
+<td>2-24</td>
+<td>0.41</td>
+<td>7 / 7</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>2:2 3:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>11/2</td>
+<td>20</td>
+<td>20 (10-24)</td>
+<td>20/20</td>
+<td>1</td>
+<td>20</td>
+<td>8.5</td>
+<td>19</td>
+<td>2-21</td>
+<td>0.46</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>1:3</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>6</td>
+<td>20</td>
+<td>17.5 (14-23)</td>
+<td>20/20</td>
+<td>1</td>
+<td>20</td>
+<td>8</td>
+<td>17</td>
+<td>2-20</td>
+<td>0.44</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>8</td>
+<td>20</td>
+<td>14 (6-22)</td>
+<td>20/20</td>
+<td>1</td>
+<td>14.5</td>
+<td>7</td>
+<td>13</td>
+<td>2-12</td>
+<td>0.80</td>
+<td>7 / 7</td>
+<td>3/3</td>
+<td>0:3</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>5</td>
+<td>20</td>
+<td>22 (18-29)</td>
+<td>20/20</td>
+<td>1</td>
+<td>25</td>
+<td>10</td>
+<td>21</td>
+<td>5-23</td>
+<td>0.12</td>
+<td>6 / 6</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>1:3</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>11/2</td>
+<td>20</td>
+<td>22 (15-28)</td>
+<td>20/20</td>
+<td>1</td>
+<td>23</td>
+<td>9</td>
+<td>21</td>
+<td>6-21</td>
+<td>0.08</td>
+<td>6 / 6</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>1:2 2:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>6</td>
+<td>20</td>
+<td>18.5 (15-24)</td>
+<td>20/20</td>
+<td>1</td>
+<td>21.5</td>
+<td>10</td>
+<td>17.5</td>
+<td>6-20</td>
+<td>0.09</td>
+<td>6 / 6</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>8</td>
+<td>20</td>
+<td>12 (6-19)</td>
+<td>20/20</td>
+<td>1</td>
+<td>14</td>
+<td>8</td>
+<td>11</td>
+<td>7-21</td>
+<td>0.00</td>
+<td>6 / 6</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="t4walk0.03">T4[walk0.03]</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr>
+<th>graph</th>
+<th>r</th>
+<th>stuck</th>
+<th>u med (range)</th>
+<th>in (1/b)Z</th>
+<th>max unfrozen per link</th>
+<th>links med</th>
+<th>links with &gt;1 vertex med</th>
+<th>sticky cuts med</th>
+<th>chain d range</th>
+<th>chain d&lt;=7 share</th>
+<th>unfrozen diam med / graph diam</th>
+<th>extends</th>
+<th>flip hist</th>
+<th>null hist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>5</td>
+<td>4</td>
+<td>3.5 (2-4)</td>
+<td>4/4</td>
+<td>1</td>
+<td>4.5</td>
+<td>2.5</td>
+<td>2.5</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>3/3</td>
+<td>0:3</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>11/2</td>
+<td>5</td>
+<td>3 (2-4)</td>
+<td>5/5</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>1:3</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>6</td>
+<td>4</td>
+<td>2 (2-2)</td>
+<td>4/4</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:3</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>8</td>
+<td>1</td>
+<td>2 (2-2)</td>
+<td>1/1</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>5-5</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>1/1</td>
+<td>0:1</td>
+<td>1:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>5</td>
+<td>5</td>
+<td>10 (9-11)</td>
+<td>5/5</td>
+<td>1</td>
+<td>10</td>
+<td>4</td>
+<td>9</td>
+<td>5-12</td>
+<td>0.40</td>
+<td>4 / 4</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>11/2</td>
+<td>5</td>
+<td>9 (8-12)</td>
+<td>5/5</td>
+<td>1</td>
+<td>9</td>
+<td>4</td>
+<td>8</td>
+<td>6-11</td>
+<td>0.26</td>
+<td>4 / 4</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>6</td>
+<td>5</td>
+<td>5 (2-9)</td>
+<td>5/5</td>
+<td>1</td>
+<td>7</td>
+<td>4</td>
+<td>4</td>
+<td>6-13</td>
+<td>0.36</td>
+<td>4 / 4</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:3</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>8</td>
+<td>4</td>
+<td>4.5 (2-6)</td>
+<td>4/4</td>
+<td>1</td>
+<td>5</td>
+<td>2.5</td>
+<td>3.5</td>
+<td>8-11</td>
+<td>0.00</td>
+<td>4 / 4</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>5</td>
+<td>5</td>
+<td>13 (9-16)</td>
+<td>5/5</td>
+<td>1</td>
+<td>15</td>
+<td>7</td>
+<td>12</td>
+<td>5-15</td>
+<td>0.29</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:2 2:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>11/2</td>
+<td>5</td>
+<td>13 (10-15)</td>
+<td>5/5</td>
+<td>1</td>
+<td>14</td>
+<td>7</td>
+<td>12</td>
+<td>6-14</td>
+<td>0.17</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>1:2 3:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>6</td>
+<td>5</td>
+<td>14 (9-17)</td>
+<td>5/5</td>
+<td>1</td>
+<td>16</td>
+<td>6</td>
+<td>13</td>
+<td>6-14</td>
+<td>0.16</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:3</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>8</td>
+<td>4</td>
+<td>4 (2-9)</td>
+<td>4/4</td>
+<td>1</td>
+<td>4.5</td>
+<td>3</td>
+<td>3</td>
+<td>6-11</td>
+<td>0.31</td>
+<td>4.5 / 5</td>
+<td>3/3</td>
+<td>0:3</td>
+<td>1:1 2:2</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>5</td>
+<td>5</td>
+<td>13 (9-14)</td>
+<td>5/5</td>
+<td>1</td>
+<td>14</td>
+<td>7</td>
+<td>12</td>
+<td>5-14</td>
+<td>0.30</td>
+<td>5 / 5</td>
+<td>3/3</td>
+<td>0:3</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>11/2</td>
+<td>5</td>
+<td>12 (8-13)</td>
+<td>5/5</td>
+<td>1</td>
+<td>13</td>
+<td>6</td>
+<td>11</td>
+<td>6-14</td>
+<td>0.21</td>
+<td>5 / 5</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>1:2 2:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>6</td>
+<td>5</td>
+<td>11 (7-12)</td>
+<td>5/5</td>
+<td>1</td>
+<td>13</td>
+<td>6</td>
+<td>10</td>
+<td>6-13</td>
+<td>0.23</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:3</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>8</td>
+<td>3</td>
+<td>6 (6-10)</td>
+<td>3/3</td>
+<td>1</td>
+<td>9</td>
+<td>4</td>
+<td>6</td>
+<td>8-13</td>
+<td>0.00</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>5</td>
+<td>5</td>
+<td>21 (19-25)</td>
+<td>5/5</td>
+<td>1</td>
+<td>23</td>
+<td>9</td>
+<td>20</td>
+<td>2-18</td>
+<td>0.35</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>1:3</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>11/2</td>
+<td>5</td>
+<td>14 (12-21)</td>
+<td>5/5</td>
+<td>1</td>
+<td>14</td>
+<td>8</td>
+<td>13</td>
+<td>2-24</td>
+<td>0.43</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>1:2 3:1</td>
+<td>1:1 4:2</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>6</td>
+<td>5</td>
+<td>13 (13-21)</td>
+<td>5/5</td>
+<td>1</td>
+<td>19</td>
+<td>9</td>
+<td>14</td>
+<td>2-16</td>
+<td>0.29</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>2:2 3:1</td>
+<td>1:1 3:1 4:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>8</td>
+<td>5</td>
+<td>12 (10-19)</td>
+<td>5/5</td>
+<td>1</td>
+<td>12</td>
+<td>7</td>
+<td>11</td>
+<td>2-12</td>
+<td>0.61</td>
+<td>7 / 7</td>
+<td>2/3</td>
+<td>0:2 2:1</td>
+<td>1:1 2:1 3:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>5</td>
+<td>5</td>
+<td>25 (23-27)</td>
+<td>5/5</td>
+<td>1</td>
+<td>28</td>
+<td>10</td>
+<td>25</td>
+<td>5-20</td>
+<td>0.13</td>
+<td>6 / 6</td>
+<td>3/3</td>
+<td>0:3</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>11/2</td>
+<td>5</td>
+<td>23 (16-23)</td>
+<td>5/5</td>
+<td>1</td>
+<td>23</td>
+<td>9</td>
+<td>22</td>
+<td>6-19</td>
+<td>0.09</td>
+<td>6 / 6</td>
+<td>1/3</td>
+<td>0:1 1:1 2:1</td>
+<td>1:2 3:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>6</td>
+<td>5</td>
+<td>19 (17-26)</td>
+<td>5/5</td>
+<td>1</td>
+<td>21</td>
+<td>9</td>
+<td>18</td>
+<td>6-19</td>
+<td>0.04</td>
+<td>6 / 6</td>
+<td>3/3</td>
+<td>0:3</td>
+<td>0:1 2:2</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>8</td>
+<td>5</td>
+<td>11 (6-15)</td>
+<td>5/5</td>
+<td>1</td>
+<td>15</td>
+<td>7</td>
+<td>10</td>
+<td>8-20</td>
+<td>0.00</td>
+<td>6 / 6</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:1 1:2</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="t4walkray">T4[walkray]</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr>
+<th>graph</th>
+<th>r</th>
+<th>stuck</th>
+<th>u med (range)</th>
+<th>in (1/b)Z</th>
+<th>max unfrozen per link</th>
+<th>links med</th>
+<th>links with &gt;1 vertex med</th>
+<th>sticky cuts med</th>
+<th>chain d range</th>
+<th>chain d&lt;=7 share</th>
+<th>unfrozen diam med / graph diam</th>
+<th>extends</th>
+<th>flip hist</th>
+<th>null hist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>5</td>
+<td>14</td>
+<td>3.5 (2-4)</td>
+<td>14/14</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>2.5</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>11/2</td>
+<td>16</td>
+<td>3.5 (2-4)</td>
+<td>16/16</td>
+<td>1</td>
+<td>3.5</td>
+<td>2</td>
+<td>2.5</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>6</td>
+<td>13</td>
+<td>2 (2-2)</td>
+<td>13/13</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>8</td>
+<td>1</td>
+<td>2 (2-2)</td>
+<td>1/1</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>5-5</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>1/1</td>
+<td>0:1</td>
+<td>0:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>5</td>
+<td>20</td>
+<td>8 (4-12)</td>
+<td>20/20</td>
+<td>1</td>
+<td>10.5</td>
+<td>5</td>
+<td>7</td>
+<td>5-12</td>
+<td>0.42</td>
+<td>4 / 4</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>1:1 2:1 3:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>11/2</td>
+<td>20</td>
+<td>8 (4-12)</td>
+<td>20/20</td>
+<td>1</td>
+<td>9</td>
+<td>4</td>
+<td>7</td>
+<td>6-12</td>
+<td>0.32</td>
+<td>4 / 4</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>1:3</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>6</td>
+<td>20</td>
+<td>6 (2-10)</td>
+<td>20/20</td>
+<td>1</td>
+<td>7</td>
+<td>4</td>
+<td>5</td>
+<td>5-12</td>
+<td>0.40</td>
+<td>4 / 4</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>1:1 2:2</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>8</td>
+<td>15</td>
+<td>4 (2-8)</td>
+<td>15/15</td>
+<td>1</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>6-11</td>
+<td>0.23</td>
+<td>3 / 4</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>1:2 2:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>5</td>
+<td>20</td>
+<td>13 (4-19)</td>
+<td>20/20</td>
+<td>1</td>
+<td>16</td>
+<td>7</td>
+<td>12</td>
+<td>5-15</td>
+<td>0.22</td>
+<td>5 / 5</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>0:1 2:2</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>11/2</td>
+<td>20</td>
+<td>13 (6-18)</td>
+<td>20/20</td>
+<td>1</td>
+<td>14</td>
+<td>6</td>
+<td>12</td>
+<td>6-16</td>
+<td>0.26</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 2:1</td>
+<td>1:3</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>6</td>
+<td>20</td>
+<td>12 (5-16)</td>
+<td>20/20</td>
+<td>1</td>
+<td>14</td>
+<td>6</td>
+<td>11</td>
+<td>6-16</td>
+<td>0.17</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:2 1:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>8</td>
+<td>20</td>
+<td>6.5 (2-14)</td>
+<td>20/20</td>
+<td>1</td>
+<td>8</td>
+<td>4.5</td>
+<td>5.5</td>
+<td>6-15</td>
+<td>0.15</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>5</td>
+<td>20</td>
+<td>13 (7-19)</td>
+<td>20/20</td>
+<td>1</td>
+<td>14</td>
+<td>6</td>
+<td>12</td>
+<td>5-15</td>
+<td>0.26</td>
+<td>5 / 5</td>
+<td>1/3</td>
+<td>0:1 1:2</td>
+<td>0:2 2:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>11/2</td>
+<td>20</td>
+<td>11 (5-17)</td>
+<td>20/20</td>
+<td>1</td>
+<td>12.5</td>
+<td>5.5</td>
+<td>10</td>
+<td>6-16</td>
+<td>0.22</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>1:2 2:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>6</td>
+<td>20</td>
+<td>10 (4-14)</td>
+<td>20/20</td>
+<td>1</td>
+<td>12</td>
+<td>6</td>
+<td>9</td>
+<td>6-15</td>
+<td>0.22</td>
+<td>5 / 5</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>8</td>
+<td>17</td>
+<td>7 (2-10)</td>
+<td>17/17</td>
+<td>1</td>
+<td>8</td>
+<td>4</td>
+<td>6</td>
+<td>6-14</td>
+<td>0.04</td>
+<td>5 / 5</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>5</td>
+<td>20</td>
+<td>17 (13-22)</td>
+<td>20/20</td>
+<td>1</td>
+<td>21</td>
+<td>9</td>
+<td>16</td>
+<td>2-23</td>
+<td>0.37</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>1:2 3:1</td>
+<td>2:2 3:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>11/2</td>
+<td>20</td>
+<td>17.5 (11-26)</td>
+<td>20/20</td>
+<td>1</td>
+<td>18</td>
+<td>8</td>
+<td>16.5</td>
+<td>2-20</td>
+<td>0.48</td>
+<td>7 / 7</td>
+<td>1/3</td>
+<td>0:1 2:2</td>
+<td>1:2 4:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>6</td>
+<td>20</td>
+<td>14 (10-23)</td>
+<td>20/20</td>
+<td>1</td>
+<td>17</td>
+<td>8</td>
+<td>13.5</td>
+<td>2-20</td>
+<td>0.59</td>
+<td>7 / 7</td>
+<td>1/3</td>
+<td>0:1 1:1 2:1</td>
+<td>0:1 2:2</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>8</td>
+<td>20</td>
+<td>14.5 (7-18)</td>
+<td>20/20</td>
+<td>1</td>
+<td>15</td>
+<td>7</td>
+<td>13.5</td>
+<td>2-13</td>
+<td>0.68</td>
+<td>7 / 7</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:1 2:1 4:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>5</td>
+<td>20</td>
+<td>23 (16-29)</td>
+<td>20/20</td>
+<td>1</td>
+<td>26</td>
+<td>11</td>
+<td>22</td>
+<td>5-22</td>
+<td>0.13</td>
+<td>6 / 6</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:2 2:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>11/2</td>
+<td>20</td>
+<td>20.5 (9-24)</td>
+<td>20/20</td>
+<td>1</td>
+<td>22</td>
+<td>9</td>
+<td>19.5</td>
+<td>6-21</td>
+<td>0.11</td>
+<td>6 / 6</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>1:1 2:1 3:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>6</td>
+<td>20</td>
+<td>20 (8-29)</td>
+<td>20/20</td>
+<td>1</td>
+<td>21.5</td>
+<td>10</td>
+<td>19</td>
+<td>6-22</td>
+<td>0.07</td>
+<td>6 / 6</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>8</td>
+<td>20</td>
+<td>11.5 (3-19)</td>
+<td>20/20</td>
+<td>1</td>
+<td>14</td>
+<td>7</td>
+<td>10.5</td>
+<td>6-21</td>
+<td>0.01</td>
+<td>6 / 6</td>
+<td>2/3</td>
+<td>0:2 1:1</td>
+<td>1:1 3:1 6:1</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="t4lp">T4[lp]</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr>
+<th>graph</th>
+<th>r</th>
+<th>stuck</th>
+<th>u med (range)</th>
+<th>in (1/b)Z</th>
+<th>max unfrozen per link</th>
+<th>links med</th>
+<th>links with &gt;1 vertex med</th>
+<th>sticky cuts med</th>
+<th>chain d range</th>
+<th>chain d&lt;=7 share</th>
+<th>unfrozen diam med / graph diam</th>
+<th>extends</th>
+<th>flip hist</th>
+<th>null hist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>5</td>
+<td>9</td>
+<td>2 (2-4)</td>
+<td>9/9</td>
+<td>1</td>
+<td>5</td>
+<td>3</td>
+<td>-</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>11/2</td>
+<td>9</td>
+<td>2 (2-2)</td>
+<td>9/9</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>-</td>
+<td>6-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>6</td>
+<td>6</td>
+<td>2 (2-2)</td>
+<td>6/6</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>-</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>8</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>J5</td>
+<td>5</td>
+<td>17</td>
+<td>2 (2-6)</td>
+<td>17/17</td>
+<td>1</td>
+<td>7</td>
+<td>6</td>
+<td>-</td>
+<td>5-13</td>
+<td>0.38</td>
+<td>3 / 4</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>2:1 3:1 4:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>11/2</td>
+<td>15</td>
+<td>2 (2-4)</td>
+<td>15/15</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>-</td>
+<td>6-12</td>
+<td>0.45</td>
+<td>3 / 4</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>1:1 2:2</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>6</td>
+<td>11</td>
+<td>2 (2-3)</td>
+<td>11/11</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>-</td>
+<td>6-13</td>
+<td>0.55</td>
+<td>2 / 4</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>1:1 2:1 4:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>8</td>
+<td>9</td>
+<td>2 (2-4)</td>
+<td>9/9</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>-</td>
+<td>8-12</td>
+<td>0.00</td>
+<td>3 / 4</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:1 2:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>5</td>
+<td>18</td>
+<td>3 (2-4)</td>
+<td>18/18</td>
+<td>1</td>
+<td>9</td>
+<td>8</td>
+<td>-</td>
+<td>5-18</td>
+<td>0.27</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>4:1 5:1 6:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>11/2</td>
+<td>17</td>
+<td>3 (2-4)</td>
+<td>17/17</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>-</td>
+<td>6-15</td>
+<td>0.27</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>2:2 3:1</td>
+<td>4:2 5:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>6</td>
+<td>17</td>
+<td>2 (2-4)</td>
+<td>17/17</td>
+<td>1</td>
+<td>6</td>
+<td>6</td>
+<td>-</td>
+<td>6-18</td>
+<td>0.44</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>1:1 2:1 3:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>8</td>
+<td>9</td>
+<td>2 (2-3)</td>
+<td>9/9</td>
+<td>1</td>
+<td>5</td>
+<td>4</td>
+<td>-</td>
+<td>8-16</td>
+<td>0.00</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>1:2 5:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>5</td>
+<td>20</td>
+<td>2.5 (2-6)</td>
+<td>20/20</td>
+<td>1</td>
+<td>9</td>
+<td>7.5</td>
+<td>-</td>
+<td>5-16</td>
+<td>0.28</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:1 2:2</td>
+<td>2:1 4:2</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>11/2</td>
+<td>15</td>
+<td>2 (2-4)</td>
+<td>15/15</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>-</td>
+<td>6-14</td>
+<td>0.30</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:1 2:1 3:1</td>
+<td>2:1 3:1 6:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>6</td>
+<td>13</td>
+<td>2 (2-3)</td>
+<td>13/13</td>
+<td>1</td>
+<td>6</td>
+<td>5</td>
+<td>-</td>
+<td>6-14</td>
+<td>0.42</td>
+<td>3 / 5</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>1:1 2:1 3:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>8</td>
+<td>9</td>
+<td>2 (2-3)</td>
+<td>9/9</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>-</td>
+<td>8-13</td>
+<td>0.00</td>
+<td>3 / 5</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 2:1 3:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>5</td>
+<td>20</td>
+<td>4 (2-8)</td>
+<td>20/20</td>
+<td>1</td>
+<td>11</td>
+<td>10</td>
+<td>-</td>
+<td>4-24</td>
+<td>0.26</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>1:1 2:1 4:1</td>
+<td>6:3</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>11/2</td>
+<td>20</td>
+<td>4 (2-6)</td>
+<td>20/20</td>
+<td>1</td>
+<td>5</td>
+<td>5</td>
+<td>-</td>
+<td>2-14</td>
+<td>0.64</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>3:2 4:1</td>
+<td>7:2 8:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>6</td>
+<td>19</td>
+<td>4 (2-6)</td>
+<td>19/19</td>
+<td>1</td>
+<td>10</td>
+<td>8</td>
+<td>-</td>
+<td>2-22</td>
+<td>0.30</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>2:1 3:1 4:1</td>
+<td>2:1 4:1 6:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>8</td>
+<td>16</td>
+<td>2 (2-5)</td>
+<td>16/16</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>-</td>
+<td>2-17</td>
+<td>0.33</td>
+<td>6 / 7</td>
+<td>0/3</td>
+<td>1:2 3:1</td>
+<td>2:1 3:1 4:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>5</td>
+<td>20</td>
+<td>4 (2-8)</td>
+<td>20/20</td>
+<td>1</td>
+<td>14</td>
+<td>12</td>
+<td>-</td>
+<td>5-27</td>
+<td>0.17</td>
+<td>5 / 6</td>
+<td>0/3</td>
+<td>2:1 3:1 4:1</td>
+<td>5:1 7:1 8:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>11/2</td>
+<td>18</td>
+<td>3 (2-6)</td>
+<td>18/18</td>
+<td>1</td>
+<td>6</td>
+<td>6</td>
+<td>-</td>
+<td>6-19</td>
+<td>0.18</td>
+<td>4.5 / 6</td>
+<td>0/3</td>
+<td>1:1 3:2</td>
+<td>5:2 6:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>6</td>
+<td>18</td>
+<td>3 (2-5)</td>
+<td>18/18</td>
+<td>1</td>
+<td>9</td>
+<td>8</td>
+<td>-</td>
+<td>6-23</td>
+<td>0.24</td>
+<td>4 / 6</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>4:2 5:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>8</td>
+<td>14</td>
+<td>2 (2-4)</td>
+<td>14/14</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>-</td>
+<td>8-19</td>
+<td>0.00</td>
+<td>4 / 6</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>2:2 4:1</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="t4walk0.1lp">T4[walk0.1+lp]</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr>
+<th>graph</th>
+<th>r</th>
+<th>stuck</th>
+<th>u med (range)</th>
+<th>in (1/b)Z</th>
+<th>max unfrozen per link</th>
+<th>links med</th>
+<th>links with &gt;1 vertex med</th>
+<th>sticky cuts med</th>
+<th>chain d range</th>
+<th>chain d&lt;=7 share</th>
+<th>unfrozen diam med / graph diam</th>
+<th>extends</th>
+<th>flip hist</th>
+<th>null hist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petersen</td>
+<td>5</td>
+<td>14</td>
+<td>2 (2-3)</td>
+<td>14/14</td>
+<td>1</td>
+<td>5</td>
+<td>3</td>
+<td>-</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>11/2</td>
+<td>9</td>
+<td>2 (2-4)</td>
+<td>9/9</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>-</td>
+<td>6-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>1:3</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>6</td>
+<td>6</td>
+<td>2 (2-2)</td>
+<td>6/6</td>
+<td>1</td>
+<td>3.5</td>
+<td>2</td>
+<td>-</td>
+<td>5-7</td>
+<td>1.00</td>
+<td>2 / 2</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:1 1:2</td>
+</tr>
+<tr>
+<td>Petersen</td>
+<td>8</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>J5</td>
+<td>5</td>
+<td>17</td>
+<td>2 (2-4)</td>
+<td>17/17</td>
+<td>1</td>
+<td>7</td>
+<td>6</td>
+<td>-</td>
+<td>5-15</td>
+<td>0.40</td>
+<td>3 / 4</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>2:2 3:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>11/2</td>
+<td>13</td>
+<td>2 (2-3)</td>
+<td>13/13</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>-</td>
+<td>6-11</td>
+<td>0.58</td>
+<td>3 / 4</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>2:1 3:2</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>6</td>
+<td>15</td>
+<td>2 (2-4)</td>
+<td>15/15</td>
+<td>1</td>
+<td>5</td>
+<td>4</td>
+<td>-</td>
+<td>6-13</td>
+<td>0.56</td>
+<td>3 / 4</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>0:1 2:1 3:1</td>
+</tr>
+<tr>
+<td>J5</td>
+<td>8</td>
+<td>12</td>
+<td>2 (2-4)</td>
+<td>12/12</td>
+<td>1</td>
+<td>4.5</td>
+<td>4</td>
+<td>-</td>
+<td>7-12</td>
+<td>0.02</td>
+<td>3 / 4</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>1:1 2:1 4:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>5</td>
+<td>19</td>
+<td>2 (2-7)</td>
+<td>19/19</td>
+<td>1</td>
+<td>8</td>
+<td>7</td>
+<td>-</td>
+<td>5-18</td>
+<td>0.30</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:1 2:1 4:1</td>
+<td>3:1 5:2</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>11/2</td>
+<td>20</td>
+<td>2.5 (2-6)</td>
+<td>20/20</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>-</td>
+<td>6-15</td>
+<td>0.42</td>
+<td>3 / 5</td>
+<td>0/3</td>
+<td>1:1 2:2</td>
+<td>3:2 5:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>6</td>
+<td>19</td>
+<td>2 (2-4)</td>
+<td>19/19</td>
+<td>1</td>
+<td>6</td>
+<td>5</td>
+<td>-</td>
+<td>6-15</td>
+<td>0.38</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>2:2 4:1</td>
+</tr>
+<tr>
+<td>J7</td>
+<td>8</td>
+<td>10</td>
+<td>2.5 (2-4)</td>
+<td>10/10</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+<td>-</td>
+<td>6-17</td>
+<td>0.06</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>1:1 3:1 4:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>5</td>
+<td>17</td>
+<td>3 (2-5)</td>
+<td>17/17</td>
+<td>1</td>
+<td>9</td>
+<td>8</td>
+<td>-</td>
+<td>5-18</td>
+<td>0.26</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>2:3</td>
+<td>3:2 4:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>11/2</td>
+<td>19</td>
+<td>2 (2-6)</td>
+<td>19/19</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+<td>-</td>
+<td>6-15</td>
+<td>0.32</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:1 2:2</td>
+<td>1:1 3:1 6:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>6</td>
+<td>15</td>
+<td>2 (2-3)</td>
+<td>15/15</td>
+<td>1</td>
+<td>6</td>
+<td>6</td>
+<td>-</td>
+<td>6-16</td>
+<td>0.39</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>2:2 3:1</td>
+</tr>
+<tr>
+<td>GP(13,3)</td>
+<td>8</td>
+<td>10</td>
+<td>2 (2-4)</td>
+<td>10/10</td>
+<td>1</td>
+<td>4</td>
+<td>3.5</td>
+<td>-</td>
+<td>8-12</td>
+<td>0.00</td>
+<td>4 / 5</td>
+<td>0/3</td>
+<td>1:3</td>
+<td>0:2 4:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>5</td>
+<td>19</td>
+<td>4 (2-8)</td>
+<td>19/19</td>
+<td>1</td>
+<td>12</td>
+<td>11</td>
+<td>-</td>
+<td>5-26</td>
+<td>0.20</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>1:1 3:2</td>
+<td>5:1 6:1 9:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>11/2</td>
+<td>20</td>
+<td>3.5 (2-5)</td>
+<td>20/20</td>
+<td>1</td>
+<td>5</td>
+<td>4</td>
+<td>-</td>
+<td>2-14</td>
+<td>0.58</td>
+<td>6.5 / 7</td>
+<td>0/3</td>
+<td>2:2 4:1</td>
+<td>4:1 7:1 8:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>6</td>
+<td>20</td>
+<td>3.5 (2-7)</td>
+<td>20/20</td>
+<td>1</td>
+<td>8</td>
+<td>7</td>
+<td>-</td>
+<td>3-27</td>
+<td>0.29</td>
+<td>7 / 7</td>
+<td>0/3</td>
+<td>2:1 3:1 4:1</td>
+<td>3:2 4:1</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>8</td>
+<td>17</td>
+<td>2 (2-3)</td>
+<td>17/17</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>-</td>
+<td>2-18</td>
+<td>0.21</td>
+<td>6 / 7</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>2:1 5:1 10:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>5</td>
+<td>20</td>
+<td>4 (2-6)</td>
+<td>20/20</td>
+<td>1</td>
+<td>12.5</td>
+<td>11</td>
+<td>-</td>
+<td>5-25</td>
+<td>0.20</td>
+<td>5 / 6</td>
+<td>0/3</td>
+<td>1:2 3:1</td>
+<td>4:1 7:1 8:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>11/2</td>
+<td>20</td>
+<td>3.5 (2-6)</td>
+<td>20/20</td>
+<td>1</td>
+<td>5</td>
+<td>4.5</td>
+<td>-</td>
+<td>6-19</td>
+<td>0.14</td>
+<td>5 / 6</td>
+<td>0/3</td>
+<td>1:1 2:2</td>
+<td>4:1 5:1 6:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>6</td>
+<td>17</td>
+<td>2 (2-5)</td>
+<td>17/17</td>
+<td>1</td>
+<td>7</td>
+<td>7</td>
+<td>-</td>
+<td>6-27</td>
+<td>0.26</td>
+<td>5 / 6</td>
+<td>0/3</td>
+<td>1:1 2:1 3:1</td>
+<td>3:1 4:1 6:1</td>
+</tr>
+<tr>
+<td>cx42</td>
+<td>8</td>
+<td>14</td>
+<td>2.5 (2-4)</td>
+<td>14/14</td>
+<td>1</td>
+<td>5</td>
+<td>5</td>
+<td>-</td>
+<td>8-21</td>
+<td>0.00</td>
+<td>4 / 6</td>
+<td>0/3</td>
+<td>1:2 2:1</td>
+<td>1:1 5:2</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t5.-values-of-the-unfrozen-coordinates-at-stuck-points-in-units-of-1b-c-ab-pooled-over-graphs">T5. Values of the unfrozen coordinates at stuck points, in units of 1/b (c = a/b), pooled over graphs</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>method</th>
+<th>r</th>
+<th>c</th>
+<th>histogram of b*</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>walk0.1</td>
+<td>5</td>
+<td>5/3</td>
+<td>1:425 3:1197</td>
+</tr>
+<tr>
+<td>walk0.1</td>
+<td>11/2</td>
+<td>11/7</td>
+<td>1:125 3:247 5:96 7:895 9:144</td>
+</tr>
+<tr>
+<td>walk0.1</td>
+<td>6</td>
+<td>3/2</td>
+<td>0:90 1:324 2:904</td>
+</tr>
+<tr>
+<td>walk0.1</td>
+<td>8</td>
+<td>4/3</td>
+<td>0:35 1:110 2:199 3:496</td>
+</tr>
+<tr>
+<td>walk0.03</td>
+<td>5</td>
+<td>5/3</td>
+<td>1:107 3:313</td>
+</tr>
+<tr>
+<td>walk0.03</td>
+<td>11/2</td>
+<td>11/7</td>
+<td>1:36 3:57 5:26 7:206 9:37</td>
+</tr>
+<tr>
+<td>walk0.03</td>
+<td>6</td>
+<td>3/2</td>
+<td>0:23 1:73 2:239</td>
+</tr>
+<tr>
+<td>walk0.03</td>
+<td>8</td>
+<td>4/3</td>
+<td>0:6 1:24 2:40 3:110</td>
+</tr>
+<tr>
+<td>walkray</td>
+<td>5</td>
+<td>5/3</td>
+<td>1:404 3:1118</td>
+</tr>
+<tr>
+<td>walkray</td>
+<td>11/2</td>
+<td>11/7</td>
+<td>1:103 3:231 5:120 7:845 9:157</td>
+</tr>
+<tr>
+<td>walkray</td>
+<td>6</td>
+<td>3/2</td>
+<td>0:89 1:299 2:865</td>
+</tr>
+<tr>
+<td>walkray</td>
+<td>8</td>
+<td>4/3</td>
+<td>0:35 1:105 2:180 3:495</td>
+</tr>
+<tr>
+<td>lp</td>
+<td>5</td>
+<td>5/3</td>
+<td>1:160 3:179</td>
+</tr>
+<tr>
+<td>lp</td>
+<td>11/2</td>
+<td>11/7</td>
+<td>1:46 3:48 5:63 7:39 9:92</td>
+</tr>
+<tr>
+<td>lp</td>
+<td>6</td>
+<td>3/2</td>
+<td>0:40 1:83 2:108</td>
+</tr>
+<tr>
+<td>lp</td>
+<td>8</td>
+<td>4/3</td>
+<td>0:13 1:37 2:46 3:37</td>
+</tr>
+<tr>
+<td>walk0.1+lp</td>
+<td>5</td>
+<td>5/3</td>
+<td>1:153 3:182</td>
+</tr>
+<tr>
+<td>walk0.1+lp</td>
+<td>11/2</td>
+<td>11/7</td>
+<td>1:57 3:46 5:57 7:46 9:88</td>
+</tr>
+<tr>
+<td>walk0.1+lp</td>
+<td>6</td>
+<td>3/2</td>
+<td>0:47 1:93 2:105</td>
+</tr>
+<tr>
+<td>walk0.1+lp</td>
+<td>8</td>
+<td>4/3</td>
+<td>0:16 1:36 2:42 3:62</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t6.-sizes-of-the-links-that-contain-an-unfrozen-vertex-and-x-dx-of-the-sticky-cuts-of-the-walk-pooled-over-graphs-with-n-40-r-5">T6. Sizes of the links that contain an unfrozen vertex, and (|X|, d(X)) of the sticky cuts of the walk, pooled over graphs with n &gt;= 40, r = 5</h3>
+<ul>
+<li><strong>walk0.1</strong>: link sizes 1:587 2:145 3:50 4:48 5:19 6:4 9:1; sticky cut d(X): 2:34 3:50 4:34 5:49 6:47 7:54 8:56 9:54 10:65 11:81 12:72 13:66 14:40 15:38 16:36 17:18 18:11 19:6 20:3 21:1</li>
+<li><strong>walk0.03</strong>: link sizes 1:161 2:41 3:6 4:19 5:4; sticky cut d(X): 2:10 3:13 4:9 5:13 6:12 7:9 8:12 9:20 10:19 11:29 12:20 13:21 14:17 15:10 16:6 17:2</li>
+<li><strong>walkray</strong>: link sizes 1:523 2:140 3:54 4:53 5:19 6:2 7:1 9:2; sticky cut d(X): 2:21 3:44 4:30 5:37 6:63 7:47 8:36 9:39 10:55 11:63 12:78 13:62 14:59 15:37 16:30 17:20 18:17 19:11 20:8</li>
+<li><strong>lp</strong>: link sizes 1:67 2:30 3:13 4:11 5:9 6:8 7:6 8:4 9:3 10:3 12:1 13:1 18:1 21:1</li>
+<li><strong>walk0.1+lp</strong>: link sizes 1:67 2:34 3:11 4:10 5:9 6:5 7:3 8:5 9:2 10:1 11:2 14:1 15:1 16:1 20:1 24:2 25:1</li>
+</ul>
+<h3 id="t7.-distance-in-g-from-each-flipped-vertex-of-one-optimal-repair-to-the-nearest-unfrozen-vertex-pooled-r-in-5-6">T7. Distance (in G) from each flipped vertex of one optimal repair to the nearest unfrozen vertex, pooled, r in {5, 6}</h3>
+<ul>
+<li><strong>walk0.1</strong>: 1:21 2:4</li>
+<li><strong>walk0.03</strong>: 1:21 2:1</li>
+<li><strong>walkray</strong>: 1:25 2:2</li>
+<li><strong>lp</strong>: 1:43 2:9 3:5 4:1</li>
+<li><strong>walk0.1+lp</strong>: 1:42 2:16 3:2</li>
+</ul>
+
+  </div>
+</body>
+</html>

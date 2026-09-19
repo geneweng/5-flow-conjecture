@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Experiment D — count instead of decide: $F(G;5)$ on cubic graphs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+  <style>
+  :root{--paper:#f6f6f3;--paper2:#ecede8;--ink:#1c1f23;--ink2:#4f5760;--rule:#cfd3cc;--accent:#2b5c85;--accent2:#9a4b2f;--code:#e9ebe6;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}}
+  :root[data-theme="dark"]{--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}
+  html{color-scheme:light dark}
+  body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;padding-block:0 4rem;padding-inline:clamp(16px,4vw,40px);margin:0}
+  .wrap{max-width:46rem;margin:0 auto}
+  header.masthead{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;padding-block:3rem 1.5rem;border-bottom:2px solid var(--ink)}
+  header.masthead h1{font-family:"Source Sans 3","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 .6rem;text-wrap:balance}
+  header.masthead .byline{color:var(--ink2);font-size:.95rem;margin:0;max-width:34rem}
+  .eyebrow{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 .4rem}
+  .petersen{flex:none}
+  .sitenav{font-family:"Source Sans 3",Arial,sans-serif;font-size:.9rem;color:var(--ink2);margin:1rem 0 0}
+.conj{font-size:1.2rem;line-height:1.4;margin:2rem 0;padding:1rem 1.2rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  .conj .lbl{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.3rem}
+  nav.toc{margin:2rem 0 2.5rem;padding:1rem 1.2rem;border:1px solid var(--rule)}
+  nav.toc ol{margin:0;padding-left:1.4rem;columns:2;column-gap:2rem;font-family:"Source Sans 3",Arial,sans-serif;font-size:.95rem;line-height:1.5}
+  nav.toc li{break-inside:avoid;padding:.1rem 0}
+  @media (max-width:520px){nav.toc ol{columns:1}header.masthead{grid-template-columns:1fr}.petersen{width:84px;height:84px}}
+  h2{font-family:"Source Sans 3",Arial,sans-serif;font-weight:700;font-size:1.45rem;line-height:1.2;margin:3rem 0 1rem;padding-top:1rem;border-top:1px solid var(--rule);text-wrap:balance}
+  h3{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:1.08rem;margin:2rem 0 .6rem;text-wrap:balance}
+  p{margin:0 0 1rem}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  blockquote{margin:1.2rem 0;padding:.7rem 1.1rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  blockquote p:last-child{margin-bottom:0}
+  ul,ol{padding-left:1.4rem}li{margin-bottom:.35rem}
+  hr{border:0;height:0;margin:0}
+  .tbl{overflow-x:auto;margin:1.2rem 0}
+  table{border-collapse:collapse;width:100%;font-family:"Source Sans 3",Arial,sans-serif;font-size:.92rem;line-height:1.4;font-variant-numeric:tabular-nums}
+  th{text-align:left;font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--ink);padding:.45rem .6rem .35rem}
+  td{border-bottom:1px solid var(--rule);padding:.45rem .6rem;vertical-align:top}
+  td:first-child{font-weight:600}
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code);padding:.05em .3em;border-radius:2px}
+  strong{font-weight:600}
+  mjx-container[display="true"]{margin:.6rem 0;overflow-x:auto;overflow-y:hidden}
+  section.refs ul{padding-left:1.2rem;font-size:.93rem}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+  </style>
+  </head>
+<body>
+<div class="wrap">
+  <header class="masthead"><div><p class="eyebrow">Working notes · September 2026</p><h1>Experiment D — count instead of decide: $F(G;5)$ on cubic graphs</h1><p class="byline"></p></div><svg class="petersen" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Petersen graph"><g stroke="var(--accent)" stroke-width="1.6" fill="none"><line x1="60.0" y1="22.0" x2="98.0" y2="49.6"/><line x1="98.0" y1="49.6" x2="83.5" y2="94.4"/><line x1="83.5" y1="94.4" x2="36.5" y2="94.4"/><line x1="36.5" y1="94.4" x2="22.0" y2="49.6"/><line x1="22.0" y1="49.6" x2="60.0" y2="22.0"/><line x1="60.0" y1="22.0" x2="60.0" y2="44.0"/><line x1="98.0" y1="49.6" x2="77.1" y2="56.4"/><line x1="83.5" y1="94.4" x2="70.6" y2="76.6"/><line x1="36.5" y1="94.4" x2="49.4" y2="76.6"/><line x1="22.0" y1="49.6" x2="42.9" y2="56.4"/><line x1="60.0" y1="44.0" x2="70.6" y2="76.6"/><line x1="77.1" y1="56.4" x2="49.4" y2="76.6"/><line x1="70.6" y1="76.6" x2="42.9" y2="56.4"/><line x1="49.4" y1="76.6" x2="60.0" y2="44.0"/><line x1="42.9" y1="56.4" x2="77.1" y2="56.4"/></g><g fill="var(--ink)"><circle cx="60.0" cy="22.0" r="3"/><circle cx="98.0" cy="49.6" r="3"/><circle cx="83.5" cy="94.4" r="3"/><circle cx="36.5" cy="94.4" r="3"/><circle cx="22.0" cy="49.6" r="3"/><circle cx="60.0" cy="44.0" r="3"/><circle cx="77.1" cy="56.4" r="3"/><circle cx="70.6" cy="76.6" r="3"/><circle cx="49.4" cy="76.6" r="3"/><circle cx="42.9" cy="56.4" r="3"/></g></svg></header>
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#summary">Summary</a></li><li><a href="#the-counting-tool-toolsflowcount.py">The counting tool (<code>tools/flowcount.py</code>)</a></li><li><a href="#families">Families</a></li><li><a href="#random-cubic-graphs-and-the-effect-of-short-cycles">Random cubic graphs and the effect of short cycles</a></li><li><a href="#exhaustive-enumeration-nle22-geng">Exhaustive enumeration (<span class="math inline">\(n\le22\)</span>, <code>geng</code>)</a></li><li><a href="#climber-toolsflowclimb.py">Climber (<code>tools/flowclimb.py</code>)</a></li><li><a href="#arithmetic-of-fg5">Arithmetic of <span class="math inline">\(F(G;5)\)</span></a></li><li><a href="#conjectures-and-the-strength-of-the-evidence">Conjectures and the strength of the evidence</a></li><li><a href="#not-done-caveats">Not done / caveats</a></li></ol></nav>
+  <p><em>2026-09-19. Implements idea D of <code>oddness.md</code> §18.4. Scripts: <code>tools/flowcount.py</code> (exact counting), <code>tools/flowdata.py</code> (families, random graphs, exhaustive enumeration with <code>geng</code>), <code>tools/flowclimb.py</code> (annealing climber minimising <span class="math inline">\(F\)</span>), <code>tools/flowcycles.py</code>, <code>tools/flowstruct.py</code>. Logs: <code>tools/flowdata_*.log</code>, <code>tools/flowclimb_*.log</code>, <code>tools/flowcycles.log</code>, <code>tools/flowstruct.log</code>; best graphs of the climber in <code>tools/flowclimb_best_*.json</code>; enumeration summaries in <code>tools/flowdata_enum_*.json</code>.</em></p>
+<p><span class="math inline">\(F(G;q)\)</span> = number of nowhere-zero <span class="math inline">\(\mathbb Z_q\)</span>-flows; <span class="math inline">\(n=|V|\)</span>, <span class="math inline">\(m=3n/2\)</span>. Everything below is exact integer arithmetic.</p>
+<h2 id="summary">0. Summary</h2>
+<ol type="1">
+<li><strong>Tool.</strong> <span class="math inline">\(F(G;q)\)</span> is computed as a tensor-network contraction (one <span class="math inline">\(4\times4\times4\)</span> Kirchhoff tensor per vertex, contraction tree found by randomised greedy, width = max cut <span class="math inline">\(d(S)\)</span> over the tree). About 1 ms per graph for <span class="math inline">\(n\le30\)</span>, 0.02–1 s for the project’s cyclically 6-connected graphs on 42–78 vertices, 20 s for a random cubic graph on 80 vertices. Validated against deletion–contraction, brute force, the polynomials of <span class="math inline">\(K_4\)</span>, <span class="math inline">\(K_{3,3}\)</span>, and <span class="math inline">\(F(P_{10};5)=240\)</span>, <span class="math inline">\(F(P_{10};4)=0\)</span>.</li>
+<li><strong>The right normalisation is <span class="math inline">\(1.5^n\)</span>, not <span class="math inline">\(4^m/5^{n-1}\)</span>.</strong> For every graph of girth <span class="math inline">\(\ge5\)</span> that was computed (snarks, cages, generalised Petersen graphs, random cubic graphs, all 26 of the project’s cyclically 6-connected graphs), <span class="math inline">\(F(G;5)/1.5^n\in[2.6,\,7.3]\)</span>; for the project’s graphs it is <span class="math inline">\(5.0\pm0.2\)</span>. (Local heuristic: three independent uniform non-zero values sum to zero with probability <span class="math inline">\(12/64\)</span>, so <span class="math inline">\(F\approx4^{3n/2}(3/16)^n=1.5^n\)</span>; the naive <span class="math inline">\(4^m/5^{n-1}=5\cdot1.6^n\)</span> overcounts exponentially.) Short cycles correct this multiplicatively: <strong>odd cycles depress the count, even cycles raise it</strong> (triangle <span class="math inline">\(\times0.889\)</span> exactly, 4-cycle <span class="math inline">\(\approx\times1.02\)</span>–<span class="math inline">\(1.04\)</span>, 5-cycle <span class="math inline">\(\approx\times0.97\)</span>–<span class="math inline">\(0.99\)</span>, 6-cycle <span class="math inline">\(\approx\times1.005\)</span>; regression in §3).</li>
+<li><strong>3-connected cubic graphs: <span class="math inline">\(\min F(G;5)=6\cdot2^{n/2}\)</span> exactly, for every even <span class="math inline">\(n\le20\)</span></strong> (exhaustive, 556,000 graphs), attained precisely by the graphs obtained from <span class="math inline">\(K_4\)</span> by inflating vertices to triangles. Reason: <span class="math inline">\(F\)</span> is multiplicative over 3-edge-cuts, <span class="math inline">\(F(G_1\oplus_3G_2)=F(G_1)F(G_2)/12\)</span>, and a triangle is a 3-sum with <span class="math inline">\(K_4\)</span> (<span class="math inline">\(F=24\)</span>, factor 2 for 2 vertices). So the growth base over 3-connected graphs is <span class="math inline">\(\sqrt2=1.414\)</span>, <em>also for girth 5</em> (3-sums at triangle vertices destroy the triangles: the girth-5 minimum is <span class="math inline">\(4800\cdot2^{(n-18)/2}\)</span> for <span class="math inline">\(n=18,20,22\)</span>, from <span class="math inline">\(P\oplus_3P\)</span>). The interesting classes are therefore the cyclically 4- and 5-connected ones.</li>
+<li><strong>Cyclically 4-connected / cyclically 5-connected with girth <span class="math inline">\(\ge5\)</span>.</strong> Exact minima for <span class="math inline">\(n\le22\)</span> (resp. upper bounds from the climber for <span class="math inline">\(24\le n\le30\)</span>) grow by a factor <span class="math inline">\(2.18\)</span>–<span class="math inline">\(2.27\)</span> per two vertices (geometric mean over <span class="math inline">\(n=20\to30\)</span>: <span class="math inline">\(2.227\)</span> for cyc 4, <span class="math inline">\(2.215\)</span> for cyc 5, i.e. base <span class="math inline">\(1.492\)</span> and <span class="math inline">\(1.488\)</span>), slightly <strong>below</strong> the generic <span class="math inline">\(1.5\)</span> (<span class="math inline">\(2.25\)</span> per two vertices) and indistinguishable, at this range, from the base <span class="math inline">\(24^{1/8}=1.4877\)</span> of the Blanuša chain <span class="math inline">\(P\cdot P\cdots P\)</span> (exact: <span class="math inline">\(F\)</span> is multiplied by <span class="math inline">\(24.000\)</span> per dot product with <span class="math inline">\(P_{10}\)</span>). The minimisers are <strong>not snarks</strong> in general, they are graphs with an excess of 5-cycles (8–11 against 4–5 for random girth-5 graphs) and a bounded number of Petersen fragments.</li>
+<li><strong>Petersen is extremal only among the smallest graphs.</strong> <span class="math inline">\(F^{1/n}\)</span> is decreasing in <span class="math inline">\(n\)</span> along every family (<span class="math inline">\(P_{10}\)</span>: 1.730, <span class="math inline">\(n=30\)</span> minimiser: 1.570, <span class="math inline">\(J_{25}\)</span>: 1.530), so “is <span class="math inline">\(P_{10}\)</span> the minimiser of <span class="math inline">\(F^{1/n}\)</span>” is the wrong question; the right one is the base of <span class="math inline">\(\min_nF\)</span>, and there <span class="math inline">\(P_{10}\)</span> enters through the Blanuša chain (cyclic connectivity 4). <span class="math inline">\(P_{10}\)</span> is the unique minimiser of <span class="math inline">\(F\)</span> at <span class="math inline">\(n=10\)</span> among triangle-free cubic graphs (240; next 288).</li>
+<li><strong>Arithmetic.</strong> In all data (exhaustive <span class="math inline">\(n\le20\)</span>, girth <span class="math inline">\(\ge5\)</span> for <span class="math inline">\(n=22\)</span>, all families, all random graphs, <span class="math inline">\(n\le100\)</span>): <span class="math inline">\(12\mid F(G;5)\)</span>, and <strong><span class="math inline">\(F(G;5)\bmod5\in\{0,\pm1\}\)</span> if <span class="math inline">\(4\mid n\)</span>, <span class="math inline">\(\in\{0,\pm2\}\)</span> if <span class="math inline">\(n\equiv2\pmod4\)</span>.</strong> Each of the three residues occurs for about a third of the graphs. Not every <span class="math inline">\(F\)</span> is divisible by 24 (<span class="math inline">\(K_{3,3}\)</span>: 60). Every snark in the data has <span class="math inline">\(5\mid F(G;5)\)</span> (§6).</li>
+<li><strong>Conjectures supported by the data</strong> (§7): (A) <span class="math inline">\(F(G;5)\ge6\cdot2^{n/2}\)</span> for 3-connected cubic <span class="math inline">\(G\)</span>, equality iff <span class="math inline">\(G\)</span> is a triangle-inflation of <span class="math inline">\(K_4\)</span> — equivalent to the same inequality for cyclically 4-connected graphs, where it holds with exponential room; strong evidence (exhaustive to <span class="math inline">\(n=20\)</span>). (B) <span class="math inline">\(F(G;5)\ge c\cdot\beta^n\)</span> for cyclically 4-connected cubic <span class="math inline">\(G\)</span> with some <span class="math inline">\(\beta\in[1.47,1.495]\)</span>; evidence is moderate (<span class="math inline">\(n\le22\)</span> exact), the value of <span class="math inline">\(\beta\)</span> and the extremal family are <strong>not</strong> determined by the data.</li>
+</ol>
+<h2 id="the-counting-tool-toolsflowcount.py">1. The counting tool (<code>tools/flowcount.py</code>)</h2>
+<p>Fix an orientation. <span class="math inline">\(F(G;q)=\sum_{f:E\to\mathbb Z_q^*}\prod_v[\partial f(v)=0]\)</span> is the contraction of a tensor network with one tensor <span class="math inline">\(K_v[a_1,a_2,a_3]=[\pm a_1\pm a_2\pm a_3\equiv0]\)</span> of shape <span class="math inline">\((q-1)^3\)</span> per vertex. Clusters of vertices are merged pairwise along a contraction tree; the tensor of a cluster <span class="math inline">\(S\)</span> has one axis per edge of <span class="math inline">\(d(S)\)</span>, so the cost is <span class="math inline">\(\sum(q-1)^{d(S\cup S&#39;)+\#\text{shared}}\)</span> and the governing parameter is <span class="math inline">\(\max d(S)\)</span> over the tree (a carving-width type parameter; a vertex order with small frontier, as suggested in the task, is the caterpillar special case and was markedly worse: width 14 against 11 on a random cubic graph with 60 vertices). Plans come from a randomised greedy (score <span class="math inline">\(d(S\cup S&#39;)-\alpha\log_4(4^{d(S)}+4^{d(S&#39;)})\)</span> plus noise, 40–200 restarts). A plan remains valid when edges are switched on the same vertex set, which the climber uses.</p>
+<p>Arithmetic: float64 with BLAS, exact while all entries are <span class="math inline">\(&lt;2^{52}\)</span> (entries are non-negative integers, so partial sums are bounded by the result; checked after every contraction); otherwise int64 modulo primes just below <span class="math inline">\(2^{20}\)</span> and CRT, with the rigorous bound <span class="math inline">\(F\le(q-1)^{m-n+1}\)</span>. The CRT path is exercised by <span class="math inline">\(J_{25}\)</span> (<span class="math inline">\(F\approx2.9\cdot10^{18}\)</span>) and tested against the float path.</p>
+<p>Validation (<code>python3 tools/flowcount.py --test</code>): <span class="math inline">\(F(P_{10};3,4,5,6)=0,0,240,1920\)</span>; <span class="math inline">\(F(K_4;q)=(q-1)(q-2)(q-3)\)</span> for <span class="math inline">\(q\le7\)</span>; <span class="math inline">\(F(K_{3,3};q)=(q-1)(q-2)(q^2-6q+10)\)</span>; prism <span class="math inline">\(0,6,48,180\)</span>; cube; Heawood; <span class="math inline">\(J_3\)</span>; 40 random cubic graphs (<span class="math inline">\(n\le10\)</span>, <span class="math inline">\(q\in\{3,4,5,6\}\)</span>) against deletion–contraction and under random contraction orders; 30 random multigraphs with loops and parallel edges against deletion–contraction <em>and</em> brute force over the cotree; CRT path against float path. Also verified numerically: <span class="math inline">\(F(G_1\oplus_3G_2)=F(G_1)F(G_2)/12\)</span> on four 3-sums, and the climber reproduces the exhaustive minima (§5).</p>
+<p>Widths met in practice: <span class="math inline">\(\le8\)</span> for <span class="math inline">\(n\le30\)</span>; 8–11 for the project’s graphs (<span class="math inline">\(n=42\)</span>–<span class="math inline">\(78\)</span>); 13 for <span class="math inline">\(GP(30,6)\)</span>, <span class="math inline">\(GP(35,7)\)</span>; <span class="math inline">\(GP(36,6)\)</span>, <span class="math inline">\(GP(42,6)\)</span>, <span class="math inline">\(GP(42,7)\)</span> need width 15–16 and were skipped (limit 14 = 2 GB).</p>
+<h2 id="families">2. Families</h2>
+<p><span class="math inline">\(r=F/1.5^n\)</span>; “naive” <span class="math inline">\(=F\big/(4^m/5^{n-1})\)</span>; cyc = cyclic edge-connectivity (SAT, exact, capped at 7).</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>graph</th>
+<th><span class="math inline">\(n\)</span></th>
+<th><span class="math inline">\(F(G;5)\)</span></th>
+<th><span class="math inline">\(F(G;4)\)</span></th>
+<th><span class="math inline">\(F^{1/n}\)</span></th>
+<th><span class="math inline">\(r\)</span></th>
+<th>naive</th>
+<th>girth</th>
+<th>cyc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(K_4\)</span></td>
+<td>4</td>
+<td>24</td>
+<td>6</td>
+<td>2.213</td>
+<td>4.74</td>
+<td>0.73</td>
+<td>3</td>
+<td>–</td>
+</tr>
+<tr>
+<td><span class="math inline">\(K_{3,3}\)</span></td>
+<td>6</td>
+<td>60</td>
+<td>12</td>
+<td>1.979</td>
+<td>5.27</td>
+<td>0.72</td>
+<td>4</td>
+<td>–</td>
+</tr>
+<tr>
+<td>prism</td>
+<td>6</td>
+<td>48</td>
+<td>6</td>
+<td>1.906</td>
+<td>4.21</td>
+<td>0.57</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>cube</td>
+<td>8</td>
+<td>156</td>
+<td>24</td>
+<td>1.880</td>
+<td>6.09</td>
+<td>0.73</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>Petersen</strong></td>
+<td>10</td>
+<td><strong>240</strong></td>
+<td>0</td>
+<td>1.730</td>
+<td>4.16</td>
+<td>0.44</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Heawood</td>
+<td>14</td>
+<td>1692</td>
+<td>48</td>
+<td>1.701</td>
+<td>5.80</td>
+<td>0.47</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>dodecahedron</td>
+<td>20</td>
+<td>16080</td>
+<td>60</td>
+<td>1.623</td>
+<td>4.84</td>
+<td>0.27</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Desargues <span class="math inline">\(=GP(10,3)\)</span></td>
+<td>20</td>
+<td>18396</td>
+<td>192</td>
+<td>1.634</td>
+<td>5.53</td>
+<td>0.30</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>McGee</td>
+<td>24</td>
+<td>83616</td>
+<td>204</td>
+<td>1.604</td>
+<td>4.97</td>
+<td>0.21</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Coxeter</td>
+<td>28</td>
+<td>406560</td>
+<td>336</td>
+<td>1.586</td>
+<td>4.77</td>
+<td>0.16</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Tutte–Coxeter</td>
+<td>30</td>
+<td>1038348</td>
+<td>864</td>
+<td>1.587</td>
+<td>5.42</td>
+<td>0.16</td>
+<td>8</td>
+<td><span class="math inline">\(\ge7\)</span></td>
+</tr>
+<tr>
+<td>flower <span class="math inline">\(J_5\)</span></td>
+<td>20</td>
+<td>16200</td>
+<td>0</td>
+<td>1.624</td>
+<td>4.87</td>
+<td>0.27</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td><span class="math inline">\(J_7\)</span></td>
+<td>28</td>
+<td>455280</td>
+<td>0</td>
+<td>1.593</td>
+<td>5.34</td>
+<td>0.18</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><span class="math inline">\(J_9\)</span></td>
+<td>36</td>
+<td>12247320</td>
+<td>0</td>
+<td>1.574</td>
+<td>5.61</td>
+<td>0.11</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><span class="math inline">\(J_{11}\)</span></td>
+<td>44</td>
+<td>325290240</td>
+<td>0</td>
+<td>1.561</td>
+<td>5.81</td>
+<td>0.068</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><span class="math inline">\(J_{13}\)</span></td>
+<td>52</td>
+<td>8607117480</td>
+<td>0</td>
+<td>1.553</td>
+<td>6.00</td>
+<td>0.042</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><span class="math inline">\(J_{15}\)</span></td>
+<td>60</td>
+<td>227528524560</td>
+<td>0</td>
+<td>1.546</td>
+<td>6.19</td>
+<td>0.026</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><span class="math inline">\(J_{25}\)</span></td>
+<td>100</td>
+<td>2947091530838746200</td>
+<td>0</td>
+<td>1.530</td>
+<td>7.25</td>
+<td>0.0023</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Blanuša chain <span class="math inline">\(P^{\cdot2}\)</span></td>
+<td>18</td>
+<td>6240</td>
+<td>0</td>
+<td>1.625</td>
+<td>4.22</td>
+<td>0.26</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(P^{\cdot3}\)</span></td>
+<td>26</td>
+<td>158400</td>
+<td>0</td>
+<td>1.585</td>
+<td>4.18</td>
+<td>0.16</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(P^{\cdot5}\)</span></td>
+<td>42</td>
+<td>91499520</td>
+<td>0</td>
+<td>1.547</td>
+<td>3.68</td>
+<td>0.049</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(P^{\cdot7}\)</span></td>
+<td>58</td>
+<td>52818984960</td>
+<td>0</td>
+<td>1.531</td>
+<td>3.23</td>
+<td>0.015</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(P^{\cdot10}\)</span></td>
+<td>82</td>
+<td>730213908480000</td>
+<td>0</td>
+<td>1.518</td>
+<td>2.65</td>
+<td>–</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(R_2\)</span> (oddness 6, <span class="math inline">\(n=40\)</span>)</td>
+<td>40</td>
+<td>51840000</td>
+<td>0</td>
+<td>1.559</td>
+<td>4.69</td>
+<td>0.071</td>
+<td>5</td>
+<td>2</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(7,2)\)</span></td>
+<td>14</td>
+<td>1512</td>
+<td>42</td>
+<td>1.687</td>
+<td>5.18</td>
+<td>0.42</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(9,2)\)</span></td>
+<td>18</td>
+<td>6672</td>
+<td>6</td>
+<td>1.631</td>
+<td>4.52</td>
+<td>0.28</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(13,5)\)</span></td>
+<td>26</td>
+<td>187200</td>
+<td>156</td>
+<td>1.595</td>
+<td>4.94</td>
+<td>0.19</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(16,6)\)</span></td>
+<td>32</td>
+<td>2127816</td>
+<td>480</td>
+<td>1.577</td>
+<td>4.93</td>
+<td>0.13</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(18,6)\)</span> (6 triangles)</td>
+<td>36</td>
+<td>6084864</td>
+<td>504</td>
+<td>1.543</td>
+<td>2.79</td>
+<td>0.055</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(24,6)\)</span></td>
+<td>48</td>
+<td>1929941064</td>
+<td>44208</td>
+<td>1.561</td>
+<td>6.81</td>
+<td>0.062</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(28,7)\)</span></td>
+<td>56</td>
+<td>52966976316</td>
+<td>303936</td>
+<td>1.554</td>
+<td>7.29</td>
+<td>0.039</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(30,6)\)</span></td>
+<td>60</td>
+<td>173832272400</td>
+<td>33780</td>
+<td>1.539</td>
+<td>4.73</td>
+<td>0.020</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(35,7)\)</span></td>
+<td>70</td>
+<td>9958206060000</td>
+<td>173880</td>
+<td>1.534</td>
+<td>4.70</td>
+<td>0.010</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>prism <span class="math inline">\(C_{30}\times K_2\)</span></td>
+<td>60</td>
+<td>205895427061956</td>
+<td><span class="math inline">\(2^{30}+8\)</span></td>
+<td>1.732</td>
+<td>5600</td>
+<td>23</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Möbius ladder <span class="math inline">\(M_{60}\)</span></td>
+<td>60</td>
+<td>205895427061944</td>
+<td><span class="math inline">\(2^{30}+2\)</span></td>
+<td>1.732</td>
+<td>5600</td>
+<td>23</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>data/…_n42</code></td>
+<td>42</td>
+<td>124221120</td>
+<td>1620</td>
+<td>1.559</td>
+<td>4.99</td>
+<td>0.066</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>data/…_n50</code></td>
+<td>50</td>
+<td>3181640280</td>
+<td>5058</td>
+<td>1.549</td>
+<td>4.99</td>
+<td>0.040</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>data/robust_stage2b_n50</code></td>
+<td>50</td>
+<td>3154628208</td>
+<td>4068</td>
+<td>1.549</td>
+<td>4.95</td>
+<td>0.039</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>data/…_n54</code></td>
+<td>54</td>
+<td>16946665752</td>
+<td>14040</td>
+<td>1.547</td>
+<td>5.25</td>
+<td>0.032</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>data/…counterexample</code> (60)</td>
+<td>60</td>
+<td>187291945224</td>
+<td>22860</td>
+<td>1.541</td>
+<td>5.09</td>
+<td>0.021</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>data/…_n60b</code></td>
+<td>60</td>
+<td>187385666016</td>
+<td>22482</td>
+<td>1.541</td>
+<td>5.10</td>
+<td>0.021</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>20 × <code>tools/fullkill_*.json</code></td>
+<td>42–78</td>
+<td>—</td>
+<td>1092–452964</td>
+<td>1.533–1.560</td>
+<td><strong>4.91–5.48</strong></td>
+<td>—</td>
+<td>6</td>
+<td>(6)</td>
+</tr>
+</tbody>
+</table></div>
+<p>(Full list with all 20 archive graphs: <code>tools/flowdata_families.log</code>. The double-star and Szekeres snarks were not constructed; a from-memory edge list for the double star failed the <span class="math inline">\(F(G;4)=0\)</span> check and was dropped. All snarks of girth <span class="math inline">\(\ge5\)</span> and order <span class="math inline">\(\le22\)</span> are covered by the census of §6: the cyclically 4-connected ones have <span class="math inline">\(F/1.5^n\)</span> between 3.98 and 4.9, e.g. order 20: 14400 (four graphs), 14880, 16200 <span class="math inline">\(=J_5\)</span>.)</p>
+<p><strong>Asymptotic growth per vertex</strong> (exact ratios of consecutive members, converged to 4 digits):</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>family</th>
+<th>limit of <span class="math inline">\(F(G_{k+1})/F(G_k)\)</span></th>
+<th>vertices added</th>
+<th>base</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>triangle inflation</td>
+<td>2 (exact)</td>
+<td>2</td>
+<td>1.4142</td>
+</tr>
+<tr>
+<td>3-sum with <span class="math inline">\(P_{10}\)</span></td>
+<td>20 (exact)</td>
+<td>8</td>
+<td>1.4542</td>
+</tr>
+<tr>
+<td>3-sum with <span class="math inline">\(K_{3,3}\)</span></td>
+<td>5 (exact)</td>
+<td>4</td>
+<td>1.4953</td>
+</tr>
+<tr>
+<td><strong>Blanuša chain (dot product with <span class="math inline">\(P_{10}\)</span>)</strong></td>
+<td>24.000</td>
+<td>8</td>
+<td><strong>1.4877</strong></td>
+</tr>
+<tr>
+<td>flower snarks <span class="math inline">\(J_k\)</span></td>
+<td>26.47</td>
+<td>8</td>
+<td>1.5061</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(n,2)\)</span></td>
+<td>26.92</td>
+<td>8</td>
+<td>1.5092</td>
+</tr>
+<tr>
+<td><span class="math inline">\(GP(n,3)\)</span></td>
+<td><span class="math inline">\(\approx26.9\)</span></td>
+<td>8</td>
+<td><span class="math inline">\(\approx1.509\)</span></td>
+</tr>
+<tr>
+<td>prisms, Möbius ladders</td>
+<td>3</td>
+<td>2</td>
+<td>1.7321</td>
+</tr>
+<tr>
+<td>generic (random, high girth)</td>
+<td>—</td>
+<td>—</td>
+<td><span class="math inline">\(1.50\)</span></td>
+</tr>
+</tbody>
+</table></div>
+<p>Observations. (i) The Jacobsen–Salas families <span class="math inline">\(GP(6k,6)\)</span>, <span class="math inline">\(GP(7k,7)\)</span>, whose flow roots accumulate at 5, are in no way small at <span class="math inline">\(q=5\)</span>: <span class="math inline">\(r=6.8\)</span> and <span class="math inline">\(7.3\)</span> for <span class="math inline">\(GP(24,6)\)</span>, <span class="math inline">\(GP(28,7)\)</span> (they have 4-cycles, which <em>raise</em> the count); <span class="math inline">\(GP(30,6)\)</span>, <span class="math inline">\(GP(35,7)\)</span> have <span class="math inline">\(r=4.7\)</span>. “Almost false” in the sense of real roots is invisible in the count at 5. (ii) Snarks are not special: <span class="math inline">\(J_k\)</span> has a <em>larger</em> <span class="math inline">\(r\)</span> than random graphs. (iii) The project’s cyclically 6-connected oddness-6 template failures all sit at <span class="math inline">\(r\approx5\)</span>: the count does not see the failure of the template. (iv) The climber for the template (§8, §12 of <code>oddness.md</code>) and this count are unrelated objectives, as far as this data goes.</p>
+<h2 id="random-cubic-graphs-and-the-effect-of-short-cycles">3. Random cubic graphs and the effect of short cycles</h2>
+<p><code>tools/flowdata_random.log</code>: 3-connected random cubic graphs (<code>networkx.random_regular_graph</code>).</p>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(n\)</span></th>
+<th>#graphs</th>
+<th><span class="math inline">\(F^{1/n}\)</span> min / mean / max</th>
+<th><span class="math inline">\(F/1.5^n\)</span> min / mean / max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>30</td>
+<td>1.582 / 1.616 / 1.639</td>
+<td>2.89 / 4.51 / 5.89</td>
+</tr>
+<tr>
+<td>24</td>
+<td>30</td>
+<td>1.524 / 1.589 / 1.625</td>
+<td>1.46 / 4.09 / 6.78</td>
+</tr>
+<tr>
+<td>30</td>
+<td>30</td>
+<td>1.540 / 1.574 / 1.591</td>
+<td>2.19 / 4.30 / 5.81</td>
+</tr>
+<tr>
+<td>36</td>
+<td>30</td>
+<td>1.542 / 1.561 / 1.573</td>
+<td>2.70 / 4.23 / 5.52</td>
+</tr>
+<tr>
+<td>42</td>
+<td>30</td>
+<td>1.538 / 1.553 / 1.564</td>
+<td>2.86 / 4.33 / 5.79</td>
+</tr>
+<tr>
+<td>50</td>
+<td>30</td>
+<td>1.534 / 1.544 / 1.553</td>
+<td>3.02 / 4.22 / 5.59</td>
+</tr>
+<tr>
+<td>56</td>
+<td>12</td>
+<td>1.532 / 1.538 / 1.544</td>
+<td>3.24 / 4.03 / 4.99</td>
+</tr>
+<tr>
+<td>60</td>
+<td>12</td>
+<td>1.531 / 1.538 / 1.546</td>
+<td>3.46 / 4.56 / 6.05</td>
+</tr>
+</tbody>
+</table></div>
+<p>The mean of <span class="math inline">\(F/1.5^n\)</span> does not move between <span class="math inline">\(n=20\)</span> and <span class="math inline">\(n=60\)</span>: the growth rate of a random cubic graph is <span class="math inline">\(1.500\)</span> to three digits, and the minimum in every sample is a graph with 3–5 triangles.</p>
+<p>Regression (<code>tools/flowcycles.log</code>, 150 random 3-connected cubic graphs, <span class="math inline">\(n=36\)</span>): <span class="math inline">\(\log(F/1.5^n)=\log5.64+\sum_{k=3}^7b_k\,\#\{k\text{-cycles}\}\)</span>, <span class="math inline">\(R^2=0.81\)</span>, with per-cycle factors <span class="math inline">\(e^{b_k}\)</span>:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><span class="math inline">\(k\)</span></th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fitted factor</td>
+<td>0.861</td>
+<td>1.020</td>
+<td>0.972</td>
+<td>1.007</td>
+<td>0.996</td>
+</tr>
+<tr>
+<td>ansatz <span class="math inline">\(1+3(-\tfrac13)^k\)</span></td>
+<td>0.889</td>
+<td>1.037</td>
+<td>0.988</td>
+<td>1.004</td>
+<td>0.999</td>
+</tr>
+</tbody>
+</table></div>
+<p>The ansatz is a guess that matches the exact triangle factor (<span class="math inline">\(F(G)=2F(G/T)\)</span> against <span class="math inline">\(1.5^2\)</span>) and the sign pattern; it is not derived. The sign pattern is robust: <strong>the count is depressed by odd cycles and raised by even ones</strong>, and the effect decays like <span class="math inline">\(3^{-k}\)</span>. Consistent with this, <span class="math inline">\(P_{10}\)</span> (twelve 5-cycles) has <span class="math inline">\(r=4.16\)</span> against a prediction <span class="math inline">\(5.64\cdot0.972^{12}\cdot1.007^{10}=4.3\)</span>.</p>
+<h2 id="exhaustive-enumeration-nle22-geng">4. Exhaustive enumeration (<span class="math inline">\(n\le22\)</span>, <code>geng</code>)</h2>
+<p>All connected cubic graphs for <span class="math inline">\(n\le20\)</span> (<code>-c</code>), triangle-free for <span class="math inline">\(n\le20\)</span> (<code>-ct</code>), girth <span class="math inline">\(\ge5\)</span> for <span class="math inline">\(n\le22\)</span> (<code>-ctf</code>); minima per class (cyclic connectivity by SAT on the lowest graphs until five of each class were seen).</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(n\)</span></th>
+<th>#cubic graphs</th>
+<th>min, 3-connected</th>
+<th><span class="math inline">\(=6\cdot2^{n/2}\)</span>?</th>
+<th>min, 3-conn. triangle-free</th>
+<th>min, cyc. 4-conn.</th>
+<th>min, cyc. 5-conn. &amp; girth <span class="math inline">\(\ge5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>24</td>
+<td>yes</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+<td>48</td>
+<td>yes</td>
+<td>60</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>8</td>
+<td>5</td>
+<td>96</td>
+<td>yes</td>
+<td>144</td>
+<td>144 (<span class="math inline">\(M_8\)</span>)</td>
+<td>–</td>
+</tr>
+<tr>
+<td>10</td>
+<td>19</td>
+<td>192</td>
+<td>yes</td>
+<td>240</td>
+<td><strong>240</strong> (<span class="math inline">\(P_{10}\)</span>)</td>
+<td><strong>240</strong></td>
+</tr>
+<tr>
+<td>12</td>
+<td>85</td>
+<td>384</td>
+<td>yes</td>
+<td>576</td>
+<td>576</td>
+<td>576</td>
+</tr>
+<tr>
+<td>14</td>
+<td>509</td>
+<td>768</td>
+<td>yes</td>
+<td>1200</td>
+<td>1272</td>
+<td>1368</td>
+</tr>
+<tr>
+<td>16</td>
+<td>4060</td>
+<td>1536</td>
+<td>yes</td>
+<td>2400</td>
+<td>2784</td>
+<td>2904</td>
+</tr>
+<tr>
+<td>18</td>
+<td>41301</td>
+<td>3072</td>
+<td>yes</td>
+<td>4800 (<span class="math inline">\(P\oplus_3P\)</span>)</td>
+<td>6240 (Blanuša and two non-snarks)</td>
+<td>6432</td>
+</tr>
+<tr>
+<td>20</td>
+<td>510489</td>
+<td>6144</td>
+<td>yes</td>
+<td>9600</td>
+<td>13680</td>
+<td>14256</td>
+</tr>
+<tr>
+<td>22</td>
+<td>(girth <span class="math inline">\(\ge5\)</span>: 90938)</td>
+<td>–</td>
+<td>–</td>
+<td>19200 (girth <span class="math inline">\(\ge5\)</span>)</td>
+<td><span class="math inline">\(\le\)</span> 29760 (girth <span class="math inline">\(\ge5\)</span>; snark)</td>
+<td>31488</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>For <span class="math inline">\(10\le n\le16\)</span> the stored lists contain all graphs attaining the minimum (3, 7, 24, 93 of them), for <span class="math inline">\(n=18,20\)</span> the first 100; <strong>every one of them reduces to <span class="math inline">\(K_4\)</span> by contracting triangles</strong>, all have <span class="math inline">\(F(G;4)=6\)</span> (uniquely 3-edge-colourable), and the second smallest value is <span class="math inline">\(1.25\times\)</span> the minimum <span class="math inline">\(=240\cdot2^{(n-10)/2}\)</span> (triangle inflations of <span class="math inline">\(P_{10}\)</span>).</li>
+<li>Ratios of consecutive minima in the last column: 2.40, 2.375, 2.12, 2.21, 2.216, 2.209; cyclically 4-connected column: 1.67, 2.40, 2.21, 2.19, 2.24, 2.19, 2.18.</li>
+<li>The minimisers in the last two columns come with many ties (five or more graphs with the same <span class="math inline">\(F\)</span> at <span class="math inline">\(n=20,22\)</span>), and are mostly <strong>not</strong> snarks (<span class="math inline">\(F(G;4)=24\)</span>–<span class="math inline">\(48\)</span>). At <span class="math inline">\(n=18\)</span> the two Blanuša snarks tie with two 3-edge-colourable graphs at 6240; at <span class="math inline">\(n=20\)</span> the flower snark <span class="math inline">\(J_5\)</span> (16200) and the dodecahedron (16080) are 14% above the minimum; at <span class="math inline">\(n=22\)</span> the cyclically 4-connected minimum 29760 is a snark (one of the Loupekine/Blanuša-type snarks of order 22, containing two copies of the dot-product block <span class="math inline">\(P-uv\)</span>).</li>
+</ul>
+<h2 id="climber-toolsflowclimb.py">5. Climber (<code>tools/flowclimb.py</code>)</h2>
+<p>Simulated annealing on <span class="math inline">\(\log F\)</span> over 2-switches, temperature <span class="math inline">\(0.25\to0.01\)</span>, 3 minutes per order (4 for the second seed), class constraints checked by SAT after the Metropolis test. The machine was heavily loaded by other jobs (load 12–14 on 12 cores), so runs have between 4,000 and 120,000 steps.</p>
+<p>Check against §4: the climber finds the exact minimum for <span class="math inline">\(n=12\)</span>–<span class="math inline">\(18\)</span> and <span class="math inline">\(22\)</span> in class (cyc 5, girth 5) and for <span class="math inline">\(n=12\)</span>–<span class="math inline">\(20\)</span> in class (cyc 4); it misses by 0.3% at <span class="math inline">\(n=20\)</span> (14304 vs 14256) and by 2.4% at <span class="math inline">\(n=22\)</span> in class cyc 4 (30480 vs 29760). For <span class="math inline">\(n\ge24\)</span> its values are <strong>upper bounds</strong> of unknown quality (probably within a few percent).</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(n\)</span></th>
+<th>cyc <span class="math inline">\(\ge4\)</span>: best <span class="math inline">\(F\)</span></th>
+<th><span class="math inline">\(F/1.5^n\)</span></th>
+<th>ratio</th>
+<th>cyc <span class="math inline">\(\ge5\)</span>, girth <span class="math inline">\(\ge5\)</span>: best <span class="math inline">\(F\)</span></th>
+<th><span class="math inline">\(F/1.5^n\)</span></th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>13680*</td>
+<td>4.11</td>
+<td></td>
+<td>14256*</td>
+<td>4.29</td>
+<td></td>
+</tr>
+<tr>
+<td>22</td>
+<td>29760*</td>
+<td>3.98</td>
+<td>2.175</td>
+<td>31488*</td>
+<td>4.21</td>
+<td>2.209</td>
+</tr>
+<tr>
+<td>24</td>
+<td>67680</td>
+<td>4.02</td>
+<td>2.274</td>
+<td>69960 (both seeds)</td>
+<td>4.16</td>
+<td>2.222</td>
+</tr>
+<tr>
+<td>26</td>
+<td>151152</td>
+<td>3.99</td>
+<td>2.233</td>
+<td>154272 (seed 2: 154512)</td>
+<td>4.07</td>
+<td>2.205</td>
+</tr>
+<tr>
+<td>28</td>
+<td>333936</td>
+<td>3.92</td>
+<td>2.209</td>
+<td>341616 (seed 2: 343896)</td>
+<td>4.01</td>
+<td>2.214</td>
+</tr>
+<tr>
+<td>30</td>
+<td>749280</td>
+<td>3.91</td>
+<td>2.244</td>
+<td>759552 (seed 1: 764088)</td>
+<td>3.96</td>
+<td>2.223</td>
+</tr>
+</tbody>
+</table></div>
+<p>(* exact, from §4.) For comparison at <span class="math inline">\(n=26\)</span>: Blanuša <span class="math inline">\(P^{\cdot3}\)</span> has 158400, so the Blanuša chain is <em>not</em> the minimiser in the cyclically 4-connected class beyond <span class="math inline">\(n=18\)</span>; at <span class="math inline">\(n=42\)</span>: Blanuša <span class="math inline">\(P^{\cdot5}\)</span> 91499520 (<span class="math inline">\(r=3.68\)</span>), random <span class="math inline">\(\approx1.07\cdot10^8\)</span>.</p>
+<p>Cyclically 6-connected, girth 6, <span class="math inline">\(n=42\)</span> (start: <code>data/oddness6_template_counterexample_n42.json</code>, <span class="math inline">\(F=124221120\)</span>, 18 minutes, only 9,900 steps because of an over-eager replanning rule, since fixed): best <span class="math inline">\(F=121237632\)</span>, <span class="math inline">\(F/1.5^n=4.87\)</span>, a graph with no 5-cycles and two 6-cycles. So under girth 6 the climber moves the count by 2.4% only; the twenty archived 42-vertex graphs of the project lie between 122038368 and 128708352. In class (cyc 5, girth 5) at <span class="math inline">\(n=42\)</span> the climber is not informative: with cheap replanning (6 greedy restarts per move) the contraction width after a switch is 10–12 instead of 7–9, a step costs over a second, and a 6-minute run made 209 steps (best <span class="math inline">\(F=111773160\)</span>, <span class="math inline">\(F/1.5^n=4.49\)</span>, against <span class="math inline">\(3.68\)</span> for the Blanuša chain <span class="math inline">\(P^{\cdot5}\)</span> of the same order, which has cyclic connectivity 4). <strong>The climber as written is adequate for <span class="math inline">\(n\le30\)</span> only</strong>; for <span class="math inline">\(n\approx42\)</span> it needs incremental plan repair (keep the contraction tree, re-optimise only the subtrees touching the four switched vertices).</p>
+<p><strong>Structure of the minimisers</strong> (<code>tools/flowstruct.log</code>; induced copies of <span class="math inline">\(P-v\)</span> (3-pole), <span class="math inline">\(P-uv\)</span> (4-pole, the dot-product block), <span class="math inline">\(P-P_3\)</span> (5-pole, 7 vertices)):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>class</th>
+<th><span class="math inline">\(n\)</span></th>
+<th>#5-cycles</th>
+<th><span class="math inline">\(P-v\)</span></th>
+<th><span class="math inline">\(P-uv\)</span></th>
+<th><span class="math inline">\(P-P_3\)</span></th>
+<th>snark?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3-connected, girth 5 (exact)</td>
+<td>18–22</td>
+<td>12</td>
+<td>2</td>
+<td>6</td>
+<td>18</td>
+<td>yes (<span class="math inline">\(P\oplus_3P\)</span> and descendants)</td>
+</tr>
+<tr>
+<td>cyc 4 (exact)</td>
+<td>18</td>
+<td>8–10</td>
+<td>0</td>
+<td>1–2</td>
+<td>7–10</td>
+<td>2 of 4</td>
+</tr>
+<tr>
+<td>cyc 4 (exact)</td>
+<td>20</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>no</td>
+</tr>
+<tr>
+<td>cyc 4 (exact, girth 5)</td>
+<td>22</td>
+<td>8</td>
+<td>0</td>
+<td>2</td>
+<td>8</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>cyc 4 (climber)</td>
+<td>24–30</td>
+<td>9–11</td>
+<td>0</td>
+<td>1,1,1,0</td>
+<td>7–8</td>
+<td><span class="math inline">\(n=24\)</span> only</td>
+</tr>
+<tr>
+<td>cyc 5 (exact)</td>
+<td>18</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>no</td>
+</tr>
+<tr>
+<td>cyc 5 (exact)</td>
+<td>20, 22</td>
+<td>6–9</td>
+<td>0</td>
+<td>0</td>
+<td><strong>4</strong> (all ten graphs)</td>
+<td>no</td>
+</tr>
+<tr>
+<td>cyc 5 (climber)</td>
+<td>24–30</td>
+<td>7–10</td>
+<td>0</td>
+<td>0</td>
+<td><strong>4</strong> (all four graphs)</td>
+<td>no</td>
+</tr>
+<tr>
+<td>random girth <span class="math inline">\(\ge5\)</span></td>
+<td>22 / 30</td>
+<td>4.8 / 4.0</td>
+<td>0</td>
+<td>0 / 0.05</td>
+<td>1.1 / 0.7</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>So: triangles and 3-sums with <span class="math inline">\(P_{10}\)</span> where allowed; the dot-product block <span class="math inline">\(P-uv\)</span> where cyclic connectivity 4 is allowed; and in the cyclically 5-connected class the minimisers always contain exactly four copies of the Petersen 5-pole <span class="math inline">\(P-P_3\)</span> and about twice the random number of 5-cycles, no 4-cycles even where they are allowed (they raise the count; the class-cyc-4 climber, which may use 4-cycles, ends on girth 5 in 7 of 10 runs and on a single 4-cycle in the other three). What the four copies of <span class="math inline">\(P-P_3\)</span> are (one cluster or two) and whether a family with <em>many</em> such clusters has a smaller base was not investigated.</p>
+<h2 id="arithmetic-of-fg5">6. Arithmetic of <span class="math inline">\(F(G;5)\)</span></h2>
+<ul>
+<li><span class="math inline">\(4\mid F\)</span> (units of <span class="math inline">\(\mathbb Z_5\)</span> act freely). In all data <span class="math inline">\(12\mid F\)</span>; the gcd of all non-zero values is exactly 12 at every order <span class="math inline">\(10\le n\le20\)</span>. <span class="math inline">\(F/4\bmod6\in\{0,3\}\)</span> always, with <span class="math inline">\(3\)</span> (i.e. <span class="math inline">\(F\equiv12\bmod24\)</span>) for 2 of 19, 5 of 85, 13 of 509, 38 of 4060, 149 of 41301, 703 of 510489 graphs (<span class="math inline">\(n=10,\dots,20\)</span>).</li>
+<li><strong><span class="math inline">\(F(G;5)\bmod5\)</span>:</strong> <span class="math inline">\(\{0,2,3\}\)</span> for <span class="math inline">\(n\equiv2\pmod4\)</span> and <span class="math inline">\(\{0,1,4\}\)</span> for <span class="math inline">\(n\equiv0\pmod4\)</span>, without exception in 556,000 + 91,000 enumerated graphs, 91 family graphs (<span class="math inline">\(n\le100\)</span>) and 204 random graphs; the three residues are roughly equidistributed (e.g. <span class="math inline">\(n=20\)</span>: 159670 / 167428 / 170720). Since <span class="math inline">\(F(G;5)\equiv F(G;0)=(-1)^{n/2+1}T_G(0,1)\pmod5\)</span>, this is a statement about <span class="math inline">\(T_G(0,1)\bmod5\)</span> for cubic graphs: <span class="math inline">\((-2)^{n/2}\,T_G(0,1)\)</span> is a square mod 5. I have no proof and did not search the literature.</li>
+<li><strong>Every snark in the data has <span class="math inline">\(5\mid F(G;5)\)</span></strong>: a census of all bridgeless cubic graphs of girth <span class="math inline">\(\ge5\)</span> with <span class="math inline">\(F(G;4)=0\)</span> (<code>tools/flowdata_snarks.log</code>; this includes snarks with 3-cuts) gives 1, 3, 14, 107 graphs of order 10, 18, 20, 22, all with <span class="math inline">\(F\equiv0\pmod5\)</span>; so do <span class="math inline">\(J_3,\dots,J_{25}\)</span>, the Blanuša chains and <span class="math inline">\(R_2\)</span>. Among all cubic graphs only a third have <span class="math inline">\(5\mid F\)</span>, and there is no congruence between <span class="math inline">\(F(G;4)\)</span> and <span class="math inline">\(F(G;5)\)</span> mod 5 in general (table of residues for <span class="math inline">\(n=12,14,16\)</span> computed, all combinations occur), so this looks like a genuine property of non-3-edge-colourable graphs. Many of the small snarks are 3-sums or dot products with <span class="math inline">\(P_{10}\)</span> (factors 20 and 24… only the 3-sum factor is proved), which explains part of the sample but not the flower snarks. No proof; literature not searched.</li>
+</ul>
+<h2 id="conjectures-and-the-strength-of-the-evidence">7. Conjectures and the strength of the evidence</h2>
+<p><strong>Conjecture A.</strong> For every 3-connected cubic graph <span class="math inline">\(G\)</span> on <span class="math inline">\(n\)</span> vertices, <span class="math inline">\(F(G;5)\ge6\cdot2^{n/2}\)</span>, with equality iff <span class="math inline">\(G\)</span> arises from <span class="math inline">\(K_4\)</span> by repeatedly inflating vertices into triangles. <em>Evidence: strong.</em> Exhaustive for <span class="math inline">\(n\le20\)</span> (equality cases checked for <span class="math inline">\(n\le16\)</span> completely and for the 100 stored minimisers at <span class="math inline">\(n=18,20\)</span>). <em>Reduction:</em> with <span class="math inline">\(\varphi(G)=F(G;5)/12\)</span> and <span class="math inline">\(\nu(G)=n-2\)</span>, 3-sums are multiplicative in <span class="math inline">\(\varphi\)</span> and additive in <span class="math inline">\(\nu\)</span>, so A is equivalent to <span class="math inline">\(\varphi(G)\ge2^{\nu(G)/2}\)</span> with equality only for <span class="math inline">\(K_4\)</span> <strong>on cyclically 4-connected graphs</strong>, where by §4–5 it holds with exponential room (<span class="math inline">\(n=22\)</span>: 29760 against 12288; <span class="math inline">\(n=30\)</span>: <span class="math inline">\(\le749280\)</span> against 196608). Hence A would follow from any bound <span class="math inline">\(F\ge c\beta^n\)</span> with <span class="math inline">\(\beta&gt;\sqrt2\)</span> on cyclically 4-connected graphs plus a finite check, (The triangle factor for general <span class="math inline">\(q\)</span> is <span class="math inline">\(q-3\)</span>, but the analogous inequality is false for <span class="math inline">\(q=4\)</span> because of snarks, so A is specific to <span class="math inline">\(q\ge5\)</span>.)</p>
+<p><strong>Conjecture B (weak form).</strong> There are <span class="math inline">\(c&gt;0\)</span>, <span class="math inline">\(\beta&gt;\sqrt2\)</span> with <span class="math inline">\(F(G;5)\ge c\,\beta^n\)</span> for all cyclically 4-edge-connected cubic graphs. <em>Evidence: moderate.</em> Exact minima for <span class="math inline">\(n\le22\)</span> grow by <span class="math inline">\(2.18\)</span>–<span class="math inline">\(2.24\)</span> per two vertices; climber upper bounds to <span class="math inline">\(n=30\)</span> continue at <span class="math inline">\(2.21\)</span>–<span class="math inline">\(2.27\)</span>. The data are compatible with <span class="math inline">\(\beta=24^{1/8}=1.4877\)</span> (the Blanuša chain, which however is beaten by 5% at <span class="math inline">\(n=26\)</span> by a non-snark, so the chain is not extremal for the constant <span class="math inline">\(c\)</span> and perhaps not for <span class="math inline">\(\beta\)</span>) and with anything in <span class="math inline">\([1.47,1.495]\)</span>; since <span class="math inline">\(F/1.5^n\)</span> of the minima still decreases slowly at <span class="math inline">\(n=30\)</span> (4.29, 4.21, 4.16, 4.07, 4.01, 3.96 for cyc 5), <span class="math inline">\(\beta&lt;1.5\)</span> is likely but <span class="math inline">\(\beta=1.5\)</span> with a slowly varying prefactor is not excluded. <strong>The data do not determine <span class="math inline">\(\beta\)</span> or the extremal family</strong>, and I do not state a sharp form. For cyclically 5-connected graphs of girth <span class="math inline">\(\ge5\)</span> the ratios are <span class="math inline">\(2.21\)</span>–<span class="math inline">\(2.24\)</span>, the same within the noise; whether cyclic 5- or 6-connectivity pushes the base up to the generic <span class="math inline">\(1.5\)</span> is open — the cyclically 6-connected graphs of the project and the girth-6 climber at <span class="math inline">\(n=42\)</span> stay at <span class="math inline">\(F/1.5^n\approx4.9\)</span>–<span class="math inline">\(5.2\)</span>, i.e. show no exponential deficit at all.</p>
+<p><strong>What this means for the programme of §18.4.</strong> (1) A counting induction hypothesis must be formulated on cyclically 4-connected graphs, or must carry the 3-cut structure explicitly through the normalisation <span class="math inline">\(\varphi=F/12\)</span>, <span class="math inline">\(\nu=n-2\)</span>; the hypothesis “<span class="math inline">\(F\ge c^n\)</span> for 3-connected cubic graphs” has the unique natural form A, with the trivial extremal family. (2) The local structures that depress <span class="math inline">\(F\)</span> are exactly the known reducible ones (triangles, and to a smaller extent 5-cycles and Petersen fragments); 4-cycles and 6-cycles help. A Dvořák–Mohar–Šámal style induction therefore has to lose at most a factor 2 per triangle-type reduction and <span class="math inline">\(\approx2.2\)</span> per two vertices elsewhere, and the gap between <span class="math inline">\(\sqrt2\)</span> and <span class="math inline">\(1.487\)</span> is the room available. (3) The count is blind to everything the oddness route struggles with: snarks, oddness 6, template failures and the Jacobsen–Salas graphs all have <span class="math inline">\(F\approx5\cdot1.5^n\)</span> like random graphs.</p>
+<h2 id="not-done-caveats">8. Not done / caveats</h2>
+<ul>
+<li>Double-star, Szekeres and the House of Graphs snark lists were not used (no local copy); snarks of order <span class="math inline">\(\le22\)</span> and girth <span class="math inline">\(\ge5\)</span> are covered by the census of §6 (<code>tools/flowdata_snarks_*.json</code>).</li>
+<li>Exhaustive data for the cyclically 4-connected class include girth 4 up to <span class="math inline">\(n=20\)</span> (<code>tools/flowdata_below_20ct.log</code>: of the 573 triangle-free graphs with <span class="math inline">\(F\le13680\)</span> exactly two are cyclically 4-connected, both of girth 5 with <span class="math inline">\(F=13680\)</span>); for <span class="math inline">\(n=22\)</span> only girth <span class="math inline">\(\ge5\)</span> was enumerated, and the climber (girth 4 allowed) found nothing lower.</li>
+<li>Climber values for <span class="math inline">\(n\ge24\)</span> are upper bounds from 3–4 minute runs on a loaded machine (two seeds agree exactly at <span class="math inline">\(n=24\)</span> and within 0.7% at <span class="math inline">\(n=26\)</span>–<span class="math inline">\(30\)</span> in class cyc 5; class cyc 4 has one seed). The <span class="math inline">\(n=42\)</span> runs are too short to mean anything (§5). The class 3-connected was run by the climber only at <span class="math inline">\(n=12\)</span> (finds 384); it is settled by §4 anyway.</li>
+<li>The per-cycle factors of §3 are a regression with <span class="math inline">\(R^2=0.81\)</span>, not a theorem; only the triangle factor is exact.</li>
+</ul>
+
+  </div>
+</body>
+</html>
