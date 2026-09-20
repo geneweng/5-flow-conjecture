@@ -81,6 +81,6 @@ These failures are isolated: on the 60-vertex instance exactly one of the $7^6$ 
 
 ## 8. Remarks and open ends
 
-- A proof of Proposition 4.2 by hand is desirable at least for the 300 pairs, which carry 83 % of $\mathcal L$; see `oddness.md` §23 for the first steps in the simplest case.
+- **By hand:** the 300 infeasible pairs are exactly the pairs of $(6,4,2,2)$-cuts whose four quadrants contain $1,1,1,3$ of the $z$'s, and these are impossible by a half-page argument (submodularity, parity $d(X)\equiv z(X)$, and the fact that no colour-2 edge joins two 3-vertex $z$-atoms): the quadrant lemma, `oddness.md` Lemma 26.1. This proves 4,380 of the 5,292 members of $\mathcal L$ without computer. The other 912 (triples and four-point lists, all with the six $z$'s in six different atoms) still rest on the computation.
 - For $2t=8$ odd circuits the catalogue at the threshold $\frac23$ of $r=6$ consists of $(7,5)$ and $(8,6)$ only, and between $\frac7{11}$ and $\frac23$ it contains $(6,4)$, $(7,5)$, $(8,6)$ and $(12,8)$; by analogy with Theorem 2 one expects the 12-cuts to defeat the fixed template, so the method is not expected to give a bound below 6 at oddness 8 without using the 0-edges.
 - To do before submission: literature check for bounds on $\Phi_c$ under oddness assumptions; exact statement of Jaeger's balanced valuation theorem for real $r$ with reference (Jaeger 1975/1988; Steffen's papers on circular flow numbers of regular multigraphs use exactly this form); clean archive of $\mathcal L$ and of the two caches for the reader.
