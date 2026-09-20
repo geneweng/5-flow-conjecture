@@ -84,10 +84,10 @@ def build_page(md_path, out_path, eyebrow, nav_html, standalone=True):
 
 if __name__ == '__main__':
   root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-  nav = '<nav class="sitenav"><a href="index.html">Survey</a> · <a href="mod5-orientation.html">Route: modulo 5-orientations</a> · <a href="oddness.html">Route: oddness 6</a> · <a href="c6-model-spec.html">(C6) model</a> · Experiments <a href="exp-B-defect.html">B</a> <a href="exp-C-rounding.html">C</a> <a href="exp-D-counting.html">D</a> · <a href="https://github.com/geneweng/5-flow-conjecture">GitHub</a></nav>'
+  nav = '<nav class="sitenav"><a href="index.html">Survey</a> · <a href="mod5-orientation.html">Route: modulo 5-orientations</a> · <a href="oddness.html">Route: oddness 6</a> · <a href="paper-c6-draft.html">Draft: Φc ≤ 11/2</a> · <a href="c6-model-spec.html">(C6) model</a> · Experiments <a href="exp-B-defect.html">B</a> <a href="exp-C-rounding.html">C</a> <a href="exp-D-counting.html">D</a> · <a href="https://github.com/geneweng/5-flow-conjecture">GitHub</a></nav>'
   build_page(f'{root}/survey/5-flow-survey.md', f'{root}/docs/index.html', 'Survey · September 2026', nav)
   build_page(f'{root}/notes/mod5-orientation.md', f'{root}/docs/mod5-orientation.html', 'Working notes · September 2026', nav)
   build_page(f'{root}/notes/oddness.md', f'{root}/docs/oddness.html', 'Working notes · September 2026', nav)
-  for extra in ('c6-model-spec', 'exp-B-defect', 'exp-C-rounding', 'exp-D-counting', 'c6-independent-check'):
+  for extra in ('paper-c6-draft', 'c6-model-spec', 'exp-B-defect', 'exp-C-rounding', 'exp-D-counting', 'c6-independent-check'):
     if os.path.exists(f'{root}/notes/{extra}.md'): build_page(f'{root}/notes/{extra}.md', f'{root}/docs/{extra}.html', 'Working notes · September 2026', nav)
   build_page(f'{root}/survey/5-flow-survey.md', f'{root}/survey/5-flow-survey.html', 'Survey · September 2026', '', standalone=False)
