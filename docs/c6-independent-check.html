@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Independent check of the (C6) count relaxation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+  <style>
+  :root{--paper:#f6f6f3;--paper2:#ecede8;--ink:#1c1f23;--ink2:#4f5760;--rule:#cfd3cc;--accent:#2b5c85;--accent2:#9a4b2f;--code:#e9ebe6;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}}
+  :root[data-theme="dark"]{--paper:#15181c;--paper2:#1e2227;--ink:#e7e5df;--ink2:#a2a9b1;--rule:#353b42;--accent:#86b6dc;--accent2:#d99570;--code:#22272d;}
+  html{color-scheme:light dark}
+  body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;padding-block:0 4rem;padding-inline:clamp(16px,4vw,40px);margin:0}
+  .wrap{max-width:46rem;margin:0 auto}
+  header.masthead{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;padding-block:3rem 1.5rem;border-bottom:2px solid var(--ink)}
+  header.masthead h1{font-family:"Source Sans 3","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 .6rem;text-wrap:balance}
+  header.masthead .byline{color:var(--ink2);font-size:.95rem;margin:0;max-width:34rem}
+  .eyebrow{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 .4rem}
+  .petersen{flex:none}
+  .sitenav{font-family:"Source Sans 3",Arial,sans-serif;font-size:.9rem;color:var(--ink2);margin:1rem 0 0}
+.conj{font-size:1.2rem;line-height:1.4;margin:2rem 0;padding:1rem 1.2rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  .conj .lbl{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.3rem}
+  nav.toc{margin:2rem 0 2.5rem;padding:1rem 1.2rem;border:1px solid var(--rule)}
+  nav.toc ol{margin:0;padding-left:1.4rem;columns:2;column-gap:2rem;font-family:"Source Sans 3",Arial,sans-serif;font-size:.95rem;line-height:1.5}
+  nav.toc li{break-inside:avoid;padding:.1rem 0}
+  @media (max-width:520px){nav.toc ol{columns:1}header.masthead{grid-template-columns:1fr}.petersen{width:84px;height:84px}}
+  h2{font-family:"Source Sans 3",Arial,sans-serif;font-weight:700;font-size:1.45rem;line-height:1.2;margin:3rem 0 1rem;padding-top:1rem;border-top:1px solid var(--rule);text-wrap:balance}
+  h3{font-family:"Source Sans 3",Arial,sans-serif;font-weight:600;font-size:1.08rem;margin:2rem 0 .6rem;text-wrap:balance}
+  p{margin:0 0 1rem}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  blockquote{margin:1.2rem 0;padding:.7rem 1.1rem;border-left:3px solid var(--accent);background:var(--paper2)}
+  blockquote p:last-child{margin-bottom:0}
+  ul,ol{padding-left:1.4rem}li{margin-bottom:.35rem}
+  hr{border:0;height:0;margin:0}
+  .tbl{overflow-x:auto;margin:1.2rem 0}
+  table{border-collapse:collapse;width:100%;font-family:"Source Sans 3",Arial,sans-serif;font-size:.92rem;line-height:1.4;font-variant-numeric:tabular-nums}
+  th{text-align:left;font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--ink);padding:.45rem .6rem .35rem}
+  td{border-bottom:1px solid var(--rule);padding:.45rem .6rem;vertical-align:top}
+  td:first-child{font-weight:600}
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.86em;background:var(--code);padding:.05em .3em;border-radius:2px}
+  strong{font-weight:600}
+  mjx-container[display="true"]{margin:.6rem 0;overflow-x:auto;overflow-y:hidden}
+  section.refs ul{padding-left:1.2rem;font-size:.93rem}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+  </style>
+  </head>
+<body>
+<div class="wrap">
+  <header class="masthead"><div><p class="eyebrow">Working notes · September 2026</p><h1>Independent check of the (C6) count relaxation</h1><p class="byline"></p></div><svg class="petersen" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Petersen graph"><g stroke="var(--accent)" stroke-width="1.6" fill="none"><line x1="60.0" y1="22.0" x2="98.0" y2="49.6"/><line x1="98.0" y1="49.6" x2="83.5" y2="94.4"/><line x1="83.5" y1="94.4" x2="36.5" y2="94.4"/><line x1="36.5" y1="94.4" x2="22.0" y2="49.6"/><line x1="22.0" y1="49.6" x2="60.0" y2="22.0"/><line x1="60.0" y1="22.0" x2="60.0" y2="44.0"/><line x1="98.0" y1="49.6" x2="77.1" y2="56.4"/><line x1="83.5" y1="94.4" x2="70.6" y2="76.6"/><line x1="36.5" y1="94.4" x2="49.4" y2="76.6"/><line x1="22.0" y1="49.6" x2="42.9" y2="56.4"/><line x1="60.0" y1="44.0" x2="70.6" y2="76.6"/><line x1="77.1" y1="56.4" x2="49.4" y2="76.6"/><line x1="70.6" y1="76.6" x2="42.9" y2="56.4"/><line x1="49.4" y1="76.6" x2="60.0" y2="44.0"/><line x1="42.9" y1="56.4" x2="77.1" y2="56.4"/></g><g fill="var(--ink)"><circle cx="60.0" cy="22.0" r="3"/><circle cx="98.0" cy="49.6" r="3"/><circle cx="83.5" cy="94.4" r="3"/><circle cx="36.5" cy="94.4" r="3"/><circle cx="22.0" cy="49.6" r="3"/><circle cx="60.0" cy="44.0" r="3"/><circle cx="77.1" cy="56.4" r="3"/><circle cx="70.6" cy="76.6" r="3"/><circle cx="49.4" cy="76.6" r="3"/><circle cx="42.9" cy="56.4" r="3"/></g></svg></header>
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol><li><a href="#implementation">Implementation</a></li><li><a href="#results">Results</a></li><li><a href="#validity-of-the-constraints-3-of-the-spec">Validity of the constraints (§3 of the spec)</a></li><li><a href="#one-doubt-about-4-completeness-of-the-cover-list-not-about-3">One doubt, about §4 (completeness of the cover list), not about §3</a></li><li><a href="#reproduce">Reproduce</a></li></ol></nav>
+  <p><em>2026-09-19. Independent verifier report. The model was re-implemented from <code>notes/c6-model-spec.md</code> alone; none of <code>tools/count_c6.py</code>, <code>count_general.py</code>, <code>enum_c6.py</code>, <code>enum_covers.py</code>, <code>validate_c6.py</code> was opened. Only <code>tools/enum_c6_cache.json</code> was used, as reference results.</em></p>
+<p>Files: <code>tools/c6_independent.py</code> (implementation), <code>tools/c6_independent_cache.json</code> (my results), <code>tools/c6_independent.log</code> (progress log).</p>
+<h2 id="implementation">1. Implementation</h2>
+<ul>
+<li><strong>Solver: HiGHS MIP (<code>highspy</code> 1.x), single thread per solve</strong>, big-M formulation. Parities use integer slack variables (<code>n = E1 + 2s</code>, etc.). Conditionals use binaries: <code>t7 = [n_a &gt;= 7]</code>, the rule “n_a = 3 and E_nh = 0” via <code>q + g + h &gt;= 1</code> with <code>g -&gt; n_a &gt;= 4</code>, <code>h -&gt; E_nh &gt;= 1</code>, <code>q -&gt;</code> degree conditions. Union facts use exact capped sizes <code>m_a = min(n_a, 6)</code> and threshold binaries on <code>sum m_a</code>, which keeps the big-M at most 96 instead of 8000. Tolerances 1e-9.</li>
+<li><strong>Lazy constraints:</strong> path connectivity (group 1), class connectivity (group 6), and union facts for unions of more than two atoms (group 7). Unions of one or two atoms are in the model from the start; for J = 2 all unions are. This deviates from the letter of the task (“all unions up front for J &lt;= 3”) but is logically equivalent. Any subset of unions is a valid relaxation, so INFEASIBLE stays rigorous. Every FEASIBLE answer is accepted only after an <strong>exact integer checker</strong> confirms the solution. The checker is written separately from the row builder, directly from the spec, and tests every constraint of groups 1–7, including all 2<sup>(2</sup>J) unions and both connectivity conditions. Up-front unions made triples 3–30 times slower with no change in status on the 4 triples tried.</li>
+<li><strong>Exact second opinion:</strong> all 834 pairs were re-solved with <strong>z3 (QF_LIA, exact arithmetic)</strong> on the same row system. This rules out MIP numerics for the pairs.</li>
+<li><strong>CP-SAT as last resort:</strong> the scheduler retries HiGHS-UNKNOWN jobs with OR-tools CP-SAT (1 worker, 120 s) on my own rows. <strong>No INFEASIBLE result relies on CP-SAT.</strong> It produced only 8 FEASIBLE sample answers, each exact-checked (see 2).</li>
+<li><strong>Limits:</strong> 4 worker processes, 45 s HiGHS limit (120 s in the first pass), 120 s CP-SAT limit, hard kill.</li>
+<li><strong>Timings to ignore:</strong> the machine went into macOS “Maintenance Sleep” three times before I held a <code>caffeinate -s</code> assertion. Logged times of 570–1530 s are sleep artefacts. The affected jobs were re-run.</li>
+</ul>
+<h2 id="results">2. Results</h2>
+<div class="tbl"><table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>stage</th>
+<th>jobs</th>
+<th>agree with cache</th>
+<th>disagree</th>
+<th>undecided (mine)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all pairs (no two points of one class)</td>
+<td>834</td>
+<td>834 (534 FEASIBLE, 300 INFEASIBLE)</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>the same pairs under z3, exact</td>
+<td>834</td>
+<td>834</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>certificate sub-lists (cached INFEASIBLE)</td>
+<td>384 (368 triples, 16 four-covers)</td>
+<td>367 INFEASIBLE (364 triples, 3 four-covers), all by HiGHS</td>
+<td>0</td>
+<td>17</td>
+</tr>
+<tr>
+<td>random cached-FEASIBLE triples</td>
+<td>150</td>
+<td>150 FEASIBLE, atom sizes in the log</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<p>Notes on the table:</p>
+<ul>
+<li><strong>Counts.</strong> “946 pairs” in the task is C(44,2). Excluding two points of the same class leaves 834, which is exactly the number of pair keys in the cache.</li>
+<li><strong>Items and covers.</strong> I get 44 items and <strong>5,292 minimal covers</strong> (12 + 1,184 + 4,096), as in the spec.</li>
+<li><strong>Pair statistics</strong> match §5 of the spec: L–L 36/66, L–Pc 144/288, Pc–Pc 120/216, and every pair with a P7 or P641 is feasible.</li>
+<li><strong>Sample engines.</strong> 142 of the 150 feasible sample triples were solved by HiGHS. The other 8 were solved by CP-SAT after a sleep-induced kill of the HiGHS job; all 150 passed the exact checker.</li>
+<li><strong>There is no contradiction anywhere.</strong> I never found FEASIBLE where the cache says INFEASIBLE, or the reverse. Task items (4a) and (4b), the solution dump and the constraint-group ablation, therefore did not apply.</li>
+</ul>
+<p><strong>Certificate status from my results alone: 5,275 of the 5,292 minimal covers are certified infeasible.</strong></p>
+<ul>
+<li>4,380 covers contain an INFEASIBLE pair.</li>
+<li>895 covers are certified by a re-proved triple or four-cover.</li>
+<li>17 covers are undecided: HiGHS at 45–120 s and then CP-SAT at 120 s on one core both hit the time limit. They are neither confirmed nor contradicted. The cache records all 17 as INFEASIBLE.</li>
+</ul>
+<p>The 17 undecided covers are:</p>
+<ul>
+<li><strong>4 three-covers:</strong> <code>L01b1p1 L12b0p1 P641_01</code>, <code>L01b1p1 P641_00 Pc0p1_01</code>, <code>L01b1p1 P641_00 Pc1p0_01</code>, <code>L01b1p1 P641_01 Pc1p0_00</code>.</li>
+<li><strong>13 four-point covers</strong>, all made of P7/P641 points only:
+<ul>
+<li><code>P641_00 P641_01 P641_10 P641_11</code></li>
+<li><code>P641_00 P641_01 P641_10 P7_11</code></li>
+<li><code>P641_00 P641_01 P641_11 P7_10</code></li>
+<li><code>P641_00 P641_01 P7_10 P7_11</code></li>
+<li><code>P641_00 P641_10 P641_11 P7_01</code></li>
+<li><code>P641_00 P641_10 P7_01 P7_11</code></li>
+<li><code>P641_00 P641_11 P7_01 P7_10</code></li>
+<li><code>P641_00 P7_01 P7_10 P7_11</code></li>
+<li><code>P641_01 P641_10 P641_11 P7_00</code></li>
+<li><code>P641_01 P641_10 P7_00 P7_11</code></li>
+<li><code>P641_01 P641_11 P7_00 P7_10</code></li>
+<li><code>P641_10 P641_11 P7_00 P7_01</code></li>
+<li><code>P641_11 P7_00 P7_01 P7_10</code></li>
+</ul></li>
+</ul>
+<p>Four-point covers that HiGHS did prove are <code>P7_00 P7_01 P7_10 P7_11</code>, <code>P641_10 P7_00 P7_01 P7_11</code> and <code>P641_01 P7_00 P7_10 P7_11</code>.</p>
+<p>These 17 deserve a longer independent run: a multi-hour limit, or several cores per solve.</p>
+<h2 id="validity-of-the-constraints-3-of-the-spec">3. Validity of the constraints (§3 of the spec)</h2>
+<p>I checked each constraint against the setting of §1 and found <strong>no invalid constraint</strong>.</p>
+<ul>
+<li><strong>(T1)</strong> follows from the killer definition. Matching edges inside S join black to white, so k &lt;= c1, with equality iff all S-ends are black. Colour-2 edges pair all vertices except the z’s, so k &lt;= c2 + #(black separated ends), with equality likewise. The numbers 4 = 4 = 2+2, 5 = 5 = 2+3 and 4 = 4 = 1+3 make both tight.</li>
+<li><strong>(T2) and (T3)</strong> follow from the alternation of colours and vertex colours along a component of H.</li>
+<li><strong>Group 4 (segment count):</strong> checked, including one-vertex segments.</li>
+<li><strong>Group 5:</strong>
+<ul>
+<li>The parity constraints and “E2 + E_nh even” rest on the fact that the only colour-0/3 edges between atoms are the P641 non-H edges. This holds because m = c1 + c2 for pair and P7 killers.</li>
+<li>“2n &gt;= 2 visits + H-crossings”: visits and H-segments are vertex-disjoint, and each has at least one vertex.</li>
+<li>“n + E_nh &gt;= 3 at a z”, the isolated-atom rule, and n &gt;= 42: fine.</li>
+</ul></li>
+<li><strong>Group 6:</strong> a circuit of at least 7 vertices must leave an atom of at most 6 vertices. The n = 3 rule is valid because girth &gt;= 6 excludes a triangle. It also correctly makes two z’s in a 3-vertex atom infeasible.</li>
+<li><strong>Group 7:</strong>
+<ul>
+<li>d &gt;= 3: G is 3-edge-connected.</li>
+<li>d &gt;= n + 2 for n &lt;= 5: girth &gt;= 6, so the side is a forest.</li>
+<li>d &gt;= 6 when both sides have at least 4 vertices: a side with d &lt;= 5 and at least 4 vertices cannot be a forest, so both sides contain a cycle, contradicting cyclic 6-edge-connectivity.</li>
+</ul></li>
+<li><strong>Bounds.</strong> x, w &lt;= 11 and u &lt;= 5 are harmless; in fact x &lt;= 7. n_a &lt;= 500 is harmless by the shrinking argument.</li>
+</ul>
+<h2 id="one-doubt-about-4-completeness-of-the-cover-list-not-about-3">4. One doubt, about §4 (completeness of the cover list), not about §3</h2>
+<p>The item list is <strong>not closed under the normalisation it claims</strong>. The L12 lines in the list always have z3 in S and z4 outside S. A killer of the z1-black colouring of class (1,0) or (1,1) whose third path P0 avoids the cut must contain z4, since a killer contains the black ends. Replacing it by its complement is not allowed inside one configuration: complementing a killer complements the colouring of the H-circuits too, and the model assumes a common H-circuit colouring (the u-variables).</p>
+<p>I ran a test. Take one killer for each of the four z1-black colourings: 14 choices each, 38,416 assignments.</p>
+<ul>
+<li><strong>6,512 assignments contain no listed minimal cover</strong>, for example {P7_11, the line with z4,z5 in S and z1,z2,z3,z6 outside (kills class (1,0)), P7_01, P7_00}.</li>
+<li>With path permutations only, 3,456 assignments still fail. With path reversals only, 800 fail.</li>
+<li>The list becomes complete <strong>only modulo the symmetry group generated by permutations of the three paths and reversal of individual paths</strong> (z_{2i+1} &lt;-&gt; z_{2i+2}, beta -&gt; 1 - beta). Under this group of order 48 every one of the 38,416 assignments contains an image of a listed cover (0 failures). Global complement adds nothing: the orbit is 34,096 covers with or without it.</li>
+</ul>
+<p>I checked that the system of §3 is invariant under these symmetries.</p>
+<ul>
+<li>Under path reversal, the colour rule is preserved: leaving/entering swaps together with beta.</li>
+<li>Visits become exits + [end in a], which equals entries + [start in a].</li>
+<li>The isolated-atom rule is equivalent by flow conservation.</li>
+<li>Connectivity to the start is equivalent to connectivity to the end.</li>
+</ul>
+<p>So the theorem is fine, but <strong>the spec (and the proof text, if it says the same) should state explicitly that the 5,292 covers are representatives up to path permutation and path reversal, and that the model is invariant under them.</strong> As written — “normalise z1 black … a killer contains the black ends” together with the fixed L12 orientation — the claim “every configuration contains a listed cover” is false.</p>
+<p>The script for the main test is <code>tools/c6_cover_completeness.py</code> (imports the item list from <code>tools/c6_independent.py</code>; runs in about 10 s). The symmetry action on items is (kind, membership, (crossing path, beta)). The subgroup breakdown (permutations only / reversals only) was a one-off variant of the same script.</p>
+<h2 id="reproduce">5. Reproduce</h2>
+<pre><code>python3 tools/c6_independent.py stats      # 44 items, 5292 covers, pair statistics
+python3 tools/c6_independent.py run        # pairs, feasible sample, z3 on pairs, certificate (resumable)
+python3 tools/c6_independent.py report     # agreement table + certificate count
+python3 tools/c6_independent.py one L01b0p0 L02b1p1    # prints a full solution</code></pre>
+<p>Use <code>caffeinate -s</code> on macOS.</p>
+
+  </div>
+</body>
+</html>
