@@ -10720,13 +10720,15 @@
 "engine": "highs"
 },
 "L01b1p1 L12b0p1 P641_01": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 120.67,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 17
 },
 "L01b1p1 P641_00 P641_01": {
 "status": "INFEASIBLE",
@@ -10745,22 +10747,26 @@
 "engine": "highs"
 },
 "L01b1p1 P641_00 Pc0p1_01": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 120.68,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 13
 },
 "L01b1p1 P641_00 Pc1p0_01": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 120.67,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 21
 },
 "L01b1p1 P7_00 P7_01": {
 "status": "INFEASIBLE",
@@ -10779,13 +10785,15 @@
 "engine": "highs"
 },
 "L01b1p1 P641_01 Pc1p0_00": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 120.67,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 22
 },
 "L01b1p1 P7_00 Pc0p1_01": {
 "status": "INFEASIBLE",
@@ -14274,40 +14282,48 @@
 "engine": "highs"
 },
 "P641_00 P641_01 P641_10 P641_11": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.36,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 115
 },
 "P641_00 P641_01 P641_10 P7_11": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.12,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 103
 },
 "P641_00 P641_01 P641_11 P7_10": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.15,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 91
 },
 "P641_00 P641_01 P7_10 P7_11": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.08,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 73
 },
 "P641_00 P641_01 Pc2p0_10": {
 "status": "INFEASIBLE",
@@ -14366,22 +14382,26 @@
 "engine": "highs"
 },
 "P641_00 P641_10 P641_11 P7_01": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.19,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 79
 },
 "P641_00 P641_10 P7_01 P7_11": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.01,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 88
 },
 "P641_00 P641_10 Pc1p1_11": {
 "status": "INFEASIBLE",
@@ -14416,13 +14436,15 @@
 "engine": "highs"
 },
 "P641_00 P641_11 P7_01 P7_10": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.01,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 64
 },
 "P641_00 P641_11 Pc0p1_10": {
 "status": "INFEASIBLE",
@@ -14433,13 +14455,15 @@
 "engine": "highs"
 },
 "P641_00 P7_01 P7_10 P7_11": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.31,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 72
 },
 "P641_00 P7_01 Pc2p0_11": {
 "status": "INFEASIBLE",
@@ -14642,22 +14666,26 @@
 "engine": "highs"
 },
 "P641_01 P641_10 P641_11 P7_00": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.15,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 91
 },
 "P641_01 P641_10 P7_00 P7_11": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.02,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 73
 },
 "P641_01 P641_10 Pc0p1_00": {
 "status": "INFEASIBLE",
@@ -14676,13 +14704,15 @@
 "engine": "highs"
 },
 "P641_01 P641_11 P7_00 P7_10": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.01,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 86
 },
 "P641_01 P641_11 Pc1p0_10": {
 "status": "INFEASIBLE",
@@ -14949,13 +14979,15 @@
 "engine": "highs"
 },
 "P641_10 P641_11 P7_00 P7_01": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 121.0,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 74
 },
 "P641_10 P7_00 Pc1p1_11": {
 "status": "INFEASIBLE",
@@ -15206,13 +15238,15 @@
 "engine": "highs"
 },
 "P641_11 P7_00 P7_01 P7_10": {
-"status": "UNKNOWN",
+"status": "INFEASIBLE",
 "n": null,
 "rounds": 1,
 "time": 120.97,
 "stage": "cert",
-"engine": "cpsat",
-"highs_failed": true
+"engine": "highs",
+"highs_failed": true,
+"note": "c6_independent_hard.py, 1800 s limit",
+"seconds": 47
 },
 "P641_11 P7_10 Pc2p1_01": {
 "status": "INFEASIBLE",
